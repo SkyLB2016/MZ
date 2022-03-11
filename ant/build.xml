@@ -1,0 +1,18 @@
+<project>
+    <!--    1.测试实例，以及依赖实例-->
+    <target name="antHello1" depends="antHello3">
+        <echo>antHello1 依赖于 antHello3</echo>
+    </target>
+    <!--    2.gradle 中设置属性值，ant 中通过任务依赖获取属性值-->
+    <target name="antHello4" depends="printAnt">
+        <echo>customDir = ${customDir}</echo>
+    </target>
+    <!--    3.自定义属性，在 gradle 获取-->
+    <property name="antProp" value="a property defined in an Ant build" />
+
+    <!--    4.Ant中设置引用ID，在 gradle 设置具体参数 -->
+    <path refid="classpath" />
+    <!--    5.设置引用，在 gradle  中获取-->
+    <path id="antPath" location="libs" />
+
+</project>

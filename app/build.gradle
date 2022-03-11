@@ -1,47 +1,575 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    id 'com.android.application'//App模式
+//    id 'com.android.library'//lib模式
+    id 'kotlin-android'//android版本kotlin支持
+//    id 'kotlin-android-extensions'//kotlin view 注入工具
+//    id 'kotlin-parcelize'
+//    id 'java-library'//Java模式的lib
+//    id 'kotlin'//Java版本的kotlin
+}
+//apply from: "$rootDir/common.gradle"
+//apply from: "$rootDir/app/copysrc/test.gradle"
+
+//设置依赖的jar，遵循group:artifactId:version
+dependencies {
+//    01.implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])//引用所有的lib包
+//    02.implementation files("xx/xx.jar","xx/xx.jar")//引用指定的jar
+//    03.implementation (name:'apiutils',ext:'aar')//引用指定的aar
+//    04.implementation("com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION") {
+//        exclude group: 'com.google.code.gson', module: 'gson'
+//    }//除去此jar内部对应的jar
+//    05.implementation project(':common')//引用项目内的 jar 模块
+
+    //遵循group:artifactId:version
+//    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation group: 'androidx.core', name: 'core-ktx', version: '1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'com.google.code.gson:gson:2.8.7'
+
+    //navigation 工具jar
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
+    //navigation 工具jar
+
+    //refresh 工具jar
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    //refresh 工具jar
+
+//    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation project(':uidesign')
+    implementation project(':common')
+    implementation project(':test')
 }
 
-android {
-    compileSdk 31
+def key = new Properties()
+//xx.properties 以及 xx.gradle 中的参数，只要不与默认参数重名，可以直接使用
+//def keyPass = rootProject.file("gradle.properties")
+//key.load(new FileInputStream(keyPass))
 
+//自定义文件中的参数必须载入才能获取
+def textkey = rootProject.file("text.txt")
+key.load(new FileInputStream(textkey))
+
+//android项目的环境配置
+//对应的是 APPExtension 插件
+android {
+    compileSdk COMPILE_SDK_VERSION  //编译期，进行检查的版本
+
+    //01.基本参数设置
+    //compileSdkVersion 代表着编译的时候，会采用该api的规范进行代码检查和警告，但是并不会编译进apk中。
+    //targetSdkVersion 代表着目标版本，在编译的时候会将该版本的api编译进apk中。
+    //minSdkVersion 代表着最低版本，在编译的时候兼容到该参数指定最低版本api。
+    //
+    //minSDKVersion xx --  targetSDKVersion xx：兼容从xx到xx之间所有api的变化；
+    //三者关系：minsdkVersion<=TargetSdkVersion<=compileSdkVersion;
+    //理想关系：minsdkVersion<=TargetSdkVersion==compileSdkVersion，目标与依赖相同
     defaultConfig {
         applicationId "com.sky.oa"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk MIN_SDK_VERSION             //适配的最低版本
+        targetSdk TARGET_SDK_VERSION          //目标版本，打包时的最高版本
+        versionCode 1       //版本号
+        versionName "1.0"   //版本名
+        multiDexEnabled true//添加分包支持，突破65535的限制
+        vectorDrawables.useSupportLibrary = true //库支持矢量图
 
+        flavorDimensions "sky" //渠道号
+        manifestPlaceholders = [CHANNEL_VALUE: "umeng"]//默认是umeng的渠道
+
+//        ndk {
+//            //添加对应cpu类型的.so库。
+//            abiFilters 'armeabi-v7a', 'armeabi-v8a', 'armeabi', 'x86'
+//        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    //02.签名文件配置
+    signingConfigs {
+        debug {
+            storeFile file("$rootDir/${key['STOREFILE']}")
+            storePassword key['STOREPASSWORD']
+            keyAlias key['KEYALIAS']
+            keyPassword key['KEYPASSWORD']
+//            println "debug==$storePassword"
+//            println STOREPASSWORD //自定义文件，不能直接获取
+        }
 
-    buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            storeFile file("$rootDir/${STOREFILE}")
+            storePassword STOREPASSWORD
+            keyAlias KEYALIAS
+            keyPassword KEYPASSWORD
+//            println "release==$STOREPASSWORD"
+//            println "$rootDir/${STOREFILE}"
         }
     }
+    //03.打包方式配置
+    buildTypes {
+        debug {
+            minifyEnabled false
+            zipAlignEnabled true //Zipalign优化
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            createName()
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true //Zipalign优化
+            versionNameSuffix "-release"
+            signingConfig signingConfigs.release
+            shrinkResources true// 移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            createName()
+        }
+    }
+    //04.MVVM模式配置 dataBinding 包含 viewBinding
+    buildFeatures {
+//        dataBinding = true
+        viewBinding true
+    }
+    //05.设置对应的Java版本
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    //06.kotlin的Java版本配置
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
-        viewBinding true
+    //07.通道配置，应用市场或者主地址配置
+//    flavorDimensions "sky"
+    productFlavors {
+        sky {//搭配下方的 productFlavors.all 使用
+            dimension "sky"
+        }
+//        baidu{
+//            manifestPlaceholders = [CHANNEL_VALUE: baidu]
+//        }
+        te {
+            buildConfigField 'String', 'API_URL', '"https://xxx/"'
+            buildConfigField 'String', 'APK_SUFFIX', '"SKYP"'
+        }
+    }
+    productFlavors.all { flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name] }
+
+    //08.设置自定义的资源目录，通常都是老项目转AS才会用到
+//    sourceSets {//设置自定义的资源目录
+//        main {
+//            println "manifest.srcFile=${manifest.srcFile}"
+//            println "java.srcDirs=${java.srcDirs}"
+//            println "res.srcDirs=${res.srcDirs}"
+//            println "assets.srcDirs=${assets.srcDirs}"
+//            println "jniLibs.srcDirs=${jniLibs.srcDirs}"
+//            println "resources.srcDirs=${resources.srcDirs}"
+//            println "aidl.srcDirs=${aidl.srcDirs}"
+//            println "renderscript.srcDirs=${renderscript.srcDirs}"
+////            res.srcDirs = listResDirs()
+//        }
+//        androidTest.setRoot('tests')
+//        debug.setRoot('build-types/debug')
+//        release.setRoot('build-types/release')
+//    }
+    //09.执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+//    lintOptions {
+//        abortOnError false
+//        checkReleaseBuilds false
+//        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+//        disable 'MissingTranslation'
+//    }
+    //10.声明配置，没用过
+//    packagingOptions {
+//        exclude 'META-INF/NOTICE.txt' // will not include NOTICE file
+//        exclude 'META-INF/LICENSE.txt' // will not include LICENSE file
+//    }
+}
+
+
+
+def createName() {
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name == "debug") {
+                outputFileName = "${variant.baseName}-${variant.versionName}.apk"
+//                println "basename==${variant.baseName}"
+//                println "versionName==${variant.versionName}"
+//                println "buildTime()==${buildTime()}"
+            } else {
+                outputFileName = "${variant.baseName}-${variant.versionName}-${buildTime()}.apk"
+//                println "basename==${variant.baseName}"
+//                println "versionName==${variant.versionName}"
+            }
+        }
     }
 }
 
-dependencies {
-
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+def buildTime() {
+    def date = new Date()
+//    return date.format('yyyy年MM月dd日HH时mm分ss秒')
+    return date.format('MM月dd日HH时mm分')
 }
+
+//description = "项目的主项目"
+description("项目的主项目")
+
+//project的信息
+task modelInfo {
+    doLast {
+        println "project的属性"
+        println "属性：name==${project.name}"                      //String 	项目的名称。
+        println "属性：path==${project.path}"                      //String 	项目内引用项目的写法
+        println "属性：description==${project.description}"        //String 	项目的描述。
+        println "属性：rootDir==${project.rootDir}"                //File 	整个项目的根目录。
+        println "属性：projectDir==${project.projectDir}"          //File 	自己的根目录。
+        println "属性：buildDir==${project.buildDir}"              //File 	自己的缓存目录
+        println "属性：buildFile==${project.buildFile}"            //自己的 gradle 配置文件
+        println "属性：parent==${project.parent}"                  //父级项目
+        println "属性：group==${project.group}"                    //Object 	所属 group 划分
+        println "属性：version==${project.version}"                //Object 	可动态指定
+        println "属性：status==${project.status}"                  //Object 	可动态指定
+        println "属性：rootProject==${project.rootProject}"
+        println "属性：displayName==${project.displayName}"
+        println "属性：project==${project.project}"
+        println "属性：childProjects==${project.childProjects}"
+        println "属性：allprojects==${project.allprojects}"
+        println "属性：subprojects==${project.subprojects}"
+        println "属性：tasks==${project.tasks}"
+        println "属性：defaultTasks==${project.defaultTasks}"
+        println "属性：providers==${project.providers}"
+        println "属性：properties==${project.properties}"
+        println "属性：ant==${project.ant}"                        //AntBuilder AntBuilder实例
+        println "属性：configurations==${project.configurations}"
+        println "属性：logger==${project.logger}"
+        println "属性：gradle==${project.gradle}"
+        println "属性：logging==${project.logging}"
+        println "属性：repositories==${project.repositories}"
+        println "属性：dependencies==${project.dependencies}"
+        println "属性：buildscript==${project.buildscript}"
+        println "属性：copySpec()==${project.copySpec()}"
+        println "属性：state==${project.state}"
+        println "属性：extensions==${project.extensions}"
+        println "属性：resources==${project.resources}"
+        println "属性：components==${project.components}"
+        println "属性：normalization==${project.normalization}"
+        println "属性：dependencyLocking==${project.dependencyLocking}"
+    }
+}
+//gradle 信息
+task gradleInfo1 {
+    doLast {
+        println "gradle 自带的属性"
+        println "属性：.gradleVersion == ${gradle.gradleVersion}"          //版本号
+        println "属性：.gradleHomeDir == ${gradle.gradleHomeDir}"          //当前使用版本 gradle 的具体路径
+        println "属性：.gradleUserHomeDir == ${gradle.gradleUserHomeDir}"  //gradle仓库的路径
+        println "属性：.rootProject == ${gradle.rootProject}"              //根项目
+        println "属性：.parent == ${gradle.parent}"
+        println "属性：.gradle == ${gradle.gradle}"
+        println "属性：.taskGraph == ${gradle.taskGraph}"
+        println "属性：.startParameter == ${gradle.startParameter}"
+        println "属性：.sharedServices == ${gradle.sharedServices}"
+        println "属性：.includedBuilds == ${gradle.includedBuilds}"
+        println "属性：.hashCode() == ${gradle.hashCode()}"
+    }
+}
+
+task tasksInfo1 {
+    doLast {
+        println "tasks 与 Task 自带的属性"
+        println "属性：name == ${tasksInfo1.name}"
+        println "属性：name == ${tasks.tasksInfo1.name}"
+        println "属性：path == ${tasks['tasksInfo1'].path}"
+        println "属性：project == ${tasks['tasksInfo1'].project}"
+
+        println "属性：name == ${project.tasksInfo1.name}"
+        println "属性：name == ${project.name}"
+        println "属性：name == ${project.getTasksByName("tasksInfo1", false).name}"
+        println "属性：getByPath == ${tasks.getByPath("tasksInfo1")}"
+        println "属性：name == ${tasks.getByPath("tasksInfo1").name}"
+        println "属性：path == ${tasks.getByPath("tasksInfo1").path}"
+        println "属性：project == ${tasks.findByPath("tasksInfo1").project}"
+        println "属性：description == ${tasks.findByPath("tasksInfo1").description}"
+    }
+}
+
+
+//-P：增加新的属性；
+//-D：增加新的系统属性
+//gradle -q -P commandLineProjectProp=P添加的属性 -D org.gradle.project.systemProjectProp=D动态定义系统属性 printPropers
+task printPropers {
+    doLast {
+        println "commandLineProjectProp  ==  $commandLineProjectProp"
+        println "systemProjectProp  ==  $systemProjectProp"
+        println "gradlePropertiesProp  ==  $gradlePropertiesProp"
+        println "envProjectProp  ==  $envProjectProp"
+        println System.properties['system']
+        println System.properties['envProjectProp']
+        println project.hasProperty('puzzle')
+    }
+}
+//外部脚本配置
+task outGradleConfigure {
+    doLast {
+        def pos = configure(new java.text.FieldPosition(10)) {
+            beginIndex = 8
+            endIndex = 19
+        }
+        // Apply the script
+//        apply from: 'other.gradle', to: pos
+        println pos.beginIndex
+        println pos.endIndex
+    }
+}
+//定位任务的方法
+project.task("custom") {
+    doLast {
+        println custom.name
+        println tasks.custom.name
+        println tasks['custom'].name
+        println project.custom.name
+        println project.getTasksByName("custom", false).name
+        println tasks.getByPath("custom")
+        println tasks.getByPath("custom").path
+        println tasks.getByPath("custom").name
+    }
+}
+File classesDir = new File('测试/1')
+task dependAll {
+    doLast {
+        classesDir.mkdirs()
+    }
+}
+dependAll.dependsOn {
+    tasks.findAll { task -> task.name != 'dependAll' }
+}
+
+ext {
+    springVersion = "3.3.3"
+    emailNotification = "abcdefghijklmn"
+}
+//定义资源目录内使用的自定义属性
+sourceSets.all {
+    ext.purpose = "sourceSets内部属性"
+}
+sourceSets {
+    main {
+        purpose = "production"
+//        ext.purpose = "production"
+    }
+    test {
+        purpose = "test"
+//        ext.purpose = "test"
+    }
+    plugin {
+        purpose = "production"
+//        ext.purpose = "production"
+    }
+}
+
+task printProperties {
+    doLast {
+        def index = 1
+        println springVersion
+        println emailNotification
+//        println sourceSets.ext.purpose
+        sourceSets.matching {
+            println it.getName() + "index==${index++}"
+            println it.purpose == "production"
+            it.purpose == "production"
+        }.each {
+            println it.getName() + "==${index++}"
+        }
+    }
+}
+//configurations.runtime.each { f -> println f.path }
+//文件集合
+task listApp {
+    doLast {
+        File srcDir
+        // Create a file collection using a closure使用闭包创建文件集合
+        def collection = files { srcDir.listFiles() }
+        srcDir = file('src')//定义文件路径
+        println "Contents of $srcDir.name"
+        collection.collect { relativePath(it) }.sort().each { println it }
+        srcDir = file('copysrc')//定义文件路径
+        println "Contents of $srcDir.name"
+        collection.collect { relativePath(it) }.sort().each { println it }
+    }
+}
+//文件树的使用
+task filestree {
+    // Create a file tree with a base directory
+    FileTree tree = fileTree(dir: 'src/main')
+// Add include and exclude patterns to the tree
+    tree.include '**/*.java'
+    tree.exclude '**/Abstract*'
+// Create a tree using path
+    tree = fileTree('src').include('**/*.java')
+// Create a tree using closure
+    tree = fileTree('src') {
+        include '**/*.java'
+    }
+// Create a tree using a map
+    tree = fileTree(dir: 'src', include: '**/*.java')
+    tree = fileTree(dir: 'src', includes: ['**/*.java', '**/*.xml'])
+    tree = fileTree(dir: 'src', include: '**/*.java', exclude: '**/*test*/**')
+
+    doLast {
+        // Iterate over the contents of a tree
+        tree.each { File file ->
+            println file
+        }
+// Filter a tree 过滤文件树
+        FileTree filtered = tree.matching {
+            include 'org/gradle/api/**'
+        }
+// Add trees together
+        FileTree sum = tree + fileTree(dir: 'src/test')
+// Visit the elements of the tree
+        tree.visit { element ->
+            println "$element.relativePath => $element.file"
+        }
+    }
+}
+
+task filesTree2 {
+    // Create a ZIP file tree using path
+    FileTree zip = zipTree('someFile.zip')
+// Create a TAR file tree using path
+    FileTree tar = tarTree('someFile.tar')
+//tar tree attempts to guess the compression based on the file extension
+//however if you must specify the compression explicitly you can:
+    FileTree someTar = tarTree(resources.gzip('someTar.ext'))
+}
+//指定一组输入文件
+//task filesTree3 {
+//// Use a File object to specify the source directory
+//    compile {
+//        source = file('src/main/java')
+//    }
+//// Use a String path to specify the source directory
+//    compile {
+//        source = 'src/main/java'
+//    }
+//// Use a collection to specify multiple source directories
+//    compile {
+//        source = ['src/main/java', '../shared/java']
+//    }
+//// Use a FileCollection (or FileTree in this case) to specify the source files
+//    compile {
+//        source = fileTree(dir: 'src/main/java').matching { include 'org/gradle/api/**' }
+//    }
+//// Using a closure to specify the source files.
+//    compile {
+//        source = {
+//            // Use the contents of each zip file in the src dir
+//            file('src').listFiles().findAll { it.name.endsWith('.zip') }.collect { zipTree(it) }
+//        }
+//    }
+//}
+
+task copyFile(type: Copy) {
+    from './copysrc'//需要复制的文件夹
+    into './build/copy'//目标路径
+    include '**/*.txt', '**/*.xml', '**/*.properties'//只复制包含的文件
+    rename 'test.txt', '重命名文件.txt' //重命名复制的文件
+}
+//task copyFile(overwrite:true){
+//    doLast {
+//        println "任务 clean 已被覆盖"
+//    }
+//}
+
+//以 类型变量 的形式调用
+Copy copyFile1 = task('copyFile1', type: Copy)//任务名称，类型
+copyFile1.from './copysrc'
+copyFile1.into './build/copy1'
+copyFile1.include '**/*.txt', '**/*.xml', '**/*.properties'//只复制包含的文件
+
+//通过 task 定义任务名称，使用时通过闭包的形式使用
+task copyFile2(type: Copy)
+copyFile2 {
+    from('./copysrc') {
+        include '**/*.txt', '**/*.xml', '**/*.properties'
+    }
+    into './build/copy2'
+//    include '**/*.txt', '**/*.xml', '**/*.properties'
+    rename 'test.txt', '重命名文件.txt'
+}
+task copyFile3(type: Copy) {
+    from 'src/main'
+    into 'build/Copy3'
+    include '**/*.java'
+    include '**/*.jsp'
+    exclude { details -> details.file.name.endsWith('.html') && details.file.text.contains('staging') }
+}
+task copyFile4 {
+    doLast {
+        copy {
+            from 'src/main'
+            into 'build/Copy4'
+            include '**/*.java'
+            include '**/*.jsp'
+            // Use a closure to map the file name
+            rename { String fileName ->
+                fileName.replace('-staging-', '')
+            }
+            // Use a regular expression to map the file name
+            rename '(.+)-staging-(.+)', '$1$2'
+            rename(/(.+)-staging-(.+)/, '$1$2')
+        }
+    }
+}
+import org.apache.tools.ant.filters.FixCrLfFilter
+import org.apache.tools.ant.filters.ReplaceTokens
+
+task filter(type: Copy) {
+    from 'src/main'
+    into 'build/explodedWarFilter'
+    // Substitute property references in files
+    expand(copyright: '2009', version: '2.3.1')
+    expand(project.properties)
+    // Use some of the filters provided by Ant
+    filter(FixCrLfFilter)
+    filter(ReplaceTokens, tokens: [copyright: '2009', version: '2.3.1'])
+    // Use a closure to filter each line
+    filter { String line ->
+        "[$line]"
+    }
+}
+task copyFile5(type: Sync) {
+    from 'src/main'
+    into 'build/copy5'
+}
+project.task("copyFile6", type: Copy) {
+    from 'src/main'
+    into 'build/copy6'
+}
+
+task zip(type: Zip) {
+    //打包后的zip 文件在 build/distributions 下，名称是 项目名.zip，内部是目录结构
+    from 'src/main'//需要压缩的源文件
+    into('build/libs')//压缩后的目标目录
+
+//    baseName("custom")//自定义名称,已弃用
+    archivesBaseName = "gradle"//基本名称，不设置，名称就是 project.name.zip
+    archiveAppendix = "后缀1"
+//    archiveVersion = "版本1"//版本，不设置就是 project.version，有的话
+    archiveClassifier = "后缀2"
+//    archiveExtension = ".zip"//扩展名
+//    distsDirName = "libs"
+//    distsDirName：文件路径，依赖于归档类型。JAR包和 WAR包会生成到 project.buildDir/libraries中。ZIP文件和 TAR文件会生成到project.buildDir/distributions中。
+//    自定义的路径也是在 buildDir 文件夹之下
+
+//    archiveFileName="d/d/d"//文件的绝对路径以及名称，优先级最高
+//    archiveFile=不知道
+}
+//解开后跟随任务 zip 输出文件名字
+//println zip.archiveName

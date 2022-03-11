@@ -7,3 +7,37 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+//sourceCompatibility = 1.5
+//version = '1.0'
+//jar {
+//    manifest {
+//        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+//    }
+//}
+test {
+    systemProperties 'property111': 'value'
+}
+//uploadArchives {
+//    repositories {
+//        flatDir {
+//            dirs 'repos'
+//        }
+//    }
+//}
+
+task lib {
+    doLast {
+//        println "property==$property111"
+    }
+}
+//compileJava.destinationDir = file("$buildDir/output/classes")
+//compileJava.destinationDir ：java 编译代码的缓存目录
+//sourceSets.main.output.classesDirs=file() : 配置源码集合
+task show {
+    doLast {//依赖于 Java-library 插件
+        println relativePath(compileJava.destinationDir)
+        println relativePath(processResources.destinationDir)
+        println processResources.destinationDir
+
+    }
+}
