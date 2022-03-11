@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MZ"
 include ':app'
+include ':uidesign'
+include ':common'
+include ':test'
