@@ -717,13 +717,13 @@ dataBinding 可以将View 和界面上的数据进行双向绑定，viewBinding 
 
 10.设置对应的Java版本
 compileOptions {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
 }
 
 11.kotlin的Java版本配置
 kotlinOptions {
-    jvmTarget = '11'
+    jvmTarget = '1.8'
 }
 
 12.通道配置，应用市场或者主地址配置
