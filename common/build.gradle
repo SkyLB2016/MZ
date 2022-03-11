@@ -1,0 +1,15 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+apply from: "$rootDir/common.gradle"
+
+android {
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+}
+
+dependencies {
+
+}

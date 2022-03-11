@@ -1,0 +1,24 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+apply from: "$rootDir/common.gradle"
+
+android {
+
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+//    buildFeatures {
+//        viewBinding true
+//    }
+}
+
+dependencies {
+
+    api 'com.kingja.loadsir:loadsir:1.3.6'
+    api 'com.airbnb.android:lottie:2.8.0'
+//    implementation 'androidx.databinding:databinding-runtime:4.2.0'
+    implementation project(':common')
+}
