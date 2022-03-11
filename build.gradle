@@ -1,18 +1,577 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
+//根目录下的配置，内部配置有
+//subprojects {}
+//allprojects {}
+//apply from: "ant.gradle"
+buildscript {//构建项目使用。android{}中的配置使用
+    ext {//可在此设置需要的参数,也可以放在buildscript中
+        KOTLIN_VERSION = '1.6.10'
+        COMPILE_SDK_VERSION = 31
+        TARGET_SDK_VERSION = 31
+        MIN_SDK_VERSION = 21
+//        println "getVersion==${getVersion()}"
+    }
+    ext.STOREFILE = 'sky.jks'
+    ext.STOREPASSWORD = '1qaz2wsx'
+    //配置项目的基础仓库
     repositories {
         google()
-        mavenCentral()
+        mavenCentral()//maven中央仓库
+        mavenLocal()//maven本地仓库
+        //阿里云的 maven 地址
+        //isAllowInsecureProtocol=true //gradle会默认禁用非官方的仓库，如需使用，需要先声明。
+//        maven { url 'https://maven.aliyun.com/repository/public' }
+//        maven { url 'https://maven.aliyun.com/repository/google' }
+//        maven { url 'https://maven.aliyun.com/repository/central' }
+        //阿里云的 maven 地址
+
+        //maven{ url uri("地址")} //自定义的本地仓库
+
     }
+    //基于整个项目的环境配置
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${KOTLIN_VERSION}"
+//        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.21'//resguard 加密打包工具
         // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // in the individual
+        // module build.gradle files
     }
+    //其他参数配置
+    configurations {
+        //全局排除指定模块
+//        all*.exclude group: 'com.google.code.gson', module: 'gson'
+        自定义的全局配置
+    }
+    //全局排除指定模块
+//    configurations.all {
+//        exclude group: 'com.google.code.gson', module: 'gson'
+//    }
 }
-
+//allprojects {//model 的 dependencies 使用
+//    repositories {
+//        google()
+//        mavenCentral()//maven中央仓库
+//        //阿里云的 maven 地址
+//        //isAllowInsecureProtocol=true //gradle会默认禁用非官方的仓库，如需使用，需要先声明。
+//        maven { url 'https://maven.aliyun.com/repository/public' }
+//        maven { url 'https://maven.aliyun.com/repository/google' }
+//        maven { url 'https://maven.aliyun.com/repository/central' }
+//        //阿里云的 maven 地址
+//
+//        //maven{ url uri("地址")} //自定义的本地仓库
+//
+//    }
+//}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+//task clean(overwrite:true){
+//    println "任务 clean 已被覆盖"
+//}
+
+description = "项目的根目录"
+
+//定义变量是使用
+def dir = 'app/src/main/assets/Documents'
+def int variable = 1
+String variable1 = "dflskjdflk"
+def variable2 = "dflskjdflk"
+
+//定义方法
+void function01() {
+    println "无参数不能省略括号"
+}
+
+def function02() {//def 修饰可返回任意类型
+    "djflskjdflks"
+    2
+    println("variable==")
+}
+
+task defTest {
+    doLast {
+        println "variable==$variable"
+        println "variable1==$variable1"
+        println 'variable2==$variable2\nvariable2==$variable2'
+        println "variable2==$variable2\nvariable2==$variable2"
+        println '''
+variable2==$variable2\n
+variable2==$variable2，'"'
+variable2==$variable2
+'''
+        println function02()
+        function01()
+//        fileList dir
+        println variable.getClass().getCanonicalName()
+    }
+}
+defTest.onlyIf {
+    println "onlyIf测试==${project.hasProperty('puzzle')}"
+    !project.hasProperty('puzzle')
+}
+task stringTest {
+    doLast {
+        def a = "hello"
+        def b = "Hello"
+        def c = "lo"
+        def d = "lo78"
+        println "a > b==${a > b}"
+        println "a[1..2]==${a[1..2]}"
+        println "a.minus(c)==${a.minus(c)}"
+        println "a - c==${a - c}"
+        println "a * 2==${a.multiply(2)}"
+        println "a.reverse()==${a.reverse()}"
+        println "a.capitalize()==${a.capitalize()}"//首字母大写
+        println "a.isEmpty()==${a.isEmpty()}"//是否有数字字符
+    }
+}
+//容器List
+def list = [1, 2, 3]
+list[5] = "添加越界的第六个元素"
+task listTest {
+    doLast {
+        println list[1]
+        list[1] = "更改第二个元素"
+        println list[1]
+        println list[5]
+
+        list[7] = "添加越界的第八个元素"
+        list << "操作符添加"
+        list = list + "通过 + 添加数据"
+        println list[7]
+        println "获取越界的第11个元素==${list[10]}"
+        println "此时数组的长度为==${list.size()}"
+        println "数据==${list}"
+    }
+}
+//容器 map
+def key4 = 'kkk'
+def map = ['key': 'value', 'key2': true, key3: 33, (key4): 44]
+task mapTest {
+    doLast {
+        println map['key']
+        println map.key
+        map['key5'] = 67
+        println map['key5']
+        println "此时数组的长度为==${map.size()}"
+        map.key2 = 123
+        println map.key2
+    }
+}
+//容器 Range
+def range = 1..9
+def range1 = 1..<9
+task rangeTest {
+    doLast {
+        println range[3]
+        println range[33]
+        println "队头==${range.from}"
+        println "队尾==${range.to}"
+        println "间隔（1-1）个获取=${range.step(1)}"
+        println "间隔（2-1）个获取=${range.step(2)}"
+        println "间隔（3-1）个获取=${range.step(3)}"
+    }
+}
+
+//闭包的应用 closure
+def closure = { String str, String value -> "str=$str,value=$value" }
+def closure2 = { str, value -> "str=$str,value=$value" }
+def closure3 = { "默认参数==$it" }
+def closure4 = { println "默认参数==$it" }
+def closure5 = { -> "这样的是没有默认参数 it 的;" }
+
+static <T> List<T> each(List<T> self, closure) {
+
+}
+
+def testClosure(closure) {
+    closure()
+}
+
+def testClosure(a1, closure) {
+    closure("二个参数") //调用闭包
+}
+
+def testClosure(a1, b1, closure) {
+//    dosomething
+    closure(66) //调用闭包
+}
+
+task closureTest {
+    doLast {
+        println closure("闭包调用1：", "直接使用括号调用")
+        println closure2.call("闭包调用2：", "使用 call 调用")
+        println closure3("直接使用括号调用")
+        println closure5() + "无参数带括号才会执行"
+        println "无参数，不带括号，输出的是内存地址==$closure5"
+        println closure5
+
+        each(list) {
+            println "each例子调试==$it"
+        }
+        each(list, {
+            println "闭包==$it"
+        })
+
+        list.forEach() {
+            println "list的参数==$it；"
+        }
+
+        testClosure {
+            println "closure 省略圆括号，默认参数是$it"
+        }
+        testClosure("test") {
+            println "closure 在外部，默认参数是$it"
+        }
+        testClosure(4, "test", {
+            println "closure 在内部，默认参数是$it"
+        })
+        testClosure("fff", "test", {
+            println "closure 在内部，默认参数是$it"
+        })
+        testClosure("fff", "test", closure4)
+    }
+}
+//文件流操作
+task ioTest {
+    doLast {
+        File file = new File("$rootDir/build.gradle")
+        file.eachLine {
+            line ->
+                println line
+        }
+        println file.bytes
+        println file.getBytes()
+    }
+}
+task ioCopy {
+    doLast {
+        def src = new File("$rootDir/build.gradle")
+        def target = new File("$rootDir/build/复制文件.txt")
+        if (target.exists()) {
+            println "重新创建文件"
+            target.delete()
+            target.createNewFile()
+        } else {
+            target.createNewFile()
+            println "创建文件"
+        }
+        target.withOutputStream { os ->
+            src.withInputStream { is ->
+                os << is
+            }
+        }
+    }
+}
+
+task logger {
+    doLast {
+        logger.quiet('An info log message which is always logged.')
+        logger.error('An error log message.')
+        logger.warn('A warning log message.')
+        logger.lifecycle('A lifecycle info log message.')
+        logger.info('An info log message.')
+        logger.debug('A debug log message.')
+        logger.trace('A trace log message.')
+    }
+}
+//运行 gradlew hello (-q只显示有用的信息)
+task hello {
+    doLast {
+        println('Hello world!')
+    }
+}
+//增加任务的行为功能（短标记法）
+hello.doLast {
+    println('Hello world!增加末尾任务!')
+}
+//增加任务的行为功能
+hello.doFirst {
+    println "Hello world!增加doFirst任务"
+}
+task upper {
+    doLast {
+        String text = "text"
+        println "$text 转换成大写${text.toUpperCase()}"
+    }
+}
+//任务依赖，兼延迟依赖
+task count(dependsOn: upper) {
+    doLast {
+        4.times { count ->
+            println "次数输出==$count"
+        }
+    }
+}
+count.dependsOn('delay')
+
+task delay {
+    doLast {
+        println "delay地址==" + delay.path
+    }
+}
+//创建动态任务
+4.times { count ->
+    task "task$count" {
+        doLast {
+            println "动态任务$count"
+        }
+    }
+}
+//动态依赖
+task1.dependsOn(task2, task3)
+
+//自定义属性，在dolast，doFirst中不起作用
+task customProper {
+    ext.myProperties = "自定义属性"
+    def myProper = "自定义属性2"
+    doLast {
+        ext.myProperties1 = "自定义属性1"
+        println myProper
+        println myProperties
+    }
+}
+task proper {
+    doLast {
+        println "自定义属性==${customProper.myProperties}"
+//        println "自定义属性==${customProper.myProperties1}"
+//        println "自定义属性==${customProper.myProper}"
+        println "执行的依赖任务为$version"
+    }
+}
+
+//调用 Ant 任务
+task loadFile {
+    doLast {
+        def files = file(dir).listFiles().sort()
+        files.each { File file ->
+            if (file.isFile()) {
+                ant.loadfile(srcFile: file, property: file.name)//ant载入文件
+                println " *** $file.name ***"
+//                println "${ant.properties[file.name]}"//输出文件内容
+            } else {
+                println " *** 文件夹是$file.name ***"
+            }
+        }
+    }
+}
+task checkSum {
+    doLast {
+        fileList(dir).each { File file ->
+            ant.checksum(file: file, property: "cs_$file.name")
+            println "$file.name Checksum: ${ant.properties["cs_$file.name"]}"
+        }
+    }
+}
+loadFile {
+    doLast {
+        fileList(dir).each { File file ->
+            ant.loadfile(srcFile: file, property: file.name)
+            println "文件名称是 $file.name"
+        }
+    }
+}
+
+File[] fileList(String dir) {
+    println "获取自定义属性 dir 学习文档里的文件名"
+    file(dir).listFiles({ file -> file.isFile() } as FileFilter).sort()
+}
+
+//获取文件夹内所有文件的名字
+ArrayList<File> dirList(String dir) {
+    def fileLists = new ArrayList()
+    def files = file(dir).listFiles()
+    for (File file : files) {
+        if (file.isFile()) {
+            fileLists.add(file)
+        } else {
+            fileLists.addAll(dirList(file.getAbsolutePath()))
+        }
+    }
+    fileLists
+}
+
+task checkFile {
+    doLast {
+        dirList(dir).forEach { file ->
+            println "文件名字==${file.name}"
+        }
+    }
+}
+
+//设置默认任务
+defaultTasks 'a', 'hello', "checkFile"
+task a {
+    doLast {
+        println "默认任务：$name"
+    }
+}
+task b(dependsOn: a) {
+    doLast {
+        println "默认任务：$name"
+    }
+}
+//所有任务的不同输出，每次执行任务都会执行以下方法
+gradle.taskGraph.whenReady {
+    taskGraph ->
+        if (taskGraph.hasTask(b)) {
+            version = "动态更改字段属性【version】"
+            status = "动态更改字段属性【status】"
+        } else {
+            version = "动态更改字段属性【version】任务名称==${taskGraph.allTasks[0]}"
+            status = "动态更改字段属性【status】任务名称==${taskGraph.allTasks[0]}"
+        }
+//        println "version==$version"
+//        println "status==$status"
+}
+//任务的联动
+task compile {
+    doLast {
+        println 'compiling source'
+    }
+}
+task compileTest(dependsOn: compile) {
+    doLast {
+        println 'compiling unit tests'
+    }
+}
+task test(dependsOn: [compile, compileTest]) {
+    doLast {
+        println 'running unit tests'
+    }
+}
+task dist(dependsOn: [compile, test]) {
+    doLast {
+        println 'building the distribution'
+    }
+}
+//project的信息
+task projectInfo {
+    doLast {
+        println "project的属性"
+        println "属性：name==${project.name}"                      //String 	项目的名称。
+        println "属性：path==${project.path}"                      //String 	项目内引用项目的写法
+        println "属性：description==${project.description}"        //String 	项目的描述。
+        println "属性：rootDir==${project.rootDir}"                //File 	整个项目的根目录。
+        println "属性：projectDir==${project.projectDir}"          //File 	自己的根目录。
+        println "属性：buildDir==${project.buildDir}"              //File 	自己的缓存目录
+        println "属性：buildFile==${project.buildFile}"            //自己的 gradle 配置文件
+        println "属性：parent==${project.parent}"                  //父级项目
+        println "属性：group==${project.group}"                    //Object 	所属 group 划分
+        println "属性：version==${project.version}"                //Object 	可动态指定
+        println "属性：status==${project.status}"                  //Object 	可动态指定
+        println "属性：rootProject==${project.rootProject}"
+        println "属性：displayName==${project.displayName}"
+        println "属性：project==${project.project}"
+        println "属性：childProjects==${project.childProjects}"
+        println "属性：allprojects==${project.allprojects}"
+        println "属性：subprojects==${project.subprojects}"
+        println "属性：tasks==${project.tasks}"
+        println "属性：defaultTasks==${project.defaultTasks}"
+        println "属性：providers==${project.providers}"
+        println "属性：properties==${project.properties}"
+        println "属性：ant==${project.ant}"                        //AntBuilder AntBuilder实例
+        println "属性：configurations==${project.configurations}"
+        println "属性：logger==${project.logger}"
+        println "属性：gradle==${project.gradle}"
+        println "属性：logging==${project.logging}"
+        println "属性：repositories==${project.repositories}"
+        println "属性：dependencies==${project.dependencies}"
+        println "属性：buildscript==${project.buildscript}"
+        println "属性：copySpec()==${project.copySpec()}"
+        println "属性：state==${project.state}"
+        println "属性：extensions==${project.extensions}"
+        println "属性：resources==${project.resources}"
+        println "属性：components==${project.components}"
+        println "属性：normalization==${project.normalization}"
+        println "属性：dependencyLocking==${project.dependencyLocking}"
+    }
+}
+
+//gradle信息
+task gradleInfo {
+    doLast {
+        println "gradle 自带的属性"
+        println "属性：.gradleVersion == ${gradle.gradleVersion}"          //版本号
+        println "属性：.gradleHomeDir == ${gradle.gradleHomeDir}"          //当前使用版本 gradle 的具体路径
+        println "属性：.gradleUserHomeDir == ${gradle.gradleUserHomeDir}"  //gradle仓库的路径
+        println "属性：.rootProject == ${gradle.rootProject}"              //根项目
+        println "属性：.parent == ${gradle.parent}"
+        println "属性：.gradle == ${gradle.gradle}"
+        println "属性：.taskGraph == ${gradle.taskGraph}"
+        println "属性：.startParameter == ${gradle.startParameter}"
+        println "属性：.sharedServices == ${gradle.sharedServices}"
+        println "属性：.includedBuilds == ${gradle.includedBuilds}"
+        println "属性：.hashCode() == ${gradle.hashCode()}"
+    }
+}
+
+task tasksInfo {
+    doLast {
+        println "tasks 与 Task 自带的属性"
+        println "属性：name == ${tasksInfo.name}"
+        println "属性：name == ${tasks.tasksInfo.name}"
+        println "属性：path == ${tasks['tasksInfo'].path}"
+        println "属性：project == ${tasks['tasksInfo'].project}"
+
+        println "属性：name == ${project.tasksInfo.name}"
+        println "属性：name == ${project.name}"
+        println "属性：name == ${project.getTasksByName("tasksInfo", false).name}"
+        println "属性：getByPath == ${tasks.getByPath("tasksInfo")}"
+        println "属性：name == ${tasks.getByPath("tasksInfo").name}"
+        println "属性：path == ${tasks.getByPath("tasksInfo").path}"
+        println "属性：project == ${tasks.findByPath("tasksInfo").project}"
+        println "属性：description == ${tasks.findByPath("tasksInfo").description}"
+    }
+}
+//task("taskaa"){
+tasks.create("taskaa") {
+    doLast {
+        println "dfjlksjldfjslk   "
+    }
+}
+
+
+task gradleProperties {
+//    gradle.ext.debug
+}
+
+task copyUpdate(type: Copy) {
+    ext.srcFile = file('text.txt')
+    ext.destDir = new File(buildDir, 'generated')
+    inputs.file srcFile
+    outputs.dir destDir
+//    println srcFile.absolutePath
+    from srcFile
+    into destDir//目标路径
+}
+//task transform {
+//    ext.srcFile = file('mountains.xml')
+//    ext.destDir = new File(buildDir, 'generated')
+//    inputs.file srcFile
+//    outputs.dir destDir
+//    doLast {
+//        println "Transforming source file."
+//        destDir.mkdirs()
+//        def mountains = new XmlParser().parse(srcFile)
+//        mountains.mountain.each { mountain ->
+//            def name = mountain.name[0].text()
+//            def height = mountain.height[0].text()
+//            def destFile = new File(destDir, "${name}.txt")
+//            destFile.text = "$name -> ${height}\n"
+//        }
+//    }
+//}
+tasks.addRule('pattern:ping<ID>') { taskName ->
+    if (taskName.startsWith("ping")) {
+        task(taskName) {
+            println "pinging:" + taskName
+            println "pinging:" + (taskName - 'ping')
+        }
+    }
+}
+//部分同名任务组联动
+//task groupPing {
+//    dependsOn pingServer1, pingServer2
+//}
