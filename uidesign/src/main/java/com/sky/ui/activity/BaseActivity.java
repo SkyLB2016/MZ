@@ -1,14 +1,18 @@
 package com.sky.ui.activity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewbinding.ViewBinding;
 
+import com.sky.common.utils.ToastUtils;
 import com.sky.ui.api.IMVPView;
+import com.sky.ui.api.IView;
 import com.sky.ui.widget.DialogLoading;
 
 /**
@@ -17,34 +21,31 @@ import com.sky.ui.widget.DialogLoading;
  * @CreateDate: 2021/8/10 3:30 下午
  * @Version: 1.0
  */
-public abstract class BaseActivity extends AppCompatActivity implements IMVPView {
+public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActivity implements IView {
+    protected V binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+        binding = getBinding();
+        setContentView(binding.getRoot());
     }
 
-    protected abstract int getLayoutId();
+    protected abstract V getBinding();
 
     @Override
-    public void setCenterTitle(@NonNull String title) {
-
-    }
-
-    @Override
-    public void setRightTitle(@NonNull String title) {
+    public void setCenterTitle(TextView tv, @NonNull String title) {
 
     }
 
     @Override
     public void showToast(@StringRes int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
+        ToastUtils.showLong(this, resId);
     }
 
     @Override
     public void showToast(@NonNull String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        ToastUtils.showLong(this, text);
     }
 
     @Override

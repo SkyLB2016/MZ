@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewbinding.ViewBinding;
 
-import com.sky.ui.api.IMVVMView;
+import com.sky.ui.api.IView;
 import com.sky.ui.viewmodel.MVVMBaseViewModel;
 import com.sky.ui.widget.DialogLoading;
 
 /**
  * Created by libin on 2020/05/08 6:48 PM Friday.
  */
-public abstract class MVVMActivity<V extends ViewBinding, VM extends MVVMBaseViewModel> extends AppCompatActivity implements IMVVMView {
+public abstract class MVVMActivity<V extends ViewBinding, VM extends MVVMBaseViewModel> extends AppCompatActivity implements IView {
     public V viewDataBinding;
     public VM viewModel;
 
@@ -83,17 +83,17 @@ public abstract class MVVMActivity<V extends ViewBinding, VM extends MVVMBaseVie
         DialogLoading.disDialog();
     }
 
-    @Override
-    public void showContent() {
-    }
-
-    @Override
-    public void onRefreshEmpty() {
-    }
-
-    @Override
-    public void onRefreshFailure(String msg) {
-    }
+//    @Override
+//    public void showContent() {
+//    }
+//
+//    @Override
+//    public void onRefreshEmpty() {
+//    }
+//
+//    @Override
+//    public void onRefreshFailure(String msg) {
+//    }
 
     //原来的
     @Override

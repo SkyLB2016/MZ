@@ -11,14 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
-import com.sky.ui.api.IMVVMView;
+import com.sky.ui.api.IView;
 import com.sky.ui.viewmodel.MVVMBaseViewModel;
 import com.sky.ui.widget.DialogLoading;
 
 /**
  * Created by libin on 2020/05/09 3:14 PM Saturday.
  */
-public abstract class MVVMFragment<V extends ViewBinding, VM extends MVVMBaseViewModel> extends Fragment implements IMVVMView {
+public abstract class MVVMFragment<V extends ViewBinding, VM extends MVVMBaseViewModel> extends Fragment implements IView {
     public V viewBinding;
     public VM viewModel;
 
@@ -72,17 +72,17 @@ public abstract class MVVMFragment<V extends ViewBinding, VM extends MVVMBaseVie
         DialogLoading.disDialog();
     }
 
-    @Override
-    public void showContent() {
-    }
-
-    @Override
-    public void onRefreshEmpty() {
-    }
-
-    @Override
-    public void onRefreshFailure(String msg) {
-    }
+//    @Override
+//    public void showContent() {
+//    }
+//
+//    @Override
+//    public void onRefreshEmpty() {
+//    }
+//
+//    @Override
+//    public void onRefreshFailure(String msg) {
+//    }
 
     @Override
     public void onDetach() {
