@@ -1,5 +1,7 @@
 package com.sky.oa
 
+import com.sky.common.utils.LogUtils
+import com.sky.common.utils.SPUtils
 import com.sky.ui.BaseApplication
 
 /**
@@ -10,4 +12,9 @@ import com.sky.ui.BaseApplication
  * @Version: 1.0
  */
 class App : BaseApplication() {
-}
+    override fun onCreate() {
+        super.onCreate()
+        setDebug(BuildConfig.DEBUG)
+        LogUtils.isDebug = BuildConfig.DEBUG
+        SPUtils.init(this)
+    }}

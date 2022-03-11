@@ -1,4 +1,4 @@
-package com.sky.xs
+package com.sky.oa
 
 class Test {
     String name;
