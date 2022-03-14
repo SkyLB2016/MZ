@@ -75,8 +75,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     }
 
-    val vm = MainVM()
     private fun testMethod() {
+        val vm = MainVM()
 
     }
 

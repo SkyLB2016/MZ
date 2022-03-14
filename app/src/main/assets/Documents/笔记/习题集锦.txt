@@ -1,0 +1,208 @@
+Android 题录
+
+●01.IntentService和Service有什么区别？
+1）Service不是独立的线程，他也是依赖于应用程序的主线程，可以说是没有界面的activity，所以不建议在service中编写耗时的逻辑和操作，否则会ANR。
+2）IntentService是Service的子类，
+1、可用于执行后台耗时的任务，任务执行后会自动停止。
+2、具有高优先级，适合高优先级的后台任务，且不容易被系统杀死。
+3、可以多次启动，每个耗时操作都会以工作队列的方式在IntentService的onHandleIntent回调方法中执行。
+3）IntentService 在执行 onCreate 操作的时候，内部开了一个线程，去执行耗时操作。通过Handler Looper Message的方式实现了一个多线程的操作，同时耗时操作也可以被这个线程管理和执行，不会产生ANR。
+
+●02.RecyclerView 与 ListView 的区别？
+1）ListView 只能在垂直方向上滑动；
+RecyclerView 支持水平滑动，垂直滑动，多行多列的瀑布流等方式。
+2）ListView 有几个默认的Adapter，如ArrayAdapter，CursorAdapter 和 SimpleCursorAdapter
+RecyclerView：需要自己实现。
+3）ListView 拥有子item的监听函数，AdapterView.OnItemClickListener。
+RecyclerView 需要自己实现接口，来实现点击事件，麻烦但扩展性好。
+4）ListView 并不强制用ViewHolder，如果要使用，需要自己定义。不使用每次 findViewById 的话，会降低性能，造成卡顿等。
+RecyclerView 有自己的ViewHolder，必须使用。
+5）ListView 两级缓存
+1、mActiveViews 用于屏幕内ItemView快速重用
+2、mScrapViews 用于缓存离开屏幕的ItemView
+
+RecyclerView 四级缓存：
+1、mChangeScrap 与 mAttachedScrap 用于屏幕内 ItemView 快速重用。
+2、mCachedViews 默认上限为2，即缓存屏幕外2个ItemView
+3、mViewCacheExtension 用户自定义缓存，一般不使用，我没用过。
+4、mRecyclerPool:RecycledViewPool 从缓存中被移除后的缓存池，默认上限是5。
+
+6）缓存对象不同：ListView 缓存的是 View 本身；
+RecyclerView 缓存的是 ViewHolder。
+7）ListView 具有 setEmptyView、addHeaderView、addFooterView。
+RecyclerView 支持局部刷新
+
+●03.RecyclerView 嵌套卡顿如何解决？
+1）设置预加载的数量LinearLayoutManager.setInitialPrefetchItemCount(4)，默认加载是2个。
+2）设置子项缓存，设置自带滑动冲突属性setHasFixedSize(true);setNestedScorollingEnabled(false);可以完美解决。
+3）不过Google不推荐RecyclerView嵌套使用，需要嵌套尽量找类似于ExpandableListview第三方控件来解决。
+
+●04.为什么要使用 ViewHolder？
+ListView 的是把 ViewHolder 缓存在 View 的 tag 中，RecyclerView 是把 View 缓存在 ViewHolder 中。
+ViewHolder 中缓存了 view 的数据，不用多次 findViewById。效率更高。
+
+●05.匿名内部类里使用的形参为什么是final？
+匿名内部类虽然没有名称，但也是一个类 class，所以内部类的局部变量持有的引用变了，外部类的变量不会改变，同理使用过程中外部类的改变了，内部类的也不会改变，为了避免引用值发生改变，加上final，让变量不可变。
+
+●06.java 中 equals 与 == 的区别
+1）基本数据类型 == 比较的是值，非基本类型比较的是内存地址
+2）Object默认 equals 比较的是 是否指向为同一对象，是内存地址的比较。
+String 中重写了此方法，先比较是否是同一对象，然后比较长度，最后是循环比较 char 字符。
+
+●07.减少OOM的概率
+1）尽可能少的发生内存泄漏
+2）尽可能不在循环中申请内存。
+3）尽可能不在调用次数多的函数中申请内存。
+
+●08.handler机制与RaJava有什么区别：相同都是为了线程间通信
+1）Rxjava线程切换更方便，可以直接切换子线程和UI线程，handler需要在子线程中发送消息，在主线程中去接收消息，才能改变UI。
+2）RxJava是观察者模式，Handler消息队列用的是双向链表，类似于linkedList，是责任链模式。
+
+●09.广播有几种创建方式，有什么区别？
+两种，动态注册和静态注册（8.0以后不能静态注册广播，官方说法是为了省电）；区别：
+1）动态注册的广播永远要快于静态注册的广播，不管静态注册的优先级设置的多高，不管动态注册的优先级有多低。也就是和设置优先级无关，动态就是比静态快。
+2）动态注册广播不是常住性广播，也就是说广播跟随activity的生命周期。注意：activity调用ondestory，移除广播接收器。静态注册是常驻型，不能自动销毁，应用程序关闭后，如有信息广播来，程序也会被系统调用自动运行。
+3）在同一个优先级下，谁先启动，谁将先接收到广播。
+
+●10.Java/Android的数据存储方式有哪些
+1）Shardpreferences（适合轻量级数据存储，采用xml键值对的形式存储到本地，只能用于一个app内）
+2）文本文件存储（序列化与反序列化）
+3）SQLite数据库存储
+4）ContentProvider
+5）网络存储
+
+●11.服务的启动方式和对应的生命周期以及区别
+1）startService（onCreate-（onStart已舍弃）-onStartCommand-onDestory）
+服务与启动者没有必然的联系，启动者销毁，服务也可以存在；只有主动调用StopService方法才能停止。
+2）bindService（onCreate-onBind-onUnbind-onDestory）
+服务与启动者相互关联，启动者销毁，服务也跟着销毁；
+3）startService之后再bindService这样避免宿主死亡之后service跟着被销毁。
+
+●12.activity与Fragment之间的通信方式
+1）接口（常用）
+2）EventBus（观察者模式）（常用）
+3）Handler（偶尔）
+4）广播broadcast（基本不用）
+
+●13.线程间通信有哪些方式
+1）接口
+2）handler
+3）观察者模式（EventBus，RxJava也可以实现）
+4）AsyncTask
+5）广播BroadCast
+6）SharedPreferences
+
+●14.进程间通信有哪些方式
+1）intent，拨打电话，发短信等。
+2）ContentProvider，多个App共享数据
+3）AIDL（Android Interface Define Language）服务，客户端定义接口暴露给服务端使用
+4）BroadCast
+5）Socket
+
+●15.描述一下 ANR 错误，哪些情况会发生，如何避免？
+Activity内事件在5s后依然无响应，broadcastreceiver 10s内无法回应，service 20s内无法处理完成都会导致应用无响应。（在主线程做好事操作都会导致ANR）
+避免：
+1）不要在主线程做耗时操作（数据库查询，网络操作，大量数据存储，图片的切割等）。
+2）不要再广播内做耗时操作，如果非要，那么请通过service新启线程来进行耗时操作。
+
+●16.横竖屏切换activity的生命周期
+1）不设置manifest里设置Android:configChanges，会调用onSaveInstanceState（一般会在stop之后）和onRestoreInstanceState；执行顺序
+onpause-onstop-（onSaveInstanceState）-ondestory-onCreate-onStart-onRestoreInstanceState-onresume
+2）设置manifest里设置android:configChanges="orientation"，不会调用生命周期，只会执行onConfigurationChanged方法。
+configchanges一般常用三个选项：
+locale：系统语言变化
+keyboardHidden：键盘的可访问性发生了变化
+orientation：屏幕方向变化
+
+●17.调用系统界面时，怎么保存当前activity的状态？
+为了防止调用系统界面时，当前activity被回收，需要覆写onSaveInstanceState，保存当前的状态变量值。
+
+●18.view、activity、window三者之间的关系
+一个 Activity 包含一个 Window，也就是一个 PhoneWindow，一个 PhoneWindow 持有一个 DecorView 的实例，DecorView 本身继承 FrameLayout。
+
+●19.onMeasure，onLayout，onDraw，在什么时候执行。
+1）在 onCreate 方法中初始化 View 的时候，调用了 View 的 onFinishInflate。
+2）在执行完 onResume 之后才开始了 View 的绘制工作，onMeasure -> onSizeChanged -> onLayout -> onDraw。
+3）onMeasure、onSizeChanged、onLayout、onDraw可能由于 setVisible 或 onResume 调用多次，而 onAttachedToWindow 与 onDetachedFromWindow 在创建与销毁 View 的过程中只会调用一次。
+
+●20.View 的绘制流程
+从 ViewRoot 的 performTraversals 方法开始依次调用 performMeasure、performLayout 和 performDraw 这三个方法。
+这三个方法分别完成顶级View的measure、layout和draw三大流程，其中performMeasure会调用measure，measure又会调用onMeasure，在onMeasure中则会对所有子元素进行measure（测量），这个时候measure流程就从父容器传递到子元素中了，这样就完成了一次measure过程，接着子元素会重复父容器的measure，如此反复就完成了整个View树的遍历。
+同理，performLayout和perforDraw也分别完成performMeasure类似的流程。通过这三大流程，分别遍历整颗View树，就实现了Measure，Layout，Draw这一过程，view就绘制出来了。
+
+●21.invalidate 、postInvalidate 与 requestLayout 的区别？
+1）View不停向上找parent，可以一直找到DecorView，按理说DecorView是顶点了，但是DecorView还有个虚拟父View，ViewRootImpl。ViewRootImpl不是一个View或者ViewGroup，他有个成员View是DecorView，所有的操作从ViewRootImpl开始自上而下分发。
+2）View的invalidate不会导致ViewRootImplement的invalidate被调用，而是递归调用父View的invalidateChildInparent，直到ViewRootImpl的invalidateChildInParent，然后触发performTraversals，会导致当前View被重绘，由于mLayoutRequested为false，不会导致onMeasure和onLayout被调用，而onDraw会被调用。
+3）一个View的invalidate会导致本身PFLAG_INVALIDATED的值变为1，导致本身以及父族ViewGroup的PFLAG_DRAWING_CACHE_VALID变成0.
+4）requestLayout会直接递归调用父窗口的requestLayout，直到ViewRootImpl，然后触发perforTraversals，由于mLayoutRequested为true，会导致onMeasure和onLayout被调用，不一定会触发onDraw。
+5）requestLayout触发onDraw应该是在layout过程中发现l,t,r,b和以前不一样，那就触发一次invalidate，所以出发了onDraw，也可能是因为别的原因导致mDirty非空（比如在跑动画）
+6）requestLayout会导致自己以及父族View的PFLAG_FORCE_LAYOUT和FLAG_INVALIDATED标志被设置。
+
+7）invalidate是在UI线程自身中使用，要在异步线程中使用需要通过handler等消息通知UI主线程，在UI主线程中调用invalidate。
+8）postInvalidate主要是在非UI主线程中使用，刷新主线程UI；当然主线程作为一个线程，用也没有毛病。
+
+9）一般来说，主线程中刷新调用invalidate，异步使用postInvalidate；需要重新测量measure就调用requestLayout，为保证重绘就跟着调用个invalidate。
+需要注意的是，view调用invalidate只会重绘自身，ViewGroup调用invalidate则会调用整颗view树。
+
+●22.try...catch...finally，如果 try 里有return，finally还执行吗？
+答：必须执行，而且会顶掉 try 里的 return 返回值。
+
+●23.重写 override 和重载overload 含义的区别
+1）override 是重写父类的函数，可以用super继承原有的方法结构，并重写属于自己的代码
+2）overload 是函数重载，根据传入参数的个数，类型不同来区分。dart语言不支持重载，需要不同的名称。
+
+●24.static 修饰的静态类与非静态的区别？
+1）静态内部类不能有指向外部类的引用，非静态内部类可以持有对外部类的引用。
+2）非静态内部类能够访问外部类的静态和非静态成员；静态类不能访问外部类的非静态成员，他只能访问外部类的静态成员。
+3）单例模式可以用静态内部类的方式来实现。
+4）静态内部类的加载不需要依附外部类，在使用时才加载，不过在加载静态内部类的过程中也会加载外部类。
+
+●25.线程同步的方法：synchronized、lock、reentrantLock等
+1）Lock.lock()加锁，lock.unlock()释放锁
+2）reentrantLock，可重入锁。
+3）synchronized只有单一条件，不能设置加锁时间等，也不能设置多个锁。
+
+●26.内存泄漏场景
+1）handler内存泄漏：由于消息可以延时处理，所以在退出页面时，移除消息队列中的消息。还可以使用静态的handler，外部类引用使用弱引用处理
+2）异步线程中的匿名内部类持有外部引用，导致外部类无法回收，知道耗时任务结束，所以应在退出页面时结束线程任务。
+3）context导致的泄漏，酌情使用activityContext还是application的Context。
+4）资源对象未关闭导致的，
+如Cursor，file等，内部基本都使用了缓冲，要确保关闭，最好再置为null，也就是释放强引用。
+5）bitmap导致的内存泄漏，bitmap比较占内存，需要及时释放，尤其是在处理大量图片时，可以结合软引用使用。
+6）register的监听服务，也需要手动的unregister。
+7）webview导致的内存泄漏？用的太少，不懂。
+8）静态view导致的泄漏？不懂
+9）非静态内部类的静态实例；
+非静态内部类会持有外部类的引用，如果非静态内部类的实例是静态的，就会长期维持着外部类的引用阻止被系统回收，解决办法是使用静态内部类。
+
+●27.如何避免OOM?
+1）Bitmap优化，四个方面
+一、尺寸压缩：inSampleSize，默认是1，只支持整数，例如等于4，则宽高同时缩小到原来的1/4；、
+二、颜色尺寸：合适的format：ALPHA_8/RGB_545/ARGB_8888，还有一个ARGB_4444,已不建议使用。
+三、inJustDecodeBounds：为true时只解析宽高不加载到内存中。
+四、inBitmap：使用inBitmap属性可以告知Bitmap解码器去尝试使用已经存在的内存区域，新解码的Bitmap会尝试去使用之前那张Bitmap在heap中所占据的pixel data内存区域，而不是去内存中重新申请一块区域来存放Bitmap。
+利用这种特性，即使是上千张的图片，也只会仅仅只需要占用屏幕所能够显示的图片数量的内存大小，但是复用存在一些限制，具体体现在：
+Android4.4之前只能重用相同大小的bitmap的内存，而4.4及以后版本则只要后来的Bitmap比之前的小即可使用。
+使用inBitmap参数前，每创建一个Bitmap对象都会分配一块内存供其使用，而使用了inBitmap参数后，多个Bitmap可以服用一块内存，这样可以提高性能。
+2）使用StringBuilder替代String，来进行大量的字符串拼接；
+3）使用枚举ArrayMap/SparseArray替代HashMap；HashMap更好内存，因为他需要额外的实例对象来记录Mapping操作，SparseArray更加高效，因为它避免了Key Value的自动装箱，和装箱后的解箱操作。
+5）避免在类似onDraw这样的方法中创建对象，因为这种方法调用的次数多。
+6）减少内存泄漏
+
+●28.v3签名key和v2还有v1有什么区别
+答：在v1版本的签名中，签名以文件的形式存在于apk包中，这个版本的apk包就是一个标准的zip包，V2和V1的差别是V2是对整个zip包进行签名，而且在zip包中增加了一个apk signature block，里面保存签名信息。
+v2版本签名块（APK Signing Block）本身又主要分成三部分:
+SignerData（签名者数据）：主要包括签名者的证书，整个APK完整性校验hash，以及一些必要信息
+Signature（签名）：开发者对SignerData部分数据的签名数据
+PublicKey（公钥）：用于验签的公钥数据
+v3版本签名块也分成同样的三部分，与v2不同的是在SignerData部分，v3新增了attr块，其中是由更小的level块组成。每个level块中可以存储一个证书信息。前一个level块证书验证下一个level证书，以此类推。最后一个level块的证书，要符合SignerData中本身的证书，即用来签名整个APK的公钥所属于的证书
+
+●29.isAssignableFrom 与 instanceof 的区别
+isAssignableFrom是用来判断一个类Class1和另一个类Class2是否相同或是另一个类的超类或接口。
+instanceof是用来判断一个对象实例是否是一个类或接口的或其子类子接口的实例。
+
+●30.Retrofit 封装的流程
+首先我们通过我们 create 出来的 retrofit 实例来调用接口方法。所有的 interface 方法都会在 java 动态代理机制的作用下，调用一个匿名类 new InvocationHandler 中的 invoke。在 invoke 中，会根据我们想调用的方法 method 构造出一个 serviceMethod，然后调用 serviceMethod.callAdapter.adapt(okHttpCall) 作为返回结果。
+构造 serviceMethod 的时候，会根据 interface 中 method 的的返回类型，构造出 converter 和 callAdapter。其中， converter 一般使用 gson converter。gson converter 可以自动将服务器返回的 json 数据转化成 java 中的 model 类的实例。callAdapter 绝大多数的实现方式是在构造函数中接收一个 okHttpCall 实例，然后将 enqueue 和 execute 委托给这个 okHttpCall 实例来执行。okHttpCall 在获取到服务器数据之后，会利用 serviceMethod.toResponse(body) 来对数据进行转化。其中，转化的时候便利用了 converter。数据转化完成后，封装成 Response<R> ，传递给调用方。其中 R 就是我们的数据类。
+
+●31.RecyclerView的缓存机制？

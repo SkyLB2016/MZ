@@ -10,6 +10,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewbinding.ViewBinding;
 
+import com.sky.common.utils.SPUtils;
 import com.sky.common.utils.ToastUtils;
 import com.sky.ui.api.IMVPView;
 import com.sky.ui.api.IView;
@@ -33,6 +34,13 @@ public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActiv
 
     protected abstract V getBinding();
 
+
+    public void showNavigationIcon(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//就这一个也起作用，需要与 onOptionsItemSelected 配合使用
+        getSupportActionBar().setHomeButtonEnabled(true);//必须与搭配第一个使用，不用这个，也行，目前没发现他的作用
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);//没啥用
+    }
+
     @Override
     public void setCenterTitle(TextView tv, @NonNull String title) {
 
@@ -46,6 +54,16 @@ public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActiv
     @Override
     public void showToast(@NonNull String text) {
         ToastUtils.showLong(this, text);
+    }
+
+    @Override
+    public <T> T getObject(String text, T value) {
+        return (T) SPUtils.getInstance().get(text, value);
+    }
+
+    @Override
+    public <T> void setObject(String text, T value) {
+        SPUtils.getInstance().put(text, value);
     }
 
     @Override

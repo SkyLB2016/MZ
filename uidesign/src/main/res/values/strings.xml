@@ -2,7 +2,7 @@
     <string name="sure">确认</string>
     <string name="cancel">取消</string>
     <string name="complete">完成</string>
-    <string name="toast_isinternet">您的网络未连接</string>
+    <string name="toast_is_net">您的网络未连接</string>
     <string name="toast_exit">再按一次返回键回到桌面</string>
     <string name="toast_no_data">暂无数据</string>
     <string name="toast_max_text">您输入的字数已达到了限制的最大字数</string>

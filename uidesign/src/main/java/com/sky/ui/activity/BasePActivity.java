@@ -3,10 +3,13 @@ package com.sky.ui.activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.sky.common.utils.ToastUtils;
 import com.sky.ui.api.IMVPView;
 import com.sky.ui.presenter.BasePresenter;
 import com.sky.ui.widget.DialogLoading;
@@ -18,25 +21,25 @@ import com.sky.ui.widget.DialogLoading;
  * @Version: 1.0
  */
 public abstract class BasePActivity<P extends BasePresenter> extends AppCompatActivity implements IMVPView {
-    protected P p;
-
+    protected P presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        if (p == null) p = createP();
+        if (presenter == null) presenter = creatPresenter();
+        initialize(savedInstanceState);//需要初始化的成员变量
+        presenter.onCreate(savedInstanceState);//请求数据
     }
 
-    protected abstract P createP();
 
+    /**
+     * 获取布局的resId
+     */
+    @CheckResult
     protected abstract int getLayoutId();
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        p.recycle();
-    }
+    protected abstract P creatPresenter();
 
     @Override
     public void setCenterTitle(@NonNull String title) {
@@ -48,14 +51,16 @@ public abstract class BasePActivity<P extends BasePresenter> extends AppCompatAc
 
     }
 
+    protected abstract void initialize(@Nullable Bundle savedInstanceState);
+
     @Override
-    public void showToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
+    public void showToast(@StringRes int resId) {
+        ToastUtils.showShort(this, resId);
     }
 
     @Override
-    public void showToast(@NonNull String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    public void showToast(String text) {
+        ToastUtils.showShort(this, text);
     }
 
     @Override
@@ -67,4 +72,35 @@ public abstract class BasePActivity<P extends BasePresenter> extends AppCompatAc
     public void disLoading() {
         DialogLoading.disDialog();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
+
 }

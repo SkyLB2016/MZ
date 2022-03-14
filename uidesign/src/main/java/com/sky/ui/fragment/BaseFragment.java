@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
+import com.sky.common.utils.SPUtils;
 import com.sky.common.utils.ToastUtils;
 import com.sky.ui.api.IView;
 import com.sky.ui.widget.DialogLoading;
@@ -58,6 +59,16 @@ public abstract class BaseFragment<V extends ViewBinding> extends Fragment imple
     @Override
     public void showToast(@NonNull String text) {
         ToastUtils.showLong(activity, text);
+    }
+
+    @Override
+    public <T> T getObject(String text, T value) {
+        return (T) SPUtils.getInstance().get(text, value);
+    }
+
+    @Override
+    public <T> void setObject(String text, T value) {
+        SPUtils.getInstance().put(text, value);
     }
 
     @Override
