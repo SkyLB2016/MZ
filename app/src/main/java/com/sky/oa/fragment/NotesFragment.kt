@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.google.android.material.tabs.TabLayout
 import com.sky.oa.adapter.NotesFragmentAdapter
 import com.sky.oa.databinding.FragmentNotesBinding
@@ -51,16 +50,18 @@ class NotesFragment : MVVMFragment<FragmentNotesBinding, NotesVM>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tabs.tabMode = TabLayout.MODE_SCROLLABLE
+        binding.tabs.setupWithViewPager(binding.viewPager)
+
         adapter = NotesFragmentAdapter(childFragmentManager)
         binding.viewPager.adapter = adapter
-        binding.tabs.setupWithViewPager(binding.viewPager)
+
         showLoading()
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
-                viewModel.getPoetries(requireContext().assets, "Documents/笔记")
+                viewModel.getNotesList(requireContext().assets, "Documents/笔记")
             }
         }
-        viewModel.datas.observe(viewLifecycleOwner, Observer {
+        viewModel.notesListData.observe(viewLifecycleOwner, Observer {
             adapter.maps = it
             disLoading()
         })

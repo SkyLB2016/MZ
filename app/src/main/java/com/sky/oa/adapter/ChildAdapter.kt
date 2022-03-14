@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sky.oa.R
 import com.sky.oa.activity.PoetryActivity
-import com.sky.oa.databinding.AdapterNotechildBinding
+import com.sky.oa.databinding.AdapterNoteitemBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.ui.adapter.MvvmViewHolder
 
@@ -23,7 +23,7 @@ class ChildAdapter : RecyclerView.Adapter<MvvmViewHolder>() {
         R.string.font07,
         R.string.font08
     )
-    private lateinit var viewBinding: AdapterNotechildBinding
+    private lateinit var viewBinding: AdapterNoteitemBinding
     private lateinit var context: Context
 
     var poetries: MutableList<PoetryEntity> = mutableListOf()
@@ -34,7 +34,7 @@ class ChildAdapter : RecyclerView.Adapter<MvvmViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmViewHolder {
         context = parent.context
-        viewBinding = AdapterNotechildBinding.inflate(LayoutInflater.from(context))
+        viewBinding = AdapterNoteitemBinding.inflate(LayoutInflater.from(context))
         return MvvmViewHolder(viewBinding.root)
     }
 

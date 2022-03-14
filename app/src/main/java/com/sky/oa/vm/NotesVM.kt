@@ -6,8 +6,8 @@ import com.sky.oa.repository.NotesRepository
 import com.sky.ui.viewmodel.BaseVM
 
 class NotesVM(val repository: NotesRepository) : BaseVM() {
-    val datas = Transformations.map(repository.notes) { it }
-    fun getPoetries(assets: AssetManager, directory: String) {
+    val notesListData = Transformations.map(repository.notes) { it }
+    fun getNotesList(assets: AssetManager, directory: String) {
         repository.getPoetries(assets, directory)
     }
 }

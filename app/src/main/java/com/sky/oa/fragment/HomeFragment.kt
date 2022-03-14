@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sky.common.utils.LogUtils
 import com.sky.oa.databinding.FragmentHomeBinding
+import com.sky.oa.entity.PoetryEntity
 import com.sky.ui.fragment.BaseFragment
 
 /**
@@ -21,5 +23,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tv.text = "示例页面"
+        PoetryEntity(
+            "测试名称", ".txt",
+            "dir/fileName",
+            "父级目录",
+            10000
+        ).also {
+            LogUtils.i("name==${it.name}")
+        }
     }
 }
