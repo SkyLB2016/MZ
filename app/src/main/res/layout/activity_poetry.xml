@@ -35,9 +35,10 @@
             android:layout_weight="1"
             android:background="@drawable/shape_ffc107"
             android:gravity="center"
-            android:onClick="@{poetry::upToChapter}"
             android:text="上一章"
             android:textSize="@dimen/text_18" />
+        <!--databinding下使用的数据绑定-->
+        <!--android:onClick="@{poetry::upToChapter}"-->
 
         <Button
             android:id="@+id/tvCatalog"
@@ -48,9 +49,10 @@
             android:layout_weight="1"
             android:background="@drawable/shape_ffc107"
             android:gravity="center"
-            android:onClick="@{poetry::showCatalogPop}"
             android:text="目录"
             android:textSize="@dimen/text_18" />
+        <!--databinding下使用的数据绑定-->
+        <!--android:onClick="@{poetry::showCatalogPop}"-->
 
         <Button
             android:id="@+id/tvNext"
@@ -59,9 +61,10 @@
             android:layout_weight="1"
             android:background="@drawable/shape_ffc107"
             android:gravity="center"
-            android:onClick="@{poetry::nextChapter}"
             android:text="下一章"
             android:textSize="@dimen/text_18" />
+        <!--databinding下使用的数据绑定-->
+        <!--android:onClick="@{poetry::nextChapter}"-->
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
