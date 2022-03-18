@@ -23,5 +23,7 @@
     <color name="color_alpha">#ff000000</color>
     <color name="green">#00ae21</color>
     <color name="color_CB03810F">#CB03810F</color>
+    <color name="yellow">#FFD000</color>
+    <color name="color_3599f4">#3599F4</color>
 
 </resources>

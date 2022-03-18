@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.sky.common.utils.LogUtils
 import com.sky.oa.databinding.FragmentHomeBinding
 import com.sky.oa.databinding.FragmentMyBinding
+import com.sky.oa.entity.PoetryEntity
 import com.sky.ui.fragment.BaseFragment
 
 /**
@@ -43,6 +44,15 @@ class MyFragment : BaseFragment<FragmentMyBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogUtils.i(javaClass.simpleName + id + Thread.currentThread().stackTrace[2].methodName)
+        PoetryEntity(
+            "测试名称", ".txt",
+            "dir/fileName",
+            "父级目录",
+            10000
+        ).also {
+            LogUtils.i("name==${it.name}")
+            binding.tv.text = it.name
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

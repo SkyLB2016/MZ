@@ -8,6 +8,4 @@
         android:color="@color/green"
         android:dashWidth="@dimen/wh_8"
         android:dashGap="@dimen/wh_2" />
-
-
 </shape>

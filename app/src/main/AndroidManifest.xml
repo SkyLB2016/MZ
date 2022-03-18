@@ -20,6 +20,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.PoetryActivity" />
+        <activity
+            android:name="com.sky.oa.activity.MethodTestActivity"
+            android:description="@string/act_method_d"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_method"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

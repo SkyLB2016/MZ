@@ -9,9 +9,9 @@ import com.sky.oa.R
 import com.sky.oa.activity.PoetryActivity
 import com.sky.oa.databinding.AdapterNoteitemBinding
 import com.sky.oa.entity.PoetryEntity
-import com.sky.ui.adapter.MvvmViewHolder
+import com.sky.ui.adapter.MvvmHolder
 
-class ChildAdapter : RecyclerView.Adapter<MvvmViewHolder>() {
+class ChildAdapter : RecyclerView.Adapter<MvvmHolder>() {
     private val fontIcon = intArrayOf(
         R.string.font,
         R.string.font01,
@@ -32,13 +32,14 @@ class ChildAdapter : RecyclerView.Adapter<MvvmViewHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder {
         context = parent.context
         viewBinding = AdapterNoteitemBinding.inflate(LayoutInflater.from(context))
-        return MvvmViewHolder(viewBinding.root)
+//        return MvvmViewHolder(viewBinding.root)
+        return MvvmHolder(viewBinding.root)
     }
 
-    override fun onBindViewHolder(holder: MvvmViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MvvmHolder, position: Int) {
         viewBinding.tvName.text = poetries[position]?.name
         val face = Typeface.createFromAsset(
             context.assets,

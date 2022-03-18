@@ -5,7 +5,7 @@
     <gradient
         android:endColor="@color/black"
         android:startColor="@color/color_FFC107" />
-    <solid android:color="@color/color_FFC107" />
+<!--    <solid android:color="@color/color_FFC107" />-->
     <stroke
         android:width="@dimen/wh_2"
         android:color="@color/green"

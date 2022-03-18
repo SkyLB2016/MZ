@@ -10,12 +10,12 @@ import java.io.Serializable
  * @Version: 1.0
  */
 data class PoetryEntity(
-    val name: String,
-    val format: String = ".txt",
-    val path: String,
-    val parentDir: String,
-    val total: Int = 0
-) : Serializable
+    var name: String = "",
+    var format: String = ".txt",
+    var path: String = "",
+    var parentDir: String = "",
+    var total: Int = 0
+) : Serializable, Cloneable
 //data class PoetryEntity(
 //    val name: String,
 //    val format: String = ".txt",
