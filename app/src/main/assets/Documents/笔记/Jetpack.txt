@@ -276,7 +276,9 @@ FragmentNotesBinding binding = FragmentNotesBinding.inflate(inflater, container,
 return binding.getRoot();
 
 3）Adapter 中绑定
-AdapterItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+return MvvmHolder(AdapterItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+return MvvmHolder(AdapterItemBinding.inflate(LayoutInflater.from(parent.context)))
+class MvvmHolder<V : ViewBinding>(val binding: V) : RecyclerView.ViewHolder(binding.root)
 
 4）Dialog 中使用
 val binding = DialogXXXBinding.inflate(layoutInflater)
