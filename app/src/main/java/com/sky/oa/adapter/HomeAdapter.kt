@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.LayoutAnimationController
 import android.view.animation.ScaleAnimation
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.sky.oa.R
 import com.sky.oa.databinding.AdapterHomeBinding
 import com.sky.oa.entity.ActivityEntity
@@ -36,7 +37,11 @@ class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>() {
     override fun getBinding(context: Context?, parent: ViewGroup) =
         AdapterHomeBinding.inflate(LayoutInflater.from(context), parent, false)
 
-    override fun onAchieveHolder(holder: MvvmHolder?, position: Int) {
+    override fun onAchieveHolder(
+        holder: MvvmHolder<AdapterHomeBinding>,
+        binding: AdapterHomeBinding,
+        position: Int
+    ) {
         val scale = ScaleAnimation(0f, 1f, 0f, 1f)
         scale.duration = 1001
         //字体，icomoon

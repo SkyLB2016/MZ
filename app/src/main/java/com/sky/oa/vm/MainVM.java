@@ -1,8 +1,11 @@
 package com.sky.oa.vm;
 
 import android.content.Context;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.RequiresPermission;
 import androidx.lifecycle.ViewModel;
 
 import com.sky.common.utils.FileUtils;
@@ -23,7 +26,7 @@ import java.util.List;
  * @Version: 1.0
  */
 public class MainVM extends ViewModel {
-    public void onFabClick(View v) {
+    public void TestMethod(View v) {
         LogUtils.i("onbackpress==");
         //        new InterAA().getA();
 
@@ -73,6 +76,22 @@ public class MainVM extends ViewModel {
 //        collectionsTest();
 //        stringTest();
 //        hashCollision();
+    }
+
+    @RequiresPermission(value = "android.permission.READ_PRIVILEGED_PHONE_STATE")
+    public String getDeviceId(Context context) {
+        String deviceId;
+        try {
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            deviceId = tm.getDeviceId();
+        } catch (Exception ignore) {
+            deviceId = "";
+        }
+        LogUtils.i("deviceId==" + deviceId);
+        if (TextUtils.isEmpty(deviceId)) {
+//            deviceId = getUDID();
+        }
+        return deviceId;
     }
 
     private void mathTest() {

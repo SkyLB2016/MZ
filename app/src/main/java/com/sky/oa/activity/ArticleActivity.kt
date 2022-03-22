@@ -19,22 +19,21 @@ import com.sky.oa.databinding.ActivityPoetryBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.ArtivleVM
-import com.sky.oa.vm.NotesVM
 import com.sky.ui.activity.MVVMActivity
-import com.sky.xs.adapter.PoetryAdapter
+import com.sky.oa.adapter.ArticleAdapter
 
 /**
  * Created by libin on 2020/05/13 2:33 PM Wednesday.
  */
-class PoetryActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
-    lateinit var adapter: PoetryAdapter
+class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
+    lateinit var adapter: ArticleAdapter
     lateinit var poetry: PoetryEntity
 
     companion object {
         const val KEY = "poetry"
 
         fun newInstance(context: Context, poetry: PoetryEntity) {
-            val intent = Intent(context, PoetryActivity::class.java)
+            val intent = Intent(context, ArticleActivity::class.java)
             intent.putExtra(KEY, poetry)
             context.startActivity(intent)
         }
@@ -54,7 +53,7 @@ class PoetryActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         poetry = intent.getSerializableExtra(KEY) as PoetryEntity
         setToolbar(binding!!.appBar.toolbar, poetry.name)
 
-        adapter = PoetryAdapter()
+        adapter = ArticleAdapter()
         binding?.recycler?.layoutManager = LinearLayoutManager(this)
         binding?.recycler?.adapter = adapter
         viewModel?.getChapter(poetry.path)
@@ -94,20 +93,20 @@ class PoetryActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         return super.dispatchTouchEvent(ev)
     }
 
-    fun previousChapter(v: View) {
+    private fun previousChapter(v: View) {
         val layoutManager = binding!!.recycler.layoutManager as LinearLayoutManager
         val position = layoutManager.findFirstVisibleItemPosition()
         binding!!.recycler.scrollToPosition(position - 1)
     }
 
-    fun nextChapter(v: View) {
+    private fun nextChapter(v: View) {
         val layoutManager = binding!!.recycler.layoutManager as LinearLayoutManager
         val position = layoutManager.findFirstVisibleItemPosition()
         layoutManager.scrollToPositionWithOffset(position + 1, 0)
         layoutManager.stackFromEnd = true
     }
 
-    fun showCatalogPop(v: View) {
+    private fun showCatalogPop(v: View) {
         val floderPop = CatalogPop(
             LayoutInflater.from(this).inflate(R.layout.include_recycler, null),
             ScreenUtils.getWidthPX(this), (ScreenUtils.getHeightPX(this) * 0.7).toInt()

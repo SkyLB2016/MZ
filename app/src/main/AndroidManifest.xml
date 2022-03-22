@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sky.oa">
 
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PoetryActivity" />
+        <activity android:name=".activity.ArticleActivity" />
         <activity
             android:name="com.sky.oa.activity.MethodTestActivity"
             android:description="@string/act_method_d"

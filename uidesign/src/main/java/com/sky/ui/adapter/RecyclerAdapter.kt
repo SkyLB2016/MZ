@@ -13,9 +13,9 @@ import androidx.viewbinding.ViewBinding
  * Created by SKY on 16/5/10 下午3:50.
  * RecyclerView的万能适配器
  */
-abstract class RecyclerAdapter<V, T> : RecyclerView.Adapter<MvvmHolder>() where V : ViewBinding {
+abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHolder<V>>() {
     var context: Context? = null
-    lateinit var binding: V
+//    lateinit var binding: V
 
     //    var binding: V? = null
     var datas: MutableList<T>? = null
@@ -76,17 +76,16 @@ abstract class RecyclerAdapter<V, T> : RecyclerView.Adapter<MvvmHolder>() where 
         return datas?.size ?: 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder<V> {
         context = parent.context
-        binding = getBinding(context, parent)
-        return MvvmHolder(binding!!.root)
+        return MvvmHolder(getBinding(context, parent))
     }
 
     abstract fun getBinding(context: Context?, parent: ViewGroup): V
 
 
-    override fun onBindViewHolder(holder: MvvmHolder, position: Int) {
-        onAchieveHolder(holder, position)
+    override fun onBindViewHolder(holder: MvvmHolder<V>, position: Int) {
+        onAchieveHolder(holder, holder.binding, position)
         holder.itemView.setOnLongClickListener {
             return@setOnLongClickListener itemLongClickListener?.invoke(it, holder.layoutPosition)
                 ?: false
@@ -102,7 +101,11 @@ abstract class RecyclerAdapter<V, T> : RecyclerView.Adapter<MvvmHolder>() where 
      * @param holder   holder
      * @param position 位置
      */
-    protected abstract fun onAchieveHolder(holder: MvvmHolder?, position: Int)
+    protected abstract fun onAchieveHolder(
+        holder: MvvmHolder<V>,
+        binding: V,
+        position: Int
+    )
 
     companion object {
         protected const val LASTITEM = -1

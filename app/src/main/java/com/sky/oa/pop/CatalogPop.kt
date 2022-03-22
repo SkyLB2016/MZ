@@ -7,7 +7,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sky.oa.R
 import com.sky.oa.entity.ChapterEntity
 import com.sky.ui.widget.BasePop
-import com.sky.xs.pop.CatalogAdapter
+import com.sky.oa.adapter.CatalogAdapter
 
 /**
  * Created by SKY on 2016/1/11 13:14.

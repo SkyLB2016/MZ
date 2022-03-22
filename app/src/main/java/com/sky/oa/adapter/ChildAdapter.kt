@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sky.oa.R
-import com.sky.oa.activity.PoetryActivity
+import com.sky.oa.activity.ArticleActivity
 import com.sky.oa.databinding.AdapterNoteitemBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.ui.adapter.MvvmHolder
 
-class ChildAdapter : RecyclerView.Adapter<MvvmHolder>() {
+class ChildAdapter : RecyclerView.Adapter<MvvmHolder<AdapterNoteitemBinding>>() {
     private val fontIcon = intArrayOf(
         R.string.font,
         R.string.font01,
@@ -23,7 +23,6 @@ class ChildAdapter : RecyclerView.Adapter<MvvmHolder>() {
         R.string.font07,
         R.string.font08
     )
-    private lateinit var viewBinding: AdapterNoteitemBinding
     private lateinit var context: Context
 
     var poetries: MutableList<PoetryEntity> = mutableListOf()
@@ -32,25 +31,24 @@ class ChildAdapter : RecyclerView.Adapter<MvvmHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder<AdapterNoteitemBinding> {
         context = parent.context
-        viewBinding = AdapterNoteitemBinding.inflate(LayoutInflater.from(context))
-//        return MvvmViewHolder(viewBinding.root)
-        return MvvmHolder(viewBinding.root)
+//        return MvvmViewHolder(binding)
+        return MvvmHolder(AdapterNoteitemBinding.inflate(LayoutInflater.from(context)))
     }
 
-    override fun onBindViewHolder(holder: MvvmHolder, position: Int) {
-        viewBinding.tvName.text = poetries[position]?.name
+    override fun onBindViewHolder(holder: MvvmHolder<AdapterNoteitemBinding>, position: Int) {
+        holder.binding.tvName.text = poetries[position]?.name
         val face = Typeface.createFromAsset(
             context.assets,
             "font/icomoon.ttf"
         ) //字体，icomoon对应fonticon
 
-        viewBinding.tvImage.text = context.resources.getString(fontIcon[position % 9])
-        viewBinding.tvImage.typeface = face
-        viewBinding.tvImage.textSize = 50f
-        viewBinding.cardView.setOnClickListener {
-            PoetryActivity.newInstance(context, poetries[position])
+        holder.binding.tvImage.text = context.resources.getString(fontIcon[position % 9])
+        holder.binding.tvImage.typeface = face
+        holder.binding.tvImage.textSize = 50f
+        holder.binding.cardView.setOnClickListener {
+            ArticleActivity.newInstance(context, poetries[position])
         }
     }
 

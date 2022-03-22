@@ -928,8 +928,8 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
     }
 
     private fun getAppInfo() = "当前版本:${AppUtils.getVersionCode(this)};\n" +
-            "当前版本号:${AppUtils.getVersionName(this)};\n" +
-            "当前通道号:${AppUtils.getChannel(this)}"
+            "当前版本号:${AppUtils.getVersionName(this)};\n"
+//    + "当前通道号:${AppUtils.getChannel(this)}"
 
 
     private fun selectAddress() {

@@ -77,6 +77,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun testMethod() {
         val vm = MainVM()
+        vm.getDeviceId(this)
 
     }
 
