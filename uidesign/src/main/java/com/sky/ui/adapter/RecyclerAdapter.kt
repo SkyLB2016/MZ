@@ -1,12 +1,9 @@
 package com.sky.ui.adapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
-import com.sky.ui.adapter.RecyclerAdapter
-import android.view.ViewGroup
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -14,16 +11,14 @@ import androidx.viewbinding.ViewBinding
  * RecyclerView的万能适配器
  */
 abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHolder<V>>() {
-    var context: Context? = null
-//    lateinit var binding: V
+    lateinit var context: Context
 
-    //    var binding: V? = null
-    var datas: MutableList<T>? = null
+    //    var datas: MutableList<ChapterEntity> = arrayListOf()
+    var datas: MutableList<T> = arrayListOf()
         set(value) {
             field = value;
             notifyDataSetChanged()
         }
-
 
     //viewItem的点击事件监听
     //子view的按钮监听
@@ -39,7 +34,7 @@ abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHo
 
     fun clearDatas() {
         if (datas == null) return
-        datas = null
+        datas.clear()
         notifyDataSetChanged()
     }
 
@@ -83,7 +78,6 @@ abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHo
 
     abstract fun getBinding(context: Context?, parent: ViewGroup): V
 
-
     override fun onBindViewHolder(holder: MvvmHolder<V>, position: Int) {
         onAchieveHolder(holder, holder.binding, position)
         holder.itemView.setOnLongClickListener {
@@ -101,11 +95,7 @@ abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHo
      * @param holder   holder
      * @param position 位置
      */
-    protected abstract fun onAchieveHolder(
-        holder: MvvmHolder<V>,
-        binding: V,
-        position: Int
-    )
+    protected abstract fun onAchieveHolder(holder: MvvmHolder<V>, binding: V, position: Int)
 
     companion object {
         protected const val LASTITEM = -1

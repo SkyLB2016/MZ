@@ -1,36 +1,36 @@
 package com.sky.oa.adapter
 
+import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.sky.oa.R
 import com.sky.oa.databinding.ItemTvBinding
 import com.sky.oa.entity.ChapterEntity
 import com.sky.ui.adapter.MvvmHolder
+import com.sky.ui.adapter.RecyclerAdapter
 
 /**
- * Created by libin on 2020/05/14 2:49 PM Thursday.
+ *
+ * @Description: 主页 目录页面 的adapter
+ * @Author: 李彬
+ * @CreateDate: 2022/3/18 5:10 下午
+ * @Version: 1.0
  */
-class CatalogAdapter : RecyclerView.Adapter<MvvmHolder<ItemTvBinding>>() {
-    var datas: MutableList<ChapterEntity> = ArrayList()
-    var itemClick: ((View, Int) -> Unit)? = null
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder<ItemTvBinding> {
-        return MvvmHolder(ItemTvBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-    }
+class CatalogAdapter : RecyclerAdapter<ItemTvBinding, ChapterEntity>() {
+//    var datas: MutableList<ChapterEntity> = ArrayList()
+//    var itemClick: ((View, Int) -> Unit)? = null
 
-    override fun getItemCount(): Int {
-        return if (datas == null) 0 else datas.size
-    }
+    override fun getItemCount() = datas.size
 
-    override fun onBindViewHolder(holder: MvvmHolder<ItemTvBinding>, position: Int) {
-        holder.binding.tv.text = datas[position].chapter
-        holder.binding.tv.setBackgroundResource(R.drawable.shape_ffc107)
-        holder.binding.tv.textSize = 18f
-        holder.binding.tv.gravity = Gravity.LEFT
-        holder.itemView.setOnClickListener {
-            itemClick?.invoke(holder.itemView, position)
-        }
+    override fun getBinding(context: Context?, parent: ViewGroup) =
+        ItemTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+
+    override fun onAchieveHolder(holder: MvvmHolder<ItemTvBinding>, binding: ItemTvBinding, position: Int) {
+        binding.tv.text = datas[position].chapter
+        binding.tv.setBackgroundResource(R.drawable.shape_ffc107)
+        binding.tv.textSize = 18f
+        binding.tv.gravity = Gravity.LEFT
     }
 }

@@ -30,7 +30,7 @@ class CatalogPop(view: View, width: Int, height: Int) : BasePop<ChapterEntity>(v
     }
 
     override fun initEvent() {
-        adapter?.itemClick ={ view, position ->
+        adapter?.onItemClickListener ={ view, position ->
             itemClickListener?.onItemClick(view, position)
             dismiss()
         }

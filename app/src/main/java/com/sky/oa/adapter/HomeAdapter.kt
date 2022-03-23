@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.LayoutAnimationController
 import android.view.animation.ScaleAnimation
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.sky.oa.R
 import com.sky.oa.databinding.AdapterHomeBinding
 import com.sky.oa.entity.ActivityEntity
@@ -16,7 +14,7 @@ import com.sky.ui.adapter.RecyclerAdapter
 
 /**
  *
- * @Description:
+ * @Description: 主页homeFragment 的adapter
  * @Author: 李彬
  * @CreateDate: 2022/3/18 5:10 下午
  * @Version: 1.0
@@ -37,11 +35,7 @@ class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>() {
     override fun getBinding(context: Context?, parent: ViewGroup) =
         AdapterHomeBinding.inflate(LayoutInflater.from(context), parent, false)
 
-    override fun onAchieveHolder(
-        holder: MvvmHolder<AdapterHomeBinding>,
-        binding: AdapterHomeBinding,
-        position: Int
-    ) {
+    override fun onAchieveHolder(holder: MvvmHolder<AdapterHomeBinding>, binding: AdapterHomeBinding, position: Int) {
         val scale = ScaleAnimation(0f, 1f, 0f, 1f)
         scale.duration = 1001
         //字体，icomoon

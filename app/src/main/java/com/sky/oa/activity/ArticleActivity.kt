@@ -59,7 +59,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         viewModel?.getChapter(poetry.path)
 
         viewModel.articleDetail.observe(this, Observer {
-            adapter.chapters = it
+            adapter.datas = it
             adapter.notifyDataSetChanged()
 //            LogUtils.i(it.toString())
         })
@@ -111,7 +111,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
             LayoutInflater.from(this).inflate(R.layout.include_recycler, null),
             ScreenUtils.getWidthPX(this), (ScreenUtils.getHeightPX(this) * 0.7).toInt()
         )
-        floderPop?.datas = adapter?.chapters!!
+        floderPop?.datas = adapter?.datas!!
         floderPop?.setOnItemClickListener { _, position -> moveToChapter(position) }
         floderPop?.showAtLocation(window.decorView, Gravity.CENTER, 0, 0)
     }

@@ -26,23 +26,19 @@ import kotlin.Comparator
  * @Version: 1.0
  */
 class HomeFragment : MVVMFragment<FragmentHomeBinding, HomeVM>() {
-    lateinit var adapter: HomeAdapter
+    //    lateinit var adapter: HomeAdapter
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HomeAdapter()
+        val adapter = HomeAdapter()
         binding.recycler.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recycler.adapter = adapter
 
         adapter.onItemClickListener = { v, p ->
-            JumpAct.jumpActivity(
-                context,
-                adapter.datas?.get(p)!!.componentName
-            )
-
+            JumpAct.jumpActivity(context, adapter.datas?.get(p)!!.componentName)
         }
         viewModel.getActivities(requireContext())
         viewModel.activitiesData.observe(viewLifecycleOwner, {

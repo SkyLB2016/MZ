@@ -11,6 +11,13 @@ import com.sky.oa.databinding.AdapterNoteitemBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.ui.adapter.MvvmHolder
 
+/**
+ *
+ * @Description: 笔记与文章页面嵌套的 childFragment 的adapter
+ * @Author: 李彬
+ * @CreateDate: 2022/3/18 5:10 下午
+ * @Version: 1.0
+ */
 class ChildAdapter : RecyclerView.Adapter<MvvmHolder<AdapterNoteitemBinding>>() {
     private val fontIcon = intArrayOf(
         R.string.font,
@@ -26,10 +33,10 @@ class ChildAdapter : RecyclerView.Adapter<MvvmHolder<AdapterNoteitemBinding>>() 
     private lateinit var context: Context
 
     var poetries: MutableList<PoetryEntity> = mutableListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+//        set(value) {
+//            field = value
+//            notifyDataSetChanged()
+//        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder<AdapterNoteitemBinding> {
         context = parent.context
