@@ -1713,7 +1713,7 @@ UNSPECIFIED，想要多大即多大，所以可以超过屏幕尺寸，显示不
 3）onDraw()（绘制）：绘制 View
 
 自定义 Veiw 需要实现 onMeasure 与 onDraw
-自定义 ViewGroup 需要实现 onMeasure 与 onLayout，还可以自定义 LayoutParams
+自定义 ViewGroup 需要实现 onMeasure 与 onLayout，还可以自定义 LayoutParams，如果继承自 ViewGroup ，需要用到 margin 属性，还需要重写 generateLayoutParams 方法。
 
 02.LayoutParams（布局参数）：width（宽），height（高）
 1）MATCH_PARENT 与 FILL_PARENT 的值为 -1，属于 EXACTLY
