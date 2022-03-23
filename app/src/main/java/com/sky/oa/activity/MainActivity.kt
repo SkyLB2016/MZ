@@ -74,10 +74,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     }
+    val vm = MainVM()
 
     private fun testMethod() {
-        val vm = MainVM()
-        vm.getDeviceId(this)
+        vm.TestMethod(this)
 
     }
 

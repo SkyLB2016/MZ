@@ -26,7 +26,7 @@ import java.util.List;
  * @Version: 1.0
  */
 public class MainVM extends ViewModel {
-    public void TestMethod(View v) {
+    public void TestMethod(Context context) {
         LogUtils.i("onbackpress==");
         //        new InterAA().getA();
 
@@ -76,6 +76,7 @@ public class MainVM extends ViewModel {
 //        collectionsTest();
 //        stringTest();
 //        hashCollision();
+        getDeviceId(context);
     }
 
     @RequiresPermission(value = "android.permission.READ_PRIVILEGED_PHONE_STATE")
