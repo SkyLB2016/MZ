@@ -113,6 +113,8 @@ android:title
 </menu>
 
 bottomNavigationView 设置 setOnItemSelectedListener 事件后，Navigation 引导会失效。
+需要配合  NavigationUI.onNavDestinationSelected(item, controller) 重新设置引导页面
+
 
 4）页面跳转
 1、代码跳转

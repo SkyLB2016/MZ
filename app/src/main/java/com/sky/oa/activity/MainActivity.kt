@@ -16,11 +16,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.appBar.toolbar)
-//        binding.actionBar.tvCenter.setText("标题测试");
-//        binding.actionBar.toolbar.setTitle("标题");
-//        binding.actionBar.toolbar.setSubtitle("副标题");
-//        binding.actionBar.toolbar.setNavigationOnClickListener();
-//        binding.actionBar.toolbar.setOnMenuItemClickListener();
+        title = ""//绑定toolBar后，把左侧的标题置为空
+//        binding.appBar.toolbar.title = "标题"//setSupportActionBar 后此方法失效。
+//        binding.appBar.tvCenter.setText("标题测试");
+//        binding.appBar.toolbar.setSubtitle("副标题");
+//        binding.appBar.toolbar.setNavigationOnClickListener();
+//        binding.appBar.toolbar.setOnMenuItemClickListener();
 
         //显示返回键
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)//只用这一个也行
@@ -28,7 +29,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 //        binding.setActivity(this);//Databinding 的双向绑定
 //        getLifecycle().addObserver(new MyObserver());
-//        new LifecycleRegistry(this);
 
 
         //配置 NavigationBottomBar ；navigation 文件中的 fragment id 要与 menu文件中 item 的 id 相对应，否则无响应。
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         //1、直接使用 bottomBar 设置,kotlin 模式独有
 //        binding.bottomBar.setupWithNavController(controller)
         //2、使用 NavigationUI 配置 bottomBar 与 Fragment
-        NavigationUI.setupWithNavController(binding.bottomBar, controller);
+        NavigationUI.setupWithNavController(binding.bottomBar, controller)
 
 
         //配置 ToolBar 自带的标题，configuration 配置的是 navigation 文件与menu文件共同的id，配置好后相当于同页面切换，没有返回键。
@@ -46,10 +46,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         ).build();
 //        AppBarConfiguration configuration = new AppBarConfiguration.Builder(R.id.nav_home).build();
         //1、使用 ToolBar 配置,kotlin 独有
-//        binding.actionBar.toolbar.setupWithNavController(controller, configuration)
+//        binding.appBar.toolbar.setupWithNavController(controller, configuration)
         //2、通过 navigationUI 配置
-        NavigationUI.setupActionBarWithNavController(this, controller, configuration);
-        //NavigationUI.setupWithNavController(binding.actionBar.toolbar,controller,configuration)
+//        NavigationUI.setupActionBarWithNavController(this, controller, configuration);
+        //NavigationUI.setupWithNavController(binding.appBar.toolbar,controller,configuration)
         //不配置 configuration ，切换页面后，会显示返回键
 //        NavigationUI.setupActionBarWithNavController(this, controller)
         //3、kotlin 衍生方法设置。
@@ -57,12 +57,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        setupActionBarWithNavController(controller)
 
         //ToolBar 设置menu 监听后，会顶掉原有的 onOptionsItemSelected 监听
-//        binding.actionBar.toolbar.setOnMenuItemClickListener {}
+//        binding.appBar.toolbar.setOnMenuItemClickListener {}
+
+//        binding.appBar.toolbar.title = binding.bottomBar.menu.getItem(0).title
+        binding.appBar.tvCenter.text = binding.bottomBar.menu.getItem(0).title
+        //bottomBar 设置监听后，navigation 引导会失效，需要重新建立引导
+        binding.bottomBar.setOnItemSelectedListener { item ->
+            binding.appBar.tvCenter.text = item.title//居中的标题
+            NavigationUI.onNavDestinationSelected(item, controller)
+            true
+        }
+
 
         binding.fab.setOnClickListener {
             testMethod();
         }
-
 
         //content://com.android.fileexplorer.myprovider/external_files/AFile/ICP%E5%A4%87%E6%A1%88.txt
         //content://com.tencent.mtt.fileprovider/QQBrowser/Andro id/data/com.tencent.mtt/files/.ReaderTemp/thrdcall/contenturi/51cc4f665eaef803fe0fb39bf0a3bb38/%E5%B7%A5%E7%A8%8B%E9%80%9A%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C(%E6%89%8B%E6%9C%BA%E7%89%88).docx
@@ -74,6 +83,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     }
+
     val vm = MainVM()
 
     private fun testMethod() {
