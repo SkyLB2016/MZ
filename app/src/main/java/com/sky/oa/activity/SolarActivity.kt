@@ -10,6 +10,7 @@ import android.os.Message
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.Toolbar
 import com.sky.common.utils.BitmapUtils
@@ -39,28 +40,32 @@ class SolarActivity : BaseActivity<ActivitySolarBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.appBar.toolbar)
-        title=""
+        title = ""
         binding.appBar.tvCenter.text = "卫星式菜单栏"
         showNavigationIcon()
 
         val width = ScreenUtils.getWidthPX(this)
+        //自定义Menu 菜单的宽高
         val lp = binding.relative.layoutParams
         lp.height = width / 3
         lp.width = lp.height
         binding.relative.layoutParams = lp
+
+        //设置 menu 的背景动画
         binding.relative.setBackgroundResource(R.drawable.solar_rect_list)
         layoutDraw = binding.relative.background as AnimationDrawable
 
+        //自定义 子View 的宽高
         val childCount = binding.solar!!.childCount
-        val childParams = FrameLayout.LayoutParams(width / 5, width / 5)
+//        val childParams = ViewGroup.LayoutParams(width / 5, width / 5)
+        val childParams = ViewGroup.MarginLayoutParams(width / 5, width / 5)
         for (i in 0 until childCount - 1) binding.solar!!.getChildAt(i).layoutParams = childParams
 
-//        solar_svg.position=SolarSystem.CENTER_BOTTOM
         binding.solar?.radius = width / 3
-        binding.solar?.rotateMenu = true//按钮是否旋转
-//        binding.solar?.isRecoverChild = false
-        binding.solar.menuState = { state ->
-            showToast(if (state) "打开" else "关闭")
+        binding.solar?.rotateMenu = true //按钮是否旋转
+        binding.solar?.isRecoverChild = false //点击子View 不收回
+        binding.solar.menuState = {
+            showToast(if (it) "打开" else "关闭")
             layoutDraw?.start()
             handler.sendEmptyMessageDelayed(Constants.SOLAR, 600)
         }

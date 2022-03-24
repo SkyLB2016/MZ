@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.sky.common.utils.LogUtils
 import com.sky.oa.R
 import com.sky.oa.databinding.ActivityMainBinding
 import com.sky.oa.vm.MainVM
@@ -87,8 +88,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     val vm = MainVM()
 
     private fun testMethod() {
-        vm.TestMethod(this)
-
+//        vm.TestMethod(this)
+        var a = 2
+        var b = 3
+        LogUtils.i("返回2=="+a.coerceAtLeast(b))
+        LogUtils.i("返回3=="+a.coerceAtMost(b))
+        LogUtils.i("返回2=="+Math.min(a,b))
+        LogUtils.i("返回3=="+Math.max(a,b))
     }
 
 }

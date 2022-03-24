@@ -59,8 +59,10 @@ import kotlin.collections.ArrayList
 /**
  * Created by SKY on 2018/3/6 16:43.
  */
-class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickListener, Observer {
+class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickListener {
+
     override fun getBinding() = ActivityMethodBinding.inflate(layoutInflater)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.appBar.toolbar)
@@ -291,11 +293,11 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
      * 0 表示如果位数不足则以 0 填充，# 表示只要有可能就把数字拉上这个位置
      * @return
      */
-    fun format(num: Double): String {
+    private fun format(num: Double): String {
         return DecimalFormat("#,##0.00").format(num)
     }
 
-    fun format(num: String): String {
+    private fun format(num: String): String {
         return format(num.toDouble())
     }
 
@@ -315,16 +317,13 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         }
         //把观察者注册到被观察者中
         observable.addObserver(observer)
-        observable.addObserver(this)
+        observable.addObserver { o, arg ->
+            LogUtils.i("${javaClass.simpleName}==${Throwable().stackTrace[0].methodName}==$arg")
+        }
 
         //被观察者发送消息
         observable.send("观察者模式")
     }
-
-    override fun update(o: Observable?, arg: Any?) {
-        LogUtils.i("${javaClass.simpleName}==${Throwable().stackTrace[0].methodName}==$arg")
-    }
-
 
     //一组数据从1开始数，到13时移除此数，之后继续从1开始数
     private fun getNum(): String {
