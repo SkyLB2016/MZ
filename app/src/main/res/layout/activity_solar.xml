@@ -6,7 +6,9 @@
     android:background="@mipmap/bg_poetry"
     android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar" />
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/include_toolbar" />
 
     <com.sky.ui.widget.SolarLayout
         android:id="@+id/solar"

@@ -1,6 +1,7 @@
 package com.sky.ui.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.sky.common.utils.SPUtils;
 import com.sky.common.utils.ToastUtils;
+import com.sky.ui.R;
 import com.sky.ui.api.IMVPView;
 import com.sky.ui.api.IView;
 import com.sky.ui.widget.DialogLoading;
@@ -34,8 +36,7 @@ public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActiv
 
     protected abstract V getBinding();
 
-
-    public void showNavigationIcon(){
+    public void showNavigationIcon() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//就这一个也起作用，需要与 onOptionsItemSelected 配合使用
         getSupportActionBar().setHomeButtonEnabled(true);//必须与搭配第一个使用，不用这个，也行，目前没发现他的作用
         //getSupportActionBar().setDisplayShowHomeEnabled(true);//没啥用
@@ -74,5 +75,15 @@ public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActiv
     @Override
     public void disLoading() {
         DialogLoading.disDialog();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

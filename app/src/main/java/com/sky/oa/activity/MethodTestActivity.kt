@@ -63,6 +63,10 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
     override fun getBinding() = ActivityMethodBinding.inflate(layoutInflater)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(binding.appBar.toolbar)
+        title = "方法组合类"
+        showNavigationIcon()
+
         val method = arrayListOf(
             "字符替换与数组化",
             "hash相同",

@@ -25,7 +25,7 @@ import com.sky.ui.widget.SolarLayout
  * Created by SKY on 15/12/9 下午8:54.
  * 卫星菜单栏
  */
-class SolarActivity : BaseActivity<ActivitySolarBinding>(), Toolbar.OnMenuItemClickListener {
+class SolarActivity : BaseActivity<ActivitySolarBinding>() {
     private var layoutDraw: AnimationDrawable? = null
 
     override fun getBinding() = ActivitySolarBinding.inflate(layoutInflater)
@@ -38,6 +38,11 @@ class SolarActivity : BaseActivity<ActivitySolarBinding>(), Toolbar.OnMenuItemCl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(binding.appBar.toolbar)
+        title=""
+        binding.appBar.tvCenter.text = "卫星式菜单栏"
+        showNavigationIcon()
+
         val width = ScreenUtils.getWidthPX(this)
         val lp = binding.relative.layoutParams
         lp.height = width / 3
@@ -53,9 +58,9 @@ class SolarActivity : BaseActivity<ActivitySolarBinding>(), Toolbar.OnMenuItemCl
 //        solar_svg.position=SolarSystem.CENTER_BOTTOM
         binding.solar?.radius = width / 3
         binding.solar?.rotateMenu = true//按钮是否旋转
-        binding.solar?.isRecoverChild = false
+//        binding.solar?.isRecoverChild = false
         binding.solar.menuState = { state ->
-            if (state) showToast("打开") else showToast("关闭")
+            showToast(if (state) "打开" else "关闭")
             layoutDraw?.start()
             handler.sendEmptyMessageDelayed(Constants.SOLAR, 600)
         }
@@ -81,7 +86,7 @@ class SolarActivity : BaseActivity<ActivitySolarBinding>(), Toolbar.OnMenuItemCl
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_center -> binding.solar?.position = SolarLayout.CENTER
             R.id.action_left_top -> binding.solar?.position = SolarLayout.LEFT_TOP
@@ -93,7 +98,7 @@ class SolarActivity : BaseActivity<ActivitySolarBinding>(), Toolbar.OnMenuItemCl
             R.id.action_center_left -> binding.solar?.position = SolarLayout.CENTER_LEFT
             R.id.action_center_right -> binding.solar?.position = SolarLayout.CENTER_RIGHT
         }
-        return false
+        return super.onOptionsItemSelected(item)
     }
 
     // 打开系统的文件选择器
@@ -141,6 +146,4 @@ class SolarActivity : BaseActivity<ActivitySolarBinding>(), Toolbar.OnMenuItemCl
             }
         }
     }
-
-
 }
