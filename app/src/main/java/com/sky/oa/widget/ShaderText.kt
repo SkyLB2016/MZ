@@ -11,7 +11,8 @@ import androidx.appcompat.widget.AppCompatTextView
 /**
  * Created by SKY on 2018/2/24 14:49.
  */
-class ShaderText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatTextView(context, attrs, defStyleAttr) {
+class ShaderText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    AppCompatTextView(context, attrs, defStyleAttr) {
 
     internal var width: Int = 0
     private var linear: LinearGradient? = null
@@ -20,7 +21,8 @@ class ShaderText @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onSizeChanged(w, h, oldw, oldh)
         width = measuredWidth
         if (width > 0) {
-            linear = LinearGradient(0f, 0f, width.toFloat(), 0f, intArrayOf(Color.RED, Color.GREEN, Color.BLUE), null, Shader.TileMode.CLAMP)
+            linear =
+                LinearGradient(0f, 0f, width.toFloat(), 0f, intArrayOf(Color.RED, Color.GREEN, Color.BLUE), null, Shader.TileMode.CLAMP)
             paint?.shader = linear!!
         }
     }

@@ -85,5 +85,19 @@
 
     <string name="act_method">01.方法组合类</string>
     <string name="act_method_d">常用的方法：字符替换与数组化，数组排序筛选，json转换，时间地址选择等等</string>
+    <string name="act_solar">02.卫星式菜单栏</string>
+    <string name="act_solar_d">支持九个方向，采用属性动画ObjectAnimator编写，三角函数正余弦的顺逆时针（参考笔记）</string>
+
+    <string name="act_poetry">03.诗文，语言，笔记，英语</string>
+    <string name="act_poetry_d">争取做到每日至少背诵一百字，SlidingMenu结合FlowLayout</string>
+
+    <string name="act_bitmapurl">04.网络图片，图库与相机</string>
+    <string name="act_bit_d">AsyncTask图片加载，CircleImageView圆形控件，多布局加载，LruCache，图库与相机，兼容7.1版本，4.4以上；DisLurCache</string>
+
+    <string name="act_bit_uri">05.载入本地图片</string>
+    <string name="act_uri_d">自定义线程池加载，FIFO,FILO,PopWindow弹窗，图片的缩放显示，待优化</string>
+
+    <string name="act_canvas">06.图形绘画总结应用</string>
+    <string name="act_canvas_d">线性渐变，三次贝赛尔曲线，maskFilter，pathEffect，移动布局坐标，文字基线绘制，画布状态保存与回溯</string>
 
 </resources>

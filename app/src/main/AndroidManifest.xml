@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sky.oa">
 
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+    <!--    获取deviceId-->
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -24,10 +27,21 @@
         <activity
             android:name="com.sky.oa.activity.MethodTestActivity"
             android:description="@string/act_method_d"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/act_method"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SolarActivity"
+            android:exported="true"
+            android:description="@string/act_solar_d"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_solar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>

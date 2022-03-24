@@ -1373,8 +1373,10 @@ gradle开发：插桩+自动生成Dex。
 
 第八章 Kotlin
 https://www.jianshu.com/u/a324daa6fa19
+@JvmOverloads 多个构造函数与多个方法的重载
 
 第一节 kotlin 关键字
+
 01.访问限制类修饰符：6个，默认都是 final 修饰的，不可继承
 1）public：属性和方法对所有类可见，默认
 2）protected：自身及子类可见，继承需要配合 open 使用。这里与 Java 不同，Java 同包可见
@@ -1757,9 +1759,9 @@ layout_margin > layout_marginHorizontal 与 layout_marginVertical > layout_margi
 06.自定义属性的解析方式
 1）两种方式获取 TypeArray
 系统的：
-TypeArray typeArray = c.obtainStyledAttributes(attrs, R.styleable.SolarSystem)
+TypeArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.SolarSystem)
 另一种：
-TypeArray typeArray = c.theme.obtainStyledAttributes(attrs, R.styleable.SolarSystem, defStyleAttr, 0)
+TypeArray typeArray = context.theme.obtainStyledAttributes(attrs, R.styleable.SolarSystem, defStyleAttr, 0)
 2）获取属性：对应的格式有对应的获取方式
 int radius = typeArray.getDimensionPixelSize(R.styleable.SolarSystem_radius, radius)
 3）获取完成后需要释放
