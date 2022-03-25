@@ -1,7 +1,6 @@
 package com.sky.ui.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -10,15 +9,13 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
-import com.sky.ui.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by libin on 2020/01/26 20:50 Sunday.
  */
-public class FlowLay extends ViewGroup {
+public class FlowTestLayout extends ViewGroup {
     /*
      *每行有几个View，有几行。
      */
@@ -37,15 +34,15 @@ public class FlowLay extends ViewGroup {
     private int bottomBorder = 0;
 
 
-    public FlowLay(Context context) {
+    public FlowTestLayout(Context context) {
         this(context, null);
     }
 
-    public FlowLay(Context context, AttributeSet attrs) {
+    public FlowTestLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FlowLay(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FlowTestLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 //        TypedArray style = context.obtainStyledAttributes(attrs, R.styleable.FlowLay);
 //        lineSpace = style.getDimensionPixelSize(R.styleable.FlowLay_line, lineSpace);
@@ -117,13 +114,13 @@ public class FlowLay extends ViewGroup {
                 //累计当前的高度，以及行间距
                 maxHeight += lineHeight + lineSpace;
 
+                allViews.add(lineViews);//保存此行的控件
+                lineHeights.add(lineHeight);//保存此行最高值
+                lineViews = new ArrayList<>();//重置
+
                 //下一行的起始的宽高
                 lineWidth = childWidth;
                 lineHeight = childHeight;
-
-                allViews.add(lineViews);//保存此行的控件
-                lineHeights.add(lineHeight);//保存此行
-                lineViews = new ArrayList<>();//重置
             } else {
                 //不换行时，累计当前View的宽
                 lineWidth += childWidth;
@@ -147,16 +144,16 @@ public class FlowLay extends ViewGroup {
         topBorder = 0;
         bottomBorder = maxHeight;
         //ScrollView嵌套下，heightMode的模式为UNSPECIFIED，所以以判断EXACTLY为主。推荐使用getDefaultSize这个View自带的方法。
-//        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
-//            setMeasuredDimension(widthSize, heightSize);
-//        } else if (widthMode == MeasureSpec.EXACTLY) {
-//            setMeasuredDimension(widthSize, maxHeight;
-//        } else if (heightMode == MeasureSpec.EXACTLY) {
-//            setMeasuredDimension(maxWidth, heightSize);
-//        } else {
-//            setMeasuredDimension(maxWidth, maxHeight;
-//        }
-        setMeasuredDimension(getDefaultSize(maxWidth, widthMeasureSpec), getDefaultSize(maxHeight, heightMeasureSpec));
+        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
+            setMeasuredDimension(widthSize, heightSize);
+        } else if (widthMode == MeasureSpec.EXACTLY) {
+            setMeasuredDimension(widthSize, maxHeight);
+        } else if (heightMode == MeasureSpec.EXACTLY) {
+            setMeasuredDimension(maxWidth, heightSize);
+        } else {
+            setMeasuredDimension(maxWidth, maxHeight);
+        }
+//        setMeasuredDimension(getDefaultSize(maxWidth, widthMeasureSpec), getDefaultSize(maxHeight, heightMeasureSpec));
     }
 
     @Override

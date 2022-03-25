@@ -33,7 +33,7 @@ class FlowLayout @JvmOverloads constructor(
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
 
-
+        //因为onMeasure要多次执行，所以要清空该清空的数据
         allViews.clear()
         lineHeights.clear()
         val childCount = childCount
@@ -50,7 +50,11 @@ class FlowLayout @JvmOverloads constructor(
         var childHeight: Int
         var lp: MarginLayoutParams
 
-        val realWidth = widthSize - paddingLeft - paddingRight//刨除左右间距的实际宽高
+        //测量每个child的宽高
+//        measureChildren(widthMeasureSpec, heightMeasureSpec)
+
+        //刨除左右间距的实际宽高
+        val realWidth = widthSize - paddingLeft - paddingRight
         for (i in 0 until childCount) {
             child = getChildAt(i)
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
@@ -77,7 +81,7 @@ class FlowLayout @JvmOverloads constructor(
                 lineHeight = lineHeight.coerceAtLeast(childHeight)
             }
 
-            //最后一行的宽高不会被统计到，所以需要单独捕捉
+            //循环中，最后一行的宽高不会被统计到，所以需要单独添加
             if (i === childCount - 1) {
                 measureWidth = measureWidth.coerceAtLeast(lineWidth)
                 measureHeight += lineHeight
@@ -87,6 +91,10 @@ class FlowLayout @JvmOverloads constructor(
         allViews.add(lineViews)
         lineHeights.add(lineHeight)
 
+        measureWidth += paddingLeft + paddingRight
+        measureHeight += paddingTop + paddingBottom
+        if (measureWidth > widthSize) measureWidth = widthSize
+        if (measureHeight > heightSize) measureHeight = heightSize
         //设置布局的宽高
         setMeasuredDimension(
             if (widthMode === MeasureSpec.EXACTLY) widthSize else measureWidth,
@@ -95,6 +103,7 @@ class FlowLayout @JvmOverloads constructor(
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        if(!changed)return
         var lineViews: MutableList<View>
         var child: View
         var lp: MarginLayoutParams
