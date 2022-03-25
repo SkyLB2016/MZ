@@ -62,9 +62,9 @@ class SolarLayout @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val layoutWidth = MeasureSpec.getSize(widthMeasureSpec)
+        val widthSpec = MeasureSpec.getSize(widthMeasureSpec)
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val layoutHeight = MeasureSpec.getSize(heightMeasureSpec)
+        val heightSpec = MeasureSpec.getSize(heightMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
 
         //1.初始化 子控件 的宽高，
@@ -93,7 +93,7 @@ class SolarLayout @JvmOverloads constructor(
 
         //2.子view初始化完毕，如果group 的宽高都是 EXACTLY 模式，测量可以结束了。
         if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY)
-            return setMeasuredDimension(layoutWidth, layoutHeight)
+            return setMeasuredDimension(widthSpec, heightSpec)
 
         //3.如果有AT_MOST 模式还需要计算实际的宽高
         //控件的起始位置在四个角上时,group 的宽高
@@ -111,14 +111,13 @@ class SolarLayout @JvmOverloads constructor(
         measureWidth += paddingLeft + paddingRight
         measureHeight += paddingTop + paddingBottom
 
-        //4.宽高计算完毕，还要判断测量宽高是否超过
-        if (layoutWidth < measureWidth) measureWidth = layoutWidth
-        if (layoutHeight < measureHeight) measureHeight = layoutHeight
-        setMeasuredDimension(getDefaultSize(measureWidth, widthMeasureSpec), getDefaultSize(measureHeight, heightMeasureSpec))
-//        setMeasuredDimension(
-//            if (widthMode == MeasureSpec.EXACTLY) layoutWidth else measureWidth,
-//            if (heightMode == MeasureSpec.EXACTLY) layoutHeight else measureHeight
-//        )
+        //4.宽高计算完毕，还要判断测量宽高是否超过最大值
+        if (measureWidth > widthSpec) measureWidth = widthSpec
+        if (measureHeight > heightSpec) measureHeight = heightSpec
+        setMeasuredDimension(
+            if (widthMode == MeasureSpec.EXACTLY) widthSpec else measureWidth,
+            if (heightMode == MeasureSpec.EXACTLY) heightSpec else measureHeight
+        )
     }
 
     override fun generateLayoutParams(p: LayoutParams?) = MarginLayoutParams(p)
@@ -143,6 +142,10 @@ class SolarLayout @JvmOverloads constructor(
             childWidth = child.measuredWidth
             childHeight = child.measuredHeight
             lp = child.layoutParams as MarginLayoutParams
+//            LogUtils.i("childWidth==$childWidth")
+//            LogUtils.i("childWidth1==${lp.width}")
+//            LogUtils.i("childHeight==$childHeight")
+//            LogUtils.i("childHeight1==${lp.height}")
             childLeft = getChildPaddingLeft(menuWidth, childWidth, lp)
             childTop = getChildPaddingTop(menuHeight, childHeight, lp)
             child.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight)

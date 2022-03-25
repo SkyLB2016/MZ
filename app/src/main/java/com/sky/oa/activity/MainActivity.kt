@@ -91,10 +91,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        vm.TestMethod(this)
         var a = 2
         var b = 3
-        LogUtils.i("返回2=="+a.coerceAtLeast(b))
-        LogUtils.i("返回3=="+a.coerceAtMost(b))
-        LogUtils.i("返回2=="+Math.min(a,b))
-        LogUtils.i("返回3=="+Math.max(a,b))
+        LogUtils.i("返回最大b3=="+a.coerceAtLeast(b))
+        LogUtils.i("返回最小a2=="+a.coerceAtMost(b))
+        LogUtils.i("返回2=="+ a.coerceAtMost(b))
+        LogUtils.i("返回3=="+ a.coerceAtLeast(b))
     }
 
 }
