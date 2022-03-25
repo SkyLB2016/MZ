@@ -15,4 +15,12 @@
         <enum name="center_left" value="7" />
         <enum name="center_right" value="8" />
     </attr>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="FlowLay">
+        <attr name="lineSpace" format="dimension" />
+    </declare-styleable>
 </resources>

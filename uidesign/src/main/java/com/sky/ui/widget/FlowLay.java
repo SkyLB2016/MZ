@@ -146,10 +146,6 @@ public class FlowLay extends ViewGroup {
         maxHeight += getPaddingTop() + getPaddingBottom();
         topBorder = 0;
         bottomBorder = maxHeight;
-//        LogUtils.i("screenheight==" + ScreenUtils.getHeightPX(getContext()));
-//        LogUtils.i("measuredheight==" + maxHeight);
-//        LogUtils.i("height==" + heightSize);
-
         //ScrollView嵌套下，heightMode的模式为UNSPECIFIED，所以以判断EXACTLY为主。推荐使用getDefaultSize这个View自带的方法。
 //        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
 //            setMeasuredDimension(widthSize, heightSize);

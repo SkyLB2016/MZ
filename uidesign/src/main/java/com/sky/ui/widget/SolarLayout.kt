@@ -62,9 +62,9 @@ class SolarLayout @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val widthSpec = MeasureSpec.getSize(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val heightSpec = MeasureSpec.getSize(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
 
         //1.初始化 子控件 的宽高，
@@ -93,7 +93,7 @@ class SolarLayout @JvmOverloads constructor(
 
         //2.子view初始化完毕，如果group 的宽高都是 EXACTLY 模式，测量可以结束了。
         if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY)
-            return setMeasuredDimension(widthSpec, heightSpec)
+            return setMeasuredDimension(widthSize, heightSize)
 
         //3.如果有AT_MOST 模式还需要计算实际的宽高
         //控件的起始位置在四个角上时,group 的宽高
@@ -112,11 +112,11 @@ class SolarLayout @JvmOverloads constructor(
         measureHeight += paddingTop + paddingBottom
 
         //4.宽高计算完毕，还要判断测量宽高是否超过最大值
-        if (measureWidth > widthSpec) measureWidth = widthSpec
-        if (measureHeight > heightSpec) measureHeight = heightSpec
+        if (measureWidth > widthSize) measureWidth = widthSize
+        if (measureHeight > heightSize) measureHeight = heightSize
         setMeasuredDimension(
-            if (widthMode == MeasureSpec.EXACTLY) widthSpec else measureWidth,
-            if (heightMode == MeasureSpec.EXACTLY) heightSpec else measureHeight
+            if (widthMode == MeasureSpec.EXACTLY) widthSize else measureWidth,
+            if (heightMode == MeasureSpec.EXACTLY) heightSize else measureHeight
         )
     }
 

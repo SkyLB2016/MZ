@@ -28,9 +28,9 @@ class FlowLayout @JvmOverloads constructor(
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val widthSpec = MeasureSpec.getSize(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val heightSpec = MeasureSpec.getSize(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
 
 
@@ -50,7 +50,7 @@ class FlowLayout @JvmOverloads constructor(
         var childHeight: Int
         var lp: MarginLayoutParams
 
-        val realWidth = widthSpec - paddingLeft - paddingRight//刨除左右间距的实际宽高
+        val realWidth = widthSize - paddingLeft - paddingRight//刨除左右间距的实际宽高
         for (i in 0 until childCount) {
             child = getChildAt(i)
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
@@ -89,8 +89,8 @@ class FlowLayout @JvmOverloads constructor(
 
         //设置布局的宽高
         setMeasuredDimension(
-            if (widthMode === MeasureSpec.EXACTLY) widthSpec else measureWidth,
-            if (heightMode === MeasureSpec.EXACTLY) heightSpec else measureHeight
+            if (widthMode === MeasureSpec.EXACTLY) widthSize else measureWidth,
+            if (heightMode === MeasureSpec.EXACTLY) heightSize else measureHeight
         )
     }
 
@@ -121,7 +121,6 @@ class FlowLayout @JvmOverloads constructor(
             left = paddingLeft
             top += lineHeights[i]
         }
-
     }
 
     override fun generateLayoutParams(attrs: AttributeSet?) = MarginLayoutParams(context, attrs)
