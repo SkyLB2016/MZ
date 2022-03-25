@@ -27,7 +27,7 @@ import com.sky.oa.adapter.ArticleAdapter
  */
 class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
     lateinit var adapter: ArticleAdapter
-    lateinit var poetry: PoetryEntity
+//    lateinit var poetry: PoetryEntity
 
     companion object {
         const val KEY = "poetry"
@@ -50,7 +50,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        poetry = intent.getSerializableExtra(KEY) as PoetryEntity
+        val poetry = intent.getSerializableExtra(KEY) as PoetryEntity
         setToolbar(binding!!.appBar.toolbar, poetry.name)
 
         adapter = ArticleAdapter()
