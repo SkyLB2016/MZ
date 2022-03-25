@@ -13,17 +13,22 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="color_333333">#FF333333</color>
     <color name="color_666666">#FF666666</color>
     <color name="color_999999">#FF999999</color>
     <color name="color_cccccc">#FFcccccc</color>
     <color name="color_alpha">#ff000000</color>
-    <color name="green">#00ae21</color>
     <color name="color_CB03810F">#CB03810F</color>
-    <color name="yellow">#FFD000</color>
     <color name="color_3599f4">#3599F4</color>
     <color name="color_FFD000">#FFD000</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#F12B2A</color>
+    <color name="green">#00ae21</color>
+    <color name="yellow">#FFD000</color>
+    <color name="alpha_00">#00000000</color>
+    <color name="alpha_66">#66000000</color>
+    <color name="alpha_99">#99000000</color>
 
 </resources>

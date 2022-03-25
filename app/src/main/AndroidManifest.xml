@@ -66,7 +66,7 @@
         <!--            android:label="@string/act_bitmapurl"-->
         <!--            android:screenOrientation="portrait">-->
         <!--            <intent-filter>-->
-        <!--                <action android:name="com.sky.coustom" />-->
+        <!--                <action android:name="com.sky.oa" />-->
         <!--            </intent-filter>-->
         <!--        </activity>-->
         <!--        <activity-->
@@ -77,33 +77,32 @@
         <!--            android:label="@string/act_bit_uri"-->
         <!--            android:screenOrientation="portrait">-->
         <!--            <intent-filter>-->
-        <!--                <action android:name="com.sky.coustom" />-->
+        <!--                <action android:name="com.sky.oa" />-->
         <!--            </intent-filter>-->
         <!--        </activity>-->
-        <!--        <activity-->
-        <!--            android:name=".activity.CanvasActivity"-->
-        <!--            android:description="@string/act_canvas_d"-->
-        <!--            android:exported="true"-->
-        <!--            android:hardwareAccelerated="false"-->
-        <!--            android:icon="@mipmap/ic_launcher"-->
-        <!--            android:label="@string/act_canvas"-->
-        <!--            android:screenOrientation="portrait">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="com.sky.coustom" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-        <!--        &lt;!&ndash;android:process=":ninthPalace"&ndash;&gt;-->
-        <!--        <activity-->
-        <!--            android:name=".activity.NinthPalaceActivity"-->
-        <!--            android:description="@string/act_ninth"-->
-        <!--            android:exported="true"-->
-        <!--            android:icon="@mipmap/ic_launcher"-->
-        <!--            android:label="@string/act_ninth">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="com.sky.coustom" />-->
-        <!--                <category android:name="android.intent.category.CAR_MODE" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
+        <activity
+            android:name=".activity.CanvasActivity"
+            android:description="@string/act_canvas_d"
+            android:exported="true"
+            android:hardwareAccelerated="false"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_canvas"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.NinthPalaceActivity"
+            android:description="@string/act_ninth"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_ninth">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+                <category android:name="android.intent.category.CAR_MODE" />
+            </intent-filter>
+        </activity>
 
     </application>
 

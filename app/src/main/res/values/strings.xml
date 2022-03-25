@@ -82,7 +82,6 @@
     <string name="format04">以,分隔整数%,d与浮点数%,.2f %n</string>
 
 
-
     <string name="act_method">01.方法组合类</string>
     <string name="act_method_d">常用的方法：字符替换与数组化，数组排序筛选，json转换，时间地址选择等等</string>
     <string name="act_solar">02.卫星式菜单栏</string>
@@ -99,5 +98,7 @@
 
     <string name="act_canvas">06.图形绘画总结应用</string>
     <string name="act_canvas_d">线性渐变，三次贝赛尔曲线，maskFilter，pathEffect，移动布局坐标，文字基线绘制，画布状态保存与回溯</string>
+
+    <string name="act_ninth">07.九宫解锁图案</string>
 
 </resources>
