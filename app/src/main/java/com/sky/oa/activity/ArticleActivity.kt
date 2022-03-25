@@ -27,8 +27,6 @@ import com.sky.oa.adapter.ArticleAdapter
  */
 class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
     lateinit var adapter: ArticleAdapter
-//    lateinit var poetry: PoetryEntity
-
     companion object {
         const val KEY = "poetry"
 

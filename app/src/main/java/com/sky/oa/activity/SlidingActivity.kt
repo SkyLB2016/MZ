@@ -10,6 +10,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,11 +26,9 @@ import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.pop.CatalogPop
 import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.ArtivleVM
-import com.sky.ui.activity.BaseActivity
 import com.sky.ui.activity.MVVMActivity
 import java.text.Collator
 import java.util.*
-import androidx.lifecycle.Observer
 
 /**
  * Created by SKY on 2018/3/16.
@@ -37,7 +36,6 @@ import androidx.lifecycle.Observer
 class SlidingActivity : MVVMActivity<ActivitySlidingBinding, ArtivleVM>() {
     private var gravity = Gravity.LEFT
 
-    //    lateinit var poetry: PoetryEntity
     lateinit var adapter: ArticleAdapter
 
     private val poetries = ArrayList<PoetryEntity>();
@@ -61,13 +59,15 @@ class SlidingActivity : MVVMActivity<ActivitySlidingBinding, ArtivleVM>() {
         binding.appBar.tvRight.text = "3.16建"
 
         adapter = ArticleAdapter()
-        binding.recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.recycler.adapter = adapter
 
         clipM = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
 
-        initEvent()
-        addAni()
+        binding.tvLast.setOnClickListener { upToChapter() }
+        binding.tvCatalog.setOnClickListener { showCatalogPop(adapter?.datas) }
+        binding.tvNext.setOnClickListener { nextChapter() }
+
+//        addAni()
         loadData()
         binding.sliding.menuState = { state ->
             LogUtils.i("state==$state")
@@ -137,12 +137,6 @@ class SlidingActivity : MVVMActivity<ActivitySlidingBinding, ArtivleVM>() {
 
     private fun getDocument(sign: String): String {
         return FileUtils.readAssestToChar(this, sign)
-    }
-
-    private fun initEvent() {
-        binding.tvLast.setOnClickListener { upToChapter() }
-        binding.tvCatalog.setOnClickListener { showCatalogPop(adapter?.datas) }
-        binding.tvNext.setOnClickListener { nextChapter() }
     }
 
     private val selectArticle = View.OnClickListener { v ->
