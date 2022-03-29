@@ -1,4 +1,4 @@
-package com.sky.common.uu.utils;
+package com.sky.common.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sky.common.uu.utils;
+package com.sky.common.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;

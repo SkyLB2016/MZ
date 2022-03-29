@@ -61,7 +61,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
             adapter.notifyDataSetChanged()
 //            LogUtils.i(it.toString())
         })
-        binding.tvPrevious.setOnClickListener { previousChapter(it) }
+        binding.tvPrevious.setOnClickListener { previousChapter() }
         binding.tvCatalog.setOnClickListener { showCatalogPop(it) }
         binding.tvNext.setOnClickListener { nextChapter(it) }
     }
@@ -91,7 +91,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun previousChapter(v: View) {
+    private fun previousChapter() {
         val layoutManager = binding!!.recycler.layoutManager as LinearLayoutManager
         val position = layoutManager.findFirstVisibleItemPosition()
         binding!!.recycler.scrollToPosition(position - 1)

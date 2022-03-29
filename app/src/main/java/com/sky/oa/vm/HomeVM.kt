@@ -3,23 +3,16 @@ package com.sky.oa.vm
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.AssetManager
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.sky.common.utils.FileUtils
 import com.sky.common.utils.LogUtils
-import com.sky.common.utils.SPUtils
 import com.sky.oa.R
 import com.sky.oa.entity.ActivityEntity
-import com.sky.oa.entity.ChapterEntity
-import com.sky.oa.entity.PoetryEntity
-import com.sky.oa.repository.NotesRepository
 import com.sky.ui.viewmodel.BaseVM
 import java.text.Collator
 import java.util.*
 import kotlin.Comparator
 
-class HomeVM() : BaseVM() {
+class HomeVM : BaseVM() {
     val activitiesData = MutableLiveData<MutableList<ActivityEntity>>()
 
     /**

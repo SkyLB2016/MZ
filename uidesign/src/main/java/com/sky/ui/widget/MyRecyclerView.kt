@@ -2,6 +2,8 @@ package com.sky.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -19,5 +21,12 @@ class MyRecyclerView @JvmOverloads constructor(
 ) : RecyclerView(context, attrs, defStyleAttr) {
     init {
         layoutManager = LinearLayoutManager(context)
+//        layoutManager = LinearLayoutManager(context, VERTICAL, false)
+        //分割线效果
+//        addItemDecoration(DividerGridItemDecoration(context))
+//        addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        // 添加删除时的动画效果
+        itemAnimator = DefaultItemAnimator()
+
     }
 }

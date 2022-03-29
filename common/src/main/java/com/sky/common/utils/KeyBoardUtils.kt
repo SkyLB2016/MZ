@@ -1,4 +1,4 @@
-package com.sky.sdk.utils
+package com.sky.common.utils
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager

@@ -5,7 +5,7 @@ import androidx.lifecycle.Transformations
 import com.sky.oa.repository.NotesRepository
 import com.sky.ui.viewmodel.BaseVM
 
-class NotesVM(val repository: NotesRepository) : BaseVM() {
+class NotesVM(private val repository: NotesRepository) : BaseVM() {
     val notesListData = Transformations.map(repository.notes) { it }
     fun getNotesList(assets: AssetManager, directory: String) {
         repository.getPoetries(assets, directory)

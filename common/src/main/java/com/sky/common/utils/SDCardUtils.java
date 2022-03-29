@@ -1,4 +1,4 @@
-package com.sky.common.uu.utils;
+package com.sky.common.utils;
 
 import android.os.Environment;
 import android.os.StatFs;

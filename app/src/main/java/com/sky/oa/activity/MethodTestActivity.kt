@@ -914,7 +914,7 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         val factory = HairFactory()
         val right = factory.getHair("right")
         right?.draw()
-        val left = factory.getHairByClass("com.sky.ch.other.factory.factory.hair.LeftHair")
+        val left = factory.getHairByClass("com.sky.oa.other.factory.factory.hair.LeftHair")
         left?.draw()
         val hair = factory.getHairByClassKey("in")
         hair?.draw()

@@ -102,7 +102,8 @@ public abstract class MVVMActivity<V extends ViewBinding, VM extends BaseVM> ext
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
+//                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

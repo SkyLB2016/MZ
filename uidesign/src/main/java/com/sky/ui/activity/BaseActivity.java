@@ -81,7 +81,8 @@ public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActiv
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
+//                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

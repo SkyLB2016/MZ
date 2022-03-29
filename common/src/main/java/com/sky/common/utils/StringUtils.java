@@ -1,9 +1,10 @@
-package com.sky.common.uu.utils;
+package com.sky.common.utils;
 
 import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.sky.common.utils.ToastUtils;
+import com.sky.common.uu.utils.ActivityLifecycle;
 
 import java.text.DecimalFormat;
 
