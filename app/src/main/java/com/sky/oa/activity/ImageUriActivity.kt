@@ -20,6 +20,7 @@ import com.sky.oa.databinding.ActivityUriBinding
 import com.sky.oa.entity.ImageFloder
 import com.sky.oa.pop.FloderPop
 import com.sky.oa.pop.URIPop
+import com.sky.oa.repository.ImageRepository
 import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.ArtivleVM
 import com.sky.oa.vm.ImageUriVM
@@ -50,11 +51,10 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
     override fun getVModel() = ViewModelProvider(
         this,
         object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM() as T
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM(ImageRepository()) as T
         })[ImageUriVM::class.java]
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        floderPop?.showAtLocation(binding.relative, Gravity.BOTTOM, 0, 0)
         super.onCreate(savedInstanceState)
         setToolbar(binding!!.appBar.toolbar, "本地图片加载")
 

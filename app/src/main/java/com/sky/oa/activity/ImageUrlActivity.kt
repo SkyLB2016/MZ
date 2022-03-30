@@ -18,6 +18,7 @@ import com.sky.oa.R
 import com.sky.oa.adapter.LoaderURLAdapter
 import com.sky.oa.databinding.ActivityUriBinding
 import com.sky.oa.databinding.ActivityUrlBinding
+import com.sky.oa.repository.ImageRepository
 import com.sky.oa.utils.imageloader.ImageLoaderAsync
 import com.sky.oa.vm.ImageUriVM
 import com.sky.ui.activity.MVActivity
@@ -37,7 +38,7 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
 
     override fun getViewBinding() = ActivityUrlBinding.inflate(layoutInflater)
     override fun getVModel() = ViewModelProvider(this, object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM() as T
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM(ImageRepository()) as T
     })[ImageUriVM::class.java]
 
     override fun onCreate(savedInstanceState: Bundle?) {
