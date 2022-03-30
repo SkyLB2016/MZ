@@ -6,7 +6,7 @@
     android:layout_weight="1"
     android:background="@android:color/white">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.sky.ui.widget.MyRecyclerView
         android:id="@id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

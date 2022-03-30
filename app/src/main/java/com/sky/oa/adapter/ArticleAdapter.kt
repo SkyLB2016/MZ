@@ -17,7 +17,7 @@ import com.sky.ui.adapter.RecyclerAdapter
  * @Version: 1.0
  */
 class ArticleAdapter : RecyclerAdapter<AdapterNoteBinding, ChapterEntity>() {
-    override fun getItemCount() = datas?.size
+//    override fun getItemCount() = datas?.size
 
     override fun getBinding(context: Context?, parent: ViewGroup) = AdapterNoteBinding.inflate(LayoutInflater.from(parent.context))
 

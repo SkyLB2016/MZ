@@ -16,6 +16,7 @@ import com.sky.common.utils.LogUtils
 import com.sky.common.utils.PhotoUtils
 import com.sky.oa.R
 import com.sky.oa.adapter.LoaderURLAdapter
+import com.sky.oa.databinding.ActivityUriBinding
 import com.sky.oa.databinding.ActivityUrlBinding
 import com.sky.oa.utils.imageloader.ImageLoaderAsync
 import com.sky.oa.vm.ImageUriVM
@@ -34,13 +35,15 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
     lateinit var adapter: LoaderURLAdapter
 
 
-    override var binding = ActivityUrlBinding.inflate(layoutInflater)
-    override var viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+    override fun getViewBinding() = ActivityUrlBinding.inflate(layoutInflater)
+    override fun getVModel() = ViewModelProvider(this, object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM() as T
     })[ImageUriVM::class.java]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbar(binding!!.appBar.toolbar, "网络图片加载")
+        first = true
         //设置swipe的开始位置与结束位置
         binding.swipe!!.setProgressViewOffset(
             false, 0, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics)
@@ -49,7 +52,9 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
         //为进度圈设置颜色
         binding.swipe!!.setColorSchemeResources(R.color.black, android.R.color.holo_green_dark, R.color.white)
         //下拉刷新监听
-        binding.swipe!!.setOnRefreshListener { }
+        binding.swipe!!.setOnRefreshListener {
+
+        }
 
         binding.recycler!!.setHasFixedSize(true)
 //        val layoutIds = ArrayList<Int>()//主体布局
@@ -60,7 +65,7 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
         adapter = LoaderURLAdapter()
         binding.recycler.adapter = adapter
 
-        binding.recycler!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 onRecyclerScrollStateChanged(recyclerView, newState)
@@ -88,11 +93,16 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
             }
         })
 
-        first = true
         binding.fab.setOnClickListener { v ->
             Snackbar.make(v, "正在加载，请稍后", Snackbar.LENGTH_LONG).setAction("cancel") { showToast("已取消") }.show()
         }
         adapter.onItemClickListener = { view, position -> getPhoto(view, position) }
+
+        viewModel.getImageUrl()
+
+        viewModel.liveDataUrl.observe(this, {
+            adapter.datas = it
+        })
     }
 
     private fun loadMore() {

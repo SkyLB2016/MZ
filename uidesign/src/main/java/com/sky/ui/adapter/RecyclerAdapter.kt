@@ -68,7 +68,7 @@ abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHo
     }
 
     override fun getItemCount(): Int {
-        return datas?.size ?: 0
+        return datas?.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder<V> {

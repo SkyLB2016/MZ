@@ -3,9 +3,9 @@ package com.sky.oa.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.sky.common.utils.GsonUtils
 import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.fragment.NotesChildFragment
+import com.sky.oa.gson.GsonUtils
 
 class NotesFragmentAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(
     manager,

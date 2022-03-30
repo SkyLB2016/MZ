@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.reflect.TypeToken
-import com.sky.common.utils.GsonUtils
 import com.sky.oa.adapter.ChildAdapter
 import com.sky.oa.databinding.FragmentChildBinding
 import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.gson.GsonUtils
 import com.sky.ui.fragment.MVVMFragment
 import com.sky.ui.viewmodel.BaseVM
 

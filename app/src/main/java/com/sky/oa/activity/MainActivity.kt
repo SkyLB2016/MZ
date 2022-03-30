@@ -1,9 +1,11 @@
 package com.sky.oa.activity
 
+import android.Manifest
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.sky.common.utils.AppUtils
 import com.sky.common.utils.LogUtils
 import com.sky.oa.R
 import com.sky.oa.databinding.ActivityMainBinding
@@ -82,6 +84,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         //mi8 fil content://com.miui.securitycenter.zman.fileProvider/external/AFile/ICP%E5%A4%87%E6%A1%88.txt
         //mi9 fil content://com.android.fileexplorer.myprovider/external_files/AFile/ICP%E5%A4%87%E6%A1%88.txt
 
+        //recycler.addOnItemTouchListener();
+        AppUtils.isPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.WRITE_CONTACTS,
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            1119
+        )
 
     }
 

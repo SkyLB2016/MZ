@@ -4,18 +4,28 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.reflect.TypeToken
+import com.sky.common.entity.ApiResponse
 import com.sky.common.utils.LogUtils
 import com.sky.common.utils.SDCardUtils
+import com.sky.oa.entity.CourseEntity
 import com.sky.oa.entity.ImageFloder
+import com.sky.oa.gson.GsonUtils
+import com.sky.oa.utils.HttpEngine
 import com.sky.ui.viewmodel.BaseVM
+import okhttp3.*
 import java.io.File
 import java.io.FilenameFilter
 import java.util.ArrayList
 import java.util.HashSet
+import java.io.IOException
+import java.lang.reflect.Type
+
 
 class ImageUriVM : BaseVM() {
     val liveDataFloders = MutableLiveData<MutableList<ImageFloder>>()//照片所在的文件夹列表
     val liveDataParent = MutableLiveData<File>()
+    val liveDataUrl = MutableLiveData<MutableList<CourseEntity>>()
 
     @SuppressLint("Range")
     fun checkDiskImage(context: Context) {
@@ -66,4 +76,28 @@ class ImageUriVM : BaseVM() {
         val type = arrayOf(".jpg", ".JPG", ".jpeg", ".JPEG", ".png", ".PNG")
         type.any { filename.endsWith(it) }
     }
+    fun getImageUrl() {
+//        LogUtils.i("开始请求数据")
+        val url = "https://www.imooc.com/api/teacher?type=4&num=30"
+        val okHttpClient = OkHttpClient()
+        val request: Request = Request.Builder()
+            .url(url)
+            .get() //默认就是GET请求，可以不写
+            .build()
+        val call: Call = okHttpClient.newCall(request)
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                LogUtils.i("数据==${e.localizedMessage}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val data = GsonUtils.fromJson<ApiResponse<MutableList<CourseEntity>>>(response.body?.string(),
+                    object : TypeToken<ApiResponse<MutableList<CourseEntity>>>() {}.type)
+                liveDataUrl.postValue(data.data)
+                LogUtils.i("数据==${data.status}")
+//                LogUtils.i("数据==${data.data}")
+            }
+        })
+    }
+
 }

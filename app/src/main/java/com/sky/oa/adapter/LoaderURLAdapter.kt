@@ -31,10 +31,10 @@ class LoaderURLAdapter : RecyclerAdapter<AdapterUrlBinding, CourseEntity>() {
         binding.tvName.typeface = face
         binding.tvDescribe.typeface = face
         val viewType = getItemViewType(position)
-        binding.tvName.text = "${position + 1}.${datas[position].name}   第一种布局"
+        binding.tvName.text = "${position + 1}.${datas[position].name}"
         binding.tvDescribe.text = datas[position].description
         binding.image.tag = datas[position].picBig
-        binding.image.setBackgroundResource(R.mipmap.ic_launcher)
+//        binding.image.setBackgroundResource(R.mipmap.ic_launcher)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
             //使用ripple
             //((CardView) holder.getView(R.id.cardView)).setRadius(new Random().nextInt(50));

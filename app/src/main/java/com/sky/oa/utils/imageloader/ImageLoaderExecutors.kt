@@ -245,8 +245,8 @@ class ImageLoaderExecutors @JvmOverloads constructor(type: FileType = FileType.L
             height = displayMetrics.heightPixels
         imageSize.width = width
         imageSize.height = height
-        LogUtils.i("width==$width")
-        LogUtils.i("height==$height")
+//        LogUtils.i("width==$width")
+//        LogUtils.i("height==$height")
         return imageSize
 
     }

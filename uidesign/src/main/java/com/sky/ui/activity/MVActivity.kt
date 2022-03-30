@@ -18,14 +18,16 @@ import com.sky.ui.widget.DialogLoading
  * Created by libin on 2020/05/08 6:48 PM Friday.
  */
 abstract class MVActivity<V : ViewBinding, VM : BaseVM> : AppCompatActivity(), IView {
-    abstract var binding: V
-    abstract var viewModel: VM
+    lateinit var binding: V
+    lateinit var viewModel: VM
 
-    //    protected abstract fun getViewBinging(): V
-//    protected abstract fun getVModel(): VM
+    protected abstract fun getViewBinding(): V
+    protected abstract fun getVModel(): VM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = getViewBinding()
         setContentView(binding!!.root)
+        viewModel = getVModel()
     }
 
     fun setToolbar(toolbar: Toolbar?, title: String?) {

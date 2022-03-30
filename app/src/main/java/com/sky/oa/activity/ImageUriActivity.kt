@@ -15,12 +15,16 @@ import com.sky.common.utils.SDCardUtils
 import com.sky.common.utils.ScreenUtils
 import com.sky.oa.R
 import com.sky.oa.adapter.LoaderUriAdapter
+import com.sky.oa.databinding.ActivityPoetryBinding
 import com.sky.oa.databinding.ActivityUriBinding
 import com.sky.oa.entity.ImageFloder
 import com.sky.oa.pop.FloderPop
 import com.sky.oa.pop.URIPop
+import com.sky.oa.repository.NotesRepository
+import com.sky.oa.vm.ArtivleVM
 import com.sky.oa.vm.ImageUriVM
 import com.sky.ui.activity.MVActivity
+import com.sky.ui.activity.MVVMActivity
 import com.sky.ui.widget.BasePop
 import java.io.File
 import java.io.FilenameFilter
@@ -42,17 +46,15 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
 
     lateinit var adapter: LoaderUriAdapter
     private var floderPop: BasePop<*>? = null
-
-    override var binding: ActivityUriBinding
-        get() = ActivityUriBinding.inflate(layoutInflater)
-        set(value) {}
-    override var viewModel: ImageUriVM
-        get() = ViewModelProvider(this, object : ViewModelProvider.Factory {
+    override fun getViewBinding() = ActivityUriBinding.inflate(layoutInflater)
+    override fun getVModel() = ViewModelProvider(
+        this,
+        object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM() as T
         })[ImageUriVM::class.java]
-        set(value) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
+//        floderPop?.showAtLocation(binding.relative, Gravity.BOTTOM, 0, 0)
         super.onCreate(savedInstanceState)
         setToolbar(binding!!.appBar.toolbar, "本地图片加载")
 
@@ -106,12 +108,9 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
         })
 
         binding.relative.setOnClickListener {
-            if (!floderPop!!.isShowing) floderPop!!.showAtLocation(
-                window.decorView,
-                Gravity.BOTTOM,
-                0,
-                0
-            )
+            if (!floderPop!!.isShowing)
+                floderPop!!.showAtLocation(window.decorView, Gravity.BOTTOM, 0, 0)
+//            floderPop?.showAtLocation(binding.relative, Gravity.BOTTOM, 0, 0)
         }
         if (!SDCardUtils.isSDCardEnable()) showToast("暂无外部存储")
         else viewModel.checkDiskImage(this)
@@ -122,12 +121,17 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
         viewModel.liveDataParent.observe(this, {
             setAdapterData(it)
         })
-
     }
 
-    //下拉刷新
+    var total=0
+    //上划加载
     private fun loadMore() {
-
+        if (total <= adapter.datas.size) {
+            showToast("已无更多")
+//        } else {
+//            page++
+//            getDataList()
+        }
     }
 
     private fun showImagePop(position: Int) {
@@ -162,7 +166,7 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
     private fun getMinPositions(firstPositions: IntArray): Int {
         return firstPositions.indices
             .map { firstPositions[it] }
-            .minOf { it ?: firstPositions[0] }
+            .minOf { it }
 
     }
 
@@ -170,10 +174,9 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
         return (lastPositions.indices)
             .map { lastPositions[it] }
             .maxOf { it }
-            ?: lastPositions[0]
     }
 
-    fun showFloderPop(floders: List<ImageFloder>) {
+    private fun showFloderPop(floders: List<ImageFloder>) {
         floderPop = FloderPop(
             LayoutInflater.from(this).inflate(R.layout.include_recycler, null),
             ScreenUtils.getWidthPX(this), (ScreenUtils.getHeightPX(this) * 0.7).toInt()
@@ -185,14 +188,16 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
         }
     }
 
-    fun setAdapterData(parent: File?) {
+    private fun setAdapterData(parent: File?) {
         if (parent == null) return
         first = true
+        adapter.clearDatas()
         val imageNames = mutableListOf(*parent!!.list(filter))
         adapter.parentPath = parent.absolutePath
         adapter.datas = imageNames
         binding.flodername.text = parent.name
         binding.number.text = "共${imageNames.size}张图片"
+        total=imageNames.size
     }
 
     override fun onDestroy() {
