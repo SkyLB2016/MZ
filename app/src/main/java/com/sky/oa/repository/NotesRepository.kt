@@ -67,7 +67,7 @@ class NotesRepository {
         }
     }
 
-    fun getChapter(fileName: String?) {
+    fun getChapter(fileName: String) {
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
                 val async = PoetryAsync()

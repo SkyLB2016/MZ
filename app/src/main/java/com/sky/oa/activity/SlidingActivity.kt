@@ -146,9 +146,9 @@ class SlidingActivity : MVVMActivity<ActivitySlidingBinding, ArtivleVM>() {
 //        }
 //        val text = getDocument(poetries[v!!.id].path)
 //        clipM.primaryClip = ClipData.newPlainText("",text.lines()[0])
-        binding.appBar.tvCenter.text = poetries[v!!.id].name
+        binding.appBar.tvCenter.text = poetries[v.id].name
 
-        viewModel?.getChapter(poetries[v!!.id].path)
+        viewModel.getChapter(poetries[v.id].path)
 //        LogUtils.i("行数==${text.lines().size}")
     }
 

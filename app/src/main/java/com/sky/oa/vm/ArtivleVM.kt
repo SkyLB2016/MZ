@@ -12,7 +12,7 @@ class ArtivleVM(private val repository: NotesRepository) : BaseVM() {
 
     val articleDetail = Transformations.map(repository.articleDetails) { it }
 
-    fun getChapter(fileName: String?) {
+    fun getChapter(fileName: String) {
         repository.getChapter(fileName)
     }
 

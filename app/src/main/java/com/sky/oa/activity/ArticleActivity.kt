@@ -21,6 +21,7 @@ import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.ArtivleVM
 import com.sky.ui.activity.MVVMActivity
 import com.sky.oa.adapter.ArticleAdapter
+import kotlin.math.abs
 
 /**
  * Created by libin on 2020/05/13 2:33 PM Wednesday.
@@ -80,7 +81,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
                 val width = ScreenUtils.getWidthPX(this) / 3f
                 val height = ScreenUtils.getHeightPX(this) / 3f
                 val rect = RectF(width, height, width * 2, height * 2)
-                if (Math.abs(ev.x - downX) < 5 && Math.abs(ev.y - downY) < 1 && rect.contains(
+                if (abs(ev.x - downX) < 5 && abs(ev.y - downY) < 1 && rect.contains(
                         ev.x,
                         ev.y
                     )
