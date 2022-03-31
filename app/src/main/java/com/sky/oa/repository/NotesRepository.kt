@@ -10,6 +10,7 @@ import com.sky.ui.BaseApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
@@ -35,11 +36,7 @@ class NotesRepository {
         var poetries: ArrayList<PoetryEntity>? = arrayListOf()
         while (dirs.isNotEmpty()) {
             dir = dirs.removeFirst()
-            try {
-                files = assets.list(dir)
-            } catch (e: IOException) {
-
-            }
+            files = assets.list(dir)
             files?.forEach { fileName ->
                 if (fileName.endsWith(".txt")) {
                     poetry = PoetryEntity(
@@ -71,11 +68,21 @@ class NotesRepository {
     }
 
     fun getChapter(fileName: String?) {
-        val async = PoetryAsync()
-        async.execute(FileUtils.readAssestToChar(BaseApplication.app, fileName))
-        async.chapterList = { chapterEntities: MutableList<ChapterEntity> ->
-            articleDetails.value = chapterEntities
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                val async = PoetryAsync()
+                val chapterList = async.doInBackground(FileUtils.readAssestToChar(BaseApplication.app, fileName))
+//                articleDetails.value = chapterList
+                articleDetails.postValue(chapterList)
+
+            }
         }
+
+//        val async = PoetryAsync()
+//        async.execute(FileUtils.readAssestToChar(BaseApplication.app, fileName))
+//        async.chapterList = { chapterEntities: MutableList<ChapterEntity> ->
+//            articleDetails.value = chapterEntities
+//        }
     }
 
 }

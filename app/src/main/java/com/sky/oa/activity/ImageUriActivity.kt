@@ -56,7 +56,7 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbar(binding!!.appBar.toolbar, "本地图片加载")
+        setToolbar(binding.appBar.toolbar, "本地图片加载")
 
         binding.swipe.swipe.isEnabled = false
         //设置swipe的开始位置与结束位置

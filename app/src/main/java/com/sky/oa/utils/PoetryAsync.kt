@@ -1,20 +1,19 @@
 package com.sky.oa.utils
 
-import android.os.AsyncTask
 import com.sky.oa.entity.ChapterEntity
 
 /**
  * Created by libin on 2020/05/13 2:42 PM Wednesday.
  */
-class PoetryAsync : AsyncTask<String?, Void?, List<ChapterEntity>>() {
+class PoetryAsync {
 
-    var chapterList: ((MutableList<ChapterEntity>) -> Unit)? = null
+//    var chapterList: ((MutableList<ChapterEntity>) -> Unit)? = null
 
-    override fun doInBackground(vararg params: String?): List<ChapterEntity> {
-        //行列表
+    fun doInBackground(vararg params: String?): MutableList<ChapterEntity> {
+        //文章分成多少行
         val list = params[0]!!.lines()
         //目录
-        val catalog:MutableList<ChapterEntity> = arrayListOf()
+        val catalog: MutableList<ChapterEntity> = arrayListOf()
         //单一章节
         var chapter = ChapterEntity()
         chapter.chapter = list[0]//最开始的是文件名
@@ -69,7 +68,7 @@ class PoetryAsync : AsyncTask<String?, Void?, List<ChapterEntity>>() {
         return catalog
     }
 
-    override fun onPostExecute(chapterEntity: List<ChapterEntity>?) {
-        chapterList?.invoke(chapterEntity!! as MutableList<ChapterEntity>)
-    }
+//    fun onPostExecute(chapterEntity: List<ChapterEntity>?) {
+//        chapterList?.invoke(chapterEntity!! as MutableList<ChapterEntity>)
+//    }
 }

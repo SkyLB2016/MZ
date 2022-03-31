@@ -54,6 +54,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         adapter = ArticleAdapter()
         binding?.recycler?.layoutManager = LinearLayoutManager(this)
         binding?.recycler?.adapter = adapter
+
         viewModel?.getChapter(poetry.path)
 
         viewModel.articleDetail.observe(this, Observer {

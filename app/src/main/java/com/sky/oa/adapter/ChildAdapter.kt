@@ -40,16 +40,13 @@ class ChildAdapter : RecyclerView.Adapter<MvvmHolder<AdapterNoteitemBinding>>() 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MvvmHolder<AdapterNoteitemBinding> {
         context = parent.context
-//        return MvvmViewHolder(binding)
         return MvvmHolder(AdapterNoteitemBinding.inflate(LayoutInflater.from(context)))
     }
 
     override fun onBindViewHolder(holder: MvvmHolder<AdapterNoteitemBinding>, position: Int) {
         holder.binding.tvName.text = poetries[position]?.name
-        val face = Typeface.createFromAsset(
-            context.assets,
-            "font/icomoon.ttf"
-        ) //字体，icomoon对应fonticon
+        //字体，icomoon对应fonticon
+        val face = Typeface.createFromAsset(context.assets, "font/icomoon.ttf")
 
         holder.binding.tvImage.text = context.resources.getString(fontIcon[position % 9])
         holder.binding.tvImage.typeface = face

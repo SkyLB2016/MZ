@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.sky.oa.adapter.NotesFragmentAdapter
 import com.sky.oa.databinding.FragmentNotesBinding
+import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.NotesVM
 import com.sky.ui.fragment.MVVMFragment
@@ -50,22 +52,59 @@ class NotesFragment : MVVMFragment<FragmentNotesBinding, NotesVM>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tabs.tabMode = TabLayout.MODE_SCROLLABLE
-        binding.tabs.setupWithViewPager(binding.viewPager)
+//        binding.tabs.setupWithViewPager(binding.viewPager)
 
-        adapter = NotesFragmentAdapter(childFragmentManager)
+        adapter = NotesFragmentAdapter(childFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
 
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                binding.viewPager.currentItem = tab!!.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tabs.setScrollPosition(position, 0f, true, true)
+//                binding.tabs.setScrollPosition()
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+
+        })
+
+        getDatas()
+
+        viewModel.notesListData.observe(viewLifecycleOwner, Observer {
+            adapter.maps = it
+            val keys: Set<String> = it!!.keys
+            for (key in keys) {
+                binding.tabs.addTab(binding.tabs.newTab().setText(key.split("/").last()))
+            }
+            disLoading()
+        })
+
+    }
+
+    private fun getDatas() {
         showLoading()
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
                 viewModel.getNotesList(requireContext().assets, "Documents/笔记")
             }
         }
-        viewModel.notesListData.observe(viewLifecycleOwner, Observer {
-            adapter.maps = it
-            disLoading()
-        })
-
     }
 
 

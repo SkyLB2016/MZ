@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.sky.oa.adapter.NotesFragmentAdapter
 import com.sky.oa.databinding.FragmentArticleBinding
@@ -40,10 +41,30 @@ class ArticleFragment : MVVMFragment<FragmentArticleBinding, NotesVM>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tabs.tabMode = TabLayout.MODE_SCROLLABLE
-        binding.tabs.setupWithViewPager(binding.viewPager)
+//        binding.tabs.setupWithViewPager(binding.viewPager)
 
-        adapter = NotesFragmentAdapter(childFragmentManager)
+        adapter = NotesFragmentAdapter(childFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
+
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.viewPager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                TODO("Not yet implemented")
+            }
+        })
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.tabs.setScrollPosition(position, 0f, true)
+            }
+        })
+
 
         showLoading()
         GlobalScope.launch(Dispatchers.Main) {
@@ -51,8 +72,12 @@ class ArticleFragment : MVVMFragment<FragmentArticleBinding, NotesVM>() {
                 viewModel.getNotesList(requireContext().assets, "Documents/文学")
             }
         }
-        viewModel.notesListData.observe(this, Observer {
+        viewModel.notesListData.observe(viewLifecycleOwner, {
             adapter.maps = it
+            val keys = it.keys
+            for (key in keys) {
+                binding.tabs.addTab(binding.tabs.newTab().setText(key.split("/").last()))
+            }
             disLoading()
         })
     }
