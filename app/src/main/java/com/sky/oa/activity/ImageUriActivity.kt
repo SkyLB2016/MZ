@@ -66,8 +66,10 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
         )
         //为进度圈设置颜色
         binding.swipe.swipe.setColorSchemeResources(android.R.color.black, android.R.color.holo_green_dark, android.R.color.white)
-        binding.swipe.swipe.setOnRefreshListener {//下拉刷新
-        } //监听
+
+        //下拉刷新监听
+        binding.swipe.swipe.setOnRefreshListener {
+        }
 
         adapter = LoaderUriAdapter()
         adapter.onItemClickListener = { _, position -> showImagePop(position) }
