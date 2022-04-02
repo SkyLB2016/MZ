@@ -492,7 +492,7 @@ protected void onStart（）{
     observer.addOnGlobalLayoutListener(new onGlobalLayoutListener(){
         @override
         public void onGlobalLayout(){
-            view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             int width = view.getMeasuredWidth();
             int height = view.getMeasuredHeight();
         }

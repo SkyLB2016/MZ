@@ -17,8 +17,8 @@ public class SPUtils {
     public static final String FILE_NAME = "USER_INFO";//默认文件名
     private static Context context;
 
-    public static SPUtils instance;
-    public static SharedPreferences sp;
+    private static SPUtils instance;
+    private static SharedPreferences sp;
     private static Map<String, SharedPreferences> SPMaps = new HashMap<>();
 
     public static void init(Context context) {
