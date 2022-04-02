@@ -36,10 +36,10 @@ class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>() {
         AdapterHomeBinding.inflate(LayoutInflater.from(context), parent, false)
 
     override fun onAchieveHolder(holder: MvvmHolder<AdapterHomeBinding>, binding: AdapterHomeBinding, position: Int) {
+
+        //设置加载时的动画效果
         val scale = ScaleAnimation(0f, 1f, 0f, 1f)
         scale.duration = 1001
-        //字体，icomoon
-        val face = Typeface.createFromAsset(context?.assets, "font/icomoon.ttf")
         if (position % 2 == 1) {
             val controller = LayoutAnimationController(scale, 0.5f)
             controller.order = LayoutAnimationController.ORDER_RANDOM
@@ -53,6 +53,8 @@ class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>() {
             context!!.resources.getString(fontIcon[8 - position % 9]) + datas?.get(position)?.describe
         binding.tvImage.text = context!!.resources.getString(fontIcon[position % 9])
 
+        //字体，icomoon
+        val face = Typeface.createFromAsset(context?.assets, "font/icomoon.ttf")
         binding.tvName.typeface = face
         binding.tvDescribe.typeface = face
         binding.tvImage.typeface = face
