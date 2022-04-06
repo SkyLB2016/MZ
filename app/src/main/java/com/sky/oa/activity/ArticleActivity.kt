@@ -99,13 +99,13 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
                 binding.recycler.post {
                     (binding.recycler.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(lastPosition, lastOffset)
                 }
-                LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")
-                LogUtils.i("${poetry.name}的$LASTOFFSET==$lastOffset")
+//                LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")
+//                LogUtils.i("${poetry.name}的$LASTOFFSET==$lastOffset")
             }
         })
     }
 
-    //首次进入的时候总是不能加载到指定的位置。
+    //首次进入的时候有时不能加载到指定的位置。
 //    override fun onResume() {
 //        super.onResume()
 //        setLastRecord()
@@ -115,7 +115,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         val lastPosition = SPUtils.getInstance().getObject("${poetry.name}的$LASTPOSITION", 0)
         val lastOffset = SPUtils.getInstance().getObject("${poetry.name}的$LASTOFFSET", 0)
         if (lastOffset === 0 && lastPosition == 0) return
-//        LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")
+        LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")
         binding.recycler.post {
             (binding.recycler.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(lastPosition, lastOffset)
         }
