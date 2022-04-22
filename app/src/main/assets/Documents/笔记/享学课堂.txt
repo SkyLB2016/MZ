@@ -4,44 +4,40 @@
 精气神，精满气足神旺。
 学习效率，有效的时间内学习并掌握更多的知识。
 天才不可怕，可怕的是天才比你更努力。
-
 无论以前还是现在享过的福，偷过的懒，早晚都会让你连本带利的还回来。
-你还在偷懒吗？
 
 名词解释：
-01.实例就是对象
-02.基本类型变量：利用八个关键字声明的变量，不能是他们的包装类。
-03.引用类型变量：除八个关键字外，其他所有变量均是引用类型变量。
-04.字面量：给基本类型以及String赋值的方式就叫做字面量。
-int a=10;
-String a="abc";
-05.可见性：多个线程访问同一个变量时，一个线程修改了变量值，其他线程能立即看到修改后的值。
-06.有序性：程序执行的顺序按代码顺序执行。
-07.原子性：一个操作是不可中断的，要么直接执行完毕，要么就不执行。
-08.a++：会生成多个指令，多线程执行时，在不保证原子性的情况下，执行的数据不准确。
+01.可见性：多个线程访问同一个变量时，一个线程修改了变量值，其他线程能立即看到修改后的值。
+02.有序性：程序执行的顺序按代码顺序执行。
+03.原子性：一个操作是不可中断的，要么直接执行完毕，要么就不执行。
+04.a++：会生成多个指令，多线程执行时，在不保证原子性的情况下，执行的数据不准确。
 
-09.一个变量的结构构成：
+05.基本类型变量：利用八个关键字声明的变量，不能是他们的包装类。
+06.引用类型变量：除八个关键字外，其他所有变量均是引用类型变量。
+07.字面量：给基本类型以及String赋值的方式就叫做字面量。
+int a = 10;
+String a = "abc";
+08.实参：实际传入的参数（调用方法传入的参数）
+09.形参：接收传入的参数（方法的参数）
+10.常量：不可变的数据
+直接常量：具体的数值（八种基本数据类型）
+符号常量：符号化的常量，就是给直接常量起个名。
+
+11.一个变量的结构构成：
+在程序运行过程中存储可以变化的数据。
+变量的本身只是内存单元，内存单元可以存储数据，也可以将存储的数据读出来。
+int x 的含义是：告诉编译期，申请4个字节的内存空间，以后这块单元（4byte字节）就叫做 x 了；
+基本数据类型的变量的数值，直接就是这块单元的数值，可以直接在栈上分配。
+引用类型的变量，这块单元存的是对象在堆上的地址。启动栈上分配后，在没出方法作用域且较小的情况下，分配在栈上，其他时候分配在堆上。
 String text=new String(“abc”);
 1）String 是类型，其class信息在方法区（永久代/元空间）。
-2）text   是引用变量。作为成员变量时，跟随对象在堆上；
+2）text   是引用变量。存储的是对象的地址。作为成员变量时，跟随所在类的对象在堆上；
 作为局部变量时，在栈上栈帧的局部变量表中，存储的是对象在堆内存中的地址。
 3）new String("abc") 是对象，在堆内存上，但“abc”在字符串常量池里。
 4）启用栈上分配后，在没有逃出方法体的情况下，对象也会分配在栈上。
 5）字符串常量如果在编译期就可以确定，那就在常量池里；在运行期才能确定，那就在堆里。1.7之后，字符串常量池物理上在堆里，逻辑上仍然属于方法区。
 
-10.实参：实际传入的参数
-11.形参：接收传入的参数（方法的参数）
-12.常量：
-直接常量：具体的数值（八种基本数据类型）
-符号常量：符号化的常量，就是给直接常量起个名。
-13.变量：
-在程序运行过程中存储可以变化的数据。
-变量的本事只是内存单元，内存单元可以存储数据，也可以将存储的数据读出来。
-int x：的含义是：告诉编译期，申请4个字节的内存空间，以后这单元（4字节）就叫做x了；
-基本数据类型的变量可以直接在栈上分配。
-引用类型的变量，启动栈上分配后，在没出方法作用域且较小的情况下，分配在栈上，其他时候分配在堆上。
-
-
+目录
 第一章 泛型 Generic
 第二章 注解，反射、动态代理
 第三章 多线程，锁以及锁原理，线程池
@@ -73,7 +69,7 @@ public <T,V extends Comparable> void a(T a){
 
 02.泛型的好处，或者说为什么需要泛型？
 1）泛型是一种参数化类型的机制，适用于多种数据类型执行相同的代码。例如集合框架。
-2）泛型是一种编译时类型确认机制。在编译期，可以进行更强的代码类型检查，确保泛型集合都是同类型的对象。所以泛型中的实例在使用时指定，不需要强制类型转换，避免在运行时出现 ClassCastException。
+2）泛型是一种编译时类型确认机制。在编译期，可以进行更强的代码类型检查，确保泛型集合都是同类型的对象。所以泛型中的实例（对象）在使用时指定，不需要强制类型转换，避免在运行时出现 ClassCastException。
 
 03.限定类型变量，在声明泛型类、方法、接口时使用
 1）T extends X：T代表子类型，X表示超类上限；
@@ -83,8 +79,8 @@ public <T,V extends Comparable> void a(T a){
 
 04.泛型中的约束和局限性：七种
 1）无法实例化具有基本类型的泛型类型。因为基本类型不是对象。
-2）无法创建类型参数的实例。也就是不能new T()。
-3）泛型类实例化时，前后的泛型类型必须统一，即使是继承关系也不行。
+2）无法实例化泛型泛型的参数类型 T。也就是不能new T()。
+3）泛型类实例化对象时，前后的泛型类型必须统一，即使是继承关系也不行。
 4）无法用 instanceof 做比，因为对象通过getclass()方法获取的类名是不带后边类型参数的。java中的泛型是伪泛型，包装时后边的类型会被擦除，强制转成 原生类型（Object）或者限定类型变量的第一个类。
 5）无法在静态域或方法中使用。因为泛型是对象创建时才初始化，而静态域与方法是在new之前就创建好的。
 但是本身就是泛型方法就可以，如：
@@ -96,7 +92,7 @@ ApiResponse<String>[] response = new ApiResponse<String>[2]; //不可以
 ApiResponse<String>[] response = new ApiResponse[2];//可以，但不推荐
 7）无法创建，捕获或抛出参数化类型的对象。
 泛型类不能继承 Exception/Throwable。这么写是不行的：class A<T> extends Exception{}
-可以作为限定类型变量，例：T extends Exception，但是不能捕获（catch）到继承Exception/Throwable的泛型类实例，但可以抛出，也就是throws T
+可以作为限定类型变量，例：T extends Exception，但是不能捕获（catch）到继承Exception/Throwable的泛型类实例（对象），但可以抛出，也就是throws T
 
 05.通配符类型，定义方法、成员变量时使用，不能在类、接口中使用。
 1）无限通配符：?，表示对类型没有限制，当成object理解就行了，调用getFist返回的是object类型，setFist不能被调用。
@@ -140,36 +136,35 @@ Object data=type.getData();//可以获取，但获取的是object对象
 Signature是其中最重要的一项属性，他的作用就是存储一个方法在字节码层面的特征签名，这个属性中保存的参数类型并不是原生类型，而是包括了参数化类型的信息，修改后的虚拟机规范要求所有能识别49.0以上版本的Class文件的虚拟机都要能正确的识别Signature参数。
 另外，从Signature属性我们还可以得出结论，擦除仅仅只是对code属性中的字节码进行擦除，但是元数据还是保存了泛型信息，这也是我们能通过反射手段取得参数化类型的根本依据。
 
+
 第二章 注解，反射、动态代理
 第一节 注解
-01.注解 Annotation，JDK5.0引入的一种注释机制。使用 @interface 关键字，来表示一个注解类的声明。
+01.注解 Annotation，JDK5.0引入的一种注释机制。
+关键字 @interface ，来定义一个注解类。
 
 02.元注解：声明注解类的应用范围
 1）@Target：表示注解类可以使用的范围
-ElementType.PACKAGE：用于包声明
-ElementType.TYPE：用于类
-ElementType.FIELD：用于字段或属性
-ElementType.CONSTRUCTOR：用于构造函数
-ElementType.METHON：用于方法
-ElementType.LOCAL_VARIABLE：用于局部变量
-ElementType.PARAMETER：用于方法参数
-ElementType.ANNOTATION_TYPE：可以用于注解类型
-ElementType.TYPE_USE：用于类的任何元素
-ElementType.TYPE_PARAMETER：用于类型参数声明
+01、ElementType.PACKAGE：用于包声明
+02、ElementType.TYPE：用于类
+03、ElementType.FIELD：用于字段或属性
+04、ElementType.CONSTRUCTOR：用于构造函数
+05、ElementType.METHON：用于方法
+06、ElementType.LOCAL_VARIABLE：用于局部变量
+07、ElementType.PARAMETER：用于方法参数
+08、ElementType.ANNOTATION_TYPE：可以用于注解类型
+09、ElementType.TYPE_USE：用于类的任何元素
+10、ElementType.TYPE_PARAMETER：用于类型参数声明
 2）@Retention：规定注解类存在的范围，三种：
-RetentionPolicy.SOURCE：只在源码中存在，Javac编译成class文件时会被剔除掉，其中会执行APT操作。可以用于生成额外的类或者语法检查（如参数类型限定）。
-RetentionPolicy.CLASS：可以在javac编译后的class文件中存在，代码运行时会被忽略。可以进行插桩操作，对于相同的代码，可以通过注解来同时添加，如埋点操作。
-RetentionPolicy.RUNTIME：可以在代码运行时存在，反射就应用在此，也只能用在此处。
+01、RetentionPolicy.SOURCE：只在源码中存在，Javac编译成class文件时会被剔除掉，其中会执行APT操作。可以用于生成额外的类或者语法检查（如参数类型限定）。
+02、RetentionPolicy.CLASS：可以在javac编译后的class文件中存在，代码运行时会被忽略。可以进行插桩操作，对于相同的代码，可以通过注解来同时添加，如埋点操作。
+03、RetentionPolicy.RUNTIME：可以在代码运行时存在，反射就应用在此，也只能用在此处。
 3）@Documented：被javadoc工具提取成文档
 4）@Inherited：表示允许子类继承父类中定义的注解
 5）参数类型限定的注解类有：@IntDef,@DrawableRes，在androidx.annotation
 
-03注解类中可以有多个属性，可以有默认值；在只有一个的时候使用value字段，此为默认字段。传值时，只有一个字段value时，可以直接赋值，多个值时需要key-value对应。
-
+03.注解类中可以有多个属性，可以有默认值；在只有一个的时候使用value字段，此为默认字段。传值时，只有一个字段value时，可以直接赋值，多个值时需要key-value对应。
 04.Java中Enum（枚举）实际是特殊单例的静态成员变量，在运行期所有枚举类作为单例，加载到内存中，比常量多5到10倍的内存占用。
-
 05.APT 注解处理器：Annotation Processor Tools，javac自带。EventBus3，tinker，butterknifer中都有应用。
-
 06.编译期可以进行字节码插桩，可以使用 ASM，工作时期是在class文件打包成dex时。
 
 第二节 反射原理
@@ -199,7 +194,7 @@ RetentionPolicy.RUNTIME：可以在代码运行时存在，反射就应用在此
 6）ClassLoader getClassLoader() 返回该类的类加载器
 7）Type getGenericSuperclass() 返回该类的泛型类，
 
-8）通过class对象获取构造函数 Constructor实例或者数组，获得constructor实例后，通过调用 newInstance() 方法来创建封装类的实例。
+8）通过class对象获取构造函数 Constructor 实例或者数组，获得 constructor 实例后，通过调用 newInstance() 方法来创建封装类的实例。
 getConstructors() 获取公共的构造器，包括父类，是数组
 getConstructor(Class<?>... params) 获取对应参数的公共构造器，包括父类。单个实例
 getDeclaredConstructors() 获取自身所有构造函数，包含私有。数组
@@ -226,13 +221,15 @@ setAccessible(true) 访问私有属性，在使用反射时，必须要设置此
 1）TypeVariable：泛型类型变量，可以获取泛型上下限等信息。
 2）ParameterizedType 具体的泛型类型，可以获得原数据中泛型签名类型（泛型真实类型）
 3）GenericArrayType 泛型类是数组时，如List[],Map[]，此接口会作为Type实现。
-WildcardType 通配符泛型，获得上下限信息。
+4）WildcardType 通配符泛型，获得上下限信息。
 
 第三节 代理模式
 01.代理模式，分为静态代理，与动态代理（Proxy InvocationHandler）
-1）静态代理包含：接口，实现类，包含实现类的代理类（同样继承接口，在相同的方法内调用实现类的方法），访问者。
+1）静态代理包含：接口，实现类，包装类（包含实现类的代理类，同样继承接口，在相同的方法内调用实现类的方法），访问者。
 缺点是扩展能力差，可维护性差
-2）动态代理与静态代理唯一的差别就是在使用时通过一个中转类来动态生成代理类。需要依赖以下两个类来实现。
+
+2）动态代理与静态代理的差别是在使用时通过一个中转类来动态生成包装类（代理类）。需要依赖以下两个类来实现。
+他的结构包含：接口，实现类，Proxy.newProxyInstance() 方法结合 InvocationHandler 接口实现的动态包装类，访问者
 Proxy是用来创建动态代理类的类。
 InvocationHandler是给动态代理类实现的，负责处理调用接口里的方法。
 3）优点是：由于其中代理类是使用代码自动生成，减少了重复类的创建。
@@ -245,6 +242,7 @@ Proxy.newProxyInstance()的三个参数
 ClassLoader loader：类加载器
 Class<?>[] interfaces：需要对接的接口，可以调用实例类来获取接口，有些实现类会继承多个接口；也可以用数据直接定死。xx.getClass.getInterfaces() 或者 new Class[]{接口.class}
 InvocationHandler h ：方法的反射操作。method.invoke(实现类的实例，args)
+
 
 第三章 多线程，锁以及锁原理，线程池
 第一节 线程相关知识
@@ -274,12 +272,14 @@ kthread进程是所有内核进程的父进程。
 init进程：是所有用户（App）进程的父进程（或者父父进程）
 
 03.并行和并发
-1）并行是是同时运行。与CPU是几线程的有关，如四核心八线程，就是并行8个线程。
-2）并发是单位时间内能处理的线程数量。例如：一条路每小时的最大车流量。
+1）并行是是同时运行。
+与CPU是几线程的有关，如四核心八线程，就是并行8个线程。
+2）并发是单位时间内能处理的线程数量。
+例如：一条路每小时的最大车流量。
 并发是通过时间片轮转机制实现的。一秒钟执行多少个时间片就是这个核心的并发数。
 
 04.高并发编程的意义，好处和注意事项。
-优点：充分利用CPU的资源，执行更多的任务线程，下载速度更快，页面加载更快；可以使代码模块化，异步化，简单化。
+优点：高并发下，CPU可以执行更多的任务线程，可以提高下载速度，页面加载更快；可以使代码模块化，异步化。
 缺点：多线程，同步不方便，容易死锁；线程过多会损耗服务器资源，容易造成死机宕机。
 
 05.Java天生就是多线程的，一个main启动了六个线程
@@ -626,6 +626,7 @@ CPU读取一次内存             100纳秒/59.4ns
 由于CPU的时间片轮转机制，CPU在执行完某一条指令后，就会切换任务。而一句java代码，往往对应多条CPU指令。
 volatile 的问题就出在这里，一条代码生成的多条指令没有彻底执行完毕，就转去执行其他线程了，造成同步问题。
 
+
 第四章 序列化
 第一节 序列化（Encode）与反序列化（Decode）
 01.序列化（Encode）与反序列化（Decode），是将数据对象转成相应的格式与把相应的格式再次转换成数据对象的一个过程。
@@ -798,7 +799,6 @@ builder.setVersion(1);//与@Since(1.2)或@Until(1.4)搭配使用才有效果
 12）builder.disableHtmlEscaping();//禁止转义html标签
 
 
-
 第五章 IO流 与 AES加密加固
 第一节 IO流
 01.Java.io包的分类
@@ -918,6 +918,7 @@ method_ids：方法索引
 class_defs：类的定义区
 data：数据区
 link_data：链接数据区
+
 
 第六章 JVM虚拟机的原理
 第一节 了解JVM（Java Virtua; Machine）
@@ -1323,6 +1324,7 @@ GC收集器的目标就是尽可能的减少STW的时间和次数。
 1.有色指针（Colored Pointers）
 2.加载屏障（Load Barrier）
 
+
 第七章 热修复 ClassLoader 机制
 01.什么是基于栈的虚拟机？
 对于基于栈的虚拟机来说，每一个运行的线程，都有一个独立的栈。栈中记录了方法调用的历史，每一次方法调用，栈中都会多一个栈帧，最顶部的栈帧称作当前栈帧，代表当前执行的方法。
@@ -1370,6 +1372,7 @@ optimizedDirectory 是优化后的 odex 文件的输出目录，DexClassLoader �
 10.热修复：尼玛原来这么简单的啊。
 利用的就是反射获取ClassLoader，把指定的 dex 文件插入 DexPathList 中，必须插在有问题的dex之前。类信息是按顺序加载的，且只会获取一次，就算有重名的，也不会再加载。
 gradle开发：插桩+自动生成Dex。
+
 
 第八章 Kotlin
 https://www.jianshu.com/u/a324daa6fa19
@@ -1551,7 +1554,6 @@ tailrec 将一个函数标记为尾递归（允许编译器将递归替换为迭
 13）groupBy 根据条件把集合转换成分组的map
 14）flatMap 根据作为实参给定的函数对集合中的每个元素做变换，然后把多个列表合并成一个列表
 15）asSequence() 把任意的集合转换成序列 （惰性操作）
-
 
 
 第九章 自定义UI
@@ -1943,6 +1945,7 @@ insertDrawable -> inset
 
 11.SVG:VectorDrawable（vector静态效果）、AnimatedVectorDrawable（animated-vector）：animated-vector组合objectAnimator与vector形成动态的动画效果
 
+
 第十章 Android 日常总结
 01.Android的系统架构
 1）操作系统层OS：linux内核。
@@ -2070,11 +2073,11 @@ textIsSelectable="true"：是否可选择文字，默认为false
 
 11.Fragment 的添加过程
 1）add 添加新的Fragment，需要与 hide 和 show 配合使用。推荐使用
-FragmentManage manager=getSupportFragmentManager()；获取fragment的管理器
+FragmentManager manager=getSupportFragmentManager()；获取fragment的管理器
 Fragment fragment=manager.findFragmentByTag(tag);//获取已存在Fragment
 FragmentTransaction tran=manager.beginTransaction();//获取Fragment加载器
 if(fragment==null){
-    fragment = new fragment();
+    fragment = new XXXFragment();
     tran.add(fragment,tag);
 }else{
     tran.show(fragment);
@@ -2121,7 +2124,6 @@ adb install -t app-debug.apk
 9）mediaRecorder：录制音频；
 
 
-
 第十一章 混淆 ProGuard，参见app下的proguard文件，App研发录
 01.混淆的过程
 1）压缩Shrink：侦测并移除代码中的无用类，字段，方法和特性。
@@ -2150,6 +2152,7 @@ feild：匹配类中的所有字段。
 method：匹配类中的所有方法。
 init：匹配类中的所有构造函数。
 *：匹配任意长度的字符，但不含包名分隔符（.）。
+
 
 第十二章 MVVM、MVC、MVP
 01.MVC：
@@ -2247,7 +2250,6 @@ http://www.baidu.com/...
 4）提高程序在某些特定情形下的执行效率，但是并不能明显提升Android程序的性能；
 5）在cmd终端中进入到main目录下 cd (具体路径)/apiutils/src/main
 执行此语句  javah -d jni -classpath ../../build/intermediates/classes/debug com.sky.NDKString  会自动生成jni文件com_sky_NDKString.h,自定义.c的file
-
 
 
 第十六章 AsyncTask 已废弃

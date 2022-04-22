@@ -63,8 +63,9 @@ abstract class RecyclerAdapter<V : ViewBinding, T> : RecyclerView.Adapter<MvvmHo
         }
     }
 
+    //view 的种类，如果返回position的话，拖动item的会有冲突。
     override fun getItemViewType(position: Int): Int {
-        return position
+        return super.getItemViewType(position)
     }
 
     override fun getItemCount(): Int {

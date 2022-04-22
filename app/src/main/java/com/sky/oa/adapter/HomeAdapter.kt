@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.view.animation.LayoutAnimationController
 import android.view.animation.ScaleAnimation
 import com.sky.oa.R
+import com.sky.oa.adapter.itemtouch.ItemTouchHelperListener
 import com.sky.oa.databinding.AdapterHomeBinding
 import com.sky.oa.entity.ActivityEntity
 import com.sky.ui.adapter.MvvmHolder
 import com.sky.ui.adapter.RecyclerAdapter
+import java.util.*
 
 /**
  *
@@ -19,7 +21,7 @@ import com.sky.ui.adapter.RecyclerAdapter
  * @CreateDate: 2022/3/18 5:10 下午
  * @Version: 1.0
  */
-class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>() {
+class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>(), ItemTouchHelperListener {
     private val fontIcon = intArrayOf(
         R.string.font,
         R.string.font01,
@@ -82,5 +84,13 @@ class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>() {
 //                cardView.background = context.resources.getDrawable(R.drawable.bg_card)}
 //            setOnClickListener { v -> LogUtils.i("lkjdflkajdkf") }
 
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        notifyItemMoved(fromPosition, toPosition)
+        Collections.swap(datas, fromPosition, toPosition)
+    }
+
+    override fun onItemSwiped() {
     }
 }

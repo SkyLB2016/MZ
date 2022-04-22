@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sky.common.utils.FileUtils
 import com.sky.common.utils.JumpAct
 import com.sky.common.utils.LogUtils
 import com.sky.oa.adapter.HomeAdapter
+import com.sky.oa.adapter.itemtouch.ItemTouchHelperCallback
 import com.sky.oa.databinding.FragmentHomeBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.vm.HomeVM
@@ -32,10 +34,15 @@ class HomeFragment : MVVMFragment<FragmentHomeBinding, HomeVM>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = HomeAdapter()
         binding.recycler.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        binding.recycler.isNestedScrollingEnabled = false
+        val adapter = HomeAdapter()
         binding.recycler.adapter = adapter
+
+        //设置拖动item
+        val helper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+        helper.attachToRecyclerView(binding.recycler)
 
         adapter.onItemClickListener = { v, p ->
             JumpAct.jumpActivity(context, adapter.datas?.get(p)!!.componentName)

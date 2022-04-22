@@ -133,7 +133,7 @@ interface：定义接口；
 enum：枚举类。
 
 04.继承符：2个；
-extends：单继承，唯一；
+extends：单继承，唯一；泛型中的继承
 implements：继承接口，可多个。
 
 05.创建符：1个；
@@ -141,7 +141,7 @@ new：分配新的类实例，也即是创建新对象。
 
 06.本类与父类引用符：2个；
 this：指代自身；
-super：指代自身的父类/基类/超类。
+super：指代自身的父类/基类/超类。泛型中有使用
 
 07.对比符：1个；
 instanceof：判断一个对象是否是某个类的实例，多态的应用。
@@ -156,7 +156,7 @@ double（Double -> Number）：64bit，8字节，我也没闹明白他的位数�
 boolean（Boolean -> Serializable,Comparable<Boolean>）：布尔数据类型，只有true与false；在JVM规范中，boolean变量作为int处理，也就是4字节；boolean数组当做byte数组处理。
 char（Character -> Serializable,Comparable<Character>）：16bit，2字节，字符型，用单引号''表示，只能有一个字符，本质就是个数字，Unicode字符；最小值’\u0000’（0），最大值’\uffff’（即为65,535）
 
-字符串包装类型：String：不是关键字，是类，值是char类型数组，final修饰，值无法改变，每次更改都是创建新的对象，如频繁操作，应使用stringBuilder
+字符串包装类型：String：不是关键字，是类，值是char类型数组，final修饰，值无法改变，每次更改都是创建新的对象，如频繁操作，应使用 StringBuilder
 
 09.中断操作符：2个；
 break：跳出循环或者 lable 标签标记的代码段，在判断和循环中用的多；
@@ -195,7 +195,6 @@ null：空值
 const：未使用；
 goto：未使用；
 strictfp：浮点数比较使用严格的规则。
-
 
 
 第三章 Java 运算符

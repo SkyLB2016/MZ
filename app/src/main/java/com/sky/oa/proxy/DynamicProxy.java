@@ -37,7 +37,7 @@ public class DynamicProxy implements InvocationHandler {
         Object result = method.invoke(factory, args);
         afterSaleService();
 
-        return result;
+        return result; 
     }
 
     public void preSaleService() {
