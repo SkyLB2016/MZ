@@ -110,6 +110,17 @@
                 <category android:name="android.intent.category.CAR_MODE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.FragmentTestActivity"
+            android:description="@string/act_fragment"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_fragment">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+                <category android:name="android.intent.category.CAR_MODE" />
+            </intent-filter>
+        </activity>
 
     </application>
 

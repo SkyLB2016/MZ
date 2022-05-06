@@ -53,6 +53,7 @@ class MyFragment : BaseFragment<FragmentMyBinding>() {
             LogUtils.i("name==${it.name}")
             binding.tv.text = it.name
         }
+        binding.tv.text = arguments!!.getString("name")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

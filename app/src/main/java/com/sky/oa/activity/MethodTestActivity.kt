@@ -1248,12 +1248,18 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         return text.toString()
     }
 
-    private fun replaceStr() = String.format(getString(R.string.format00), 99, 44) +
-            String.format(getString(R.string.format00), 99, 44) +
-            String.format(getString(R.string.format01), 99, 44) +
-            String.format(getString(R.string.format02), "abc", 77) +
-            String.format(getString(R.string.format03), 29) +
-            String.format(getString(R.string.format04), 9982999, 9998.876)
+    private fun replaceStr() =
+        String.format(getString(R.string.format01), 88) +
+                String.format(getString(R.string.format02), "天地玄黄，宇宙洪荒") +
+                String.format(getString(R.string.format03), 88.8) +
+                String.format(getString(R.string.format03), 88.12345678) +
+                String.format(getString(R.string.format04), 88.129345678) +
+                String.format(getString(R.string.format05), "日月盈昃", 44) +
+                String.format(getString(R.string.format06), "日月", 44, 9.9) +
+                String.format(getString(R.string.format07), 29) +
+                String.format(getString(R.string.format08), 29) +
+                String.format(getString(R.string.format09), 9982999, 9998.876) +
+                getString(R.string.format016)
 
     //获取系统信息
     private fun getSystemMessage(): String {
