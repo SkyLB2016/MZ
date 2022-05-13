@@ -24,6 +24,7 @@ class CanvasView @JvmOverloads constructor(
     private var lastY = -1f
     private var cX = -1f
     private var cY = -1f
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         velocity.addMovement(event)
 //        velocity.clear()
@@ -111,9 +112,18 @@ class CanvasView @JvmOverloads constructor(
         drawBezier(canvas)//画贝赛尔曲线与pathEffect应用
         setProgress(canvas)//环形进度条
         drawClock(canvas)//时钟
-        maskFilter(canvas)
+        maskFilter(canvas)//绘制遮罩
+        canvasPanda(canvas)//画熊猫
 
+        animate().alpha(1f)
+            .rotation(180f)
+            .setDuration(3000)
+            .withStartAction { }
+            .withEndAction { }
+            .start()
+    }
 
+    private fun canvasPanda(canvas: Canvas) {
         val matrix = matrix
         matrix?.reset()
         matrix.setTranslate(0f, 1100f)
@@ -123,15 +133,11 @@ class CanvasView @JvmOverloads constructor(
 //        else matrix?.setScale(scale, scale)
         val b2 = Bitmap.createBitmap(bitmap, 0, 0, bw, bh, matrix, true)
         canvas.drawBitmap(b2, matrix, null)
-
-//        animate().alpha(1f)
-//                .rotation(180f)
-//                .setDuration(3000)
-//                .withStartAction { }
-//                .withEndAction { }
-//                .start()
     }
 
+    /**
+     * 按键操作视图
+     */
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_W -> {
@@ -203,7 +209,8 @@ class CanvasView @JvmOverloads constructor(
     private fun drawClock(canvas: Canvas) {
         val paint = Paint()
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(600f, 600f, 200f, paint)
+        paint.strokeWidth = 10f
+        canvas.drawCircle(610f, 600f, 200f, paint)
         paint.style = Paint.Style.FILL
         for (i in 0..11) {
             when (i) {
@@ -305,7 +312,8 @@ class CanvasView @JvmOverloads constructor(
         var start = 140f//起始角度
         var sweep = 260f//旋转角度
         paint.maskFilter = BlurMaskFilter(25f, BlurMaskFilter.Blur.OUTER)
-        canvas.drawArc(area, start, sweep, false, paint)
+        val areaCircle = RectF(5f, 405f, 395f, 795f)
+        canvas.drawArc(areaCircle, start, sweep, false, paint)
 
         val textP = TextPaint()
         textP.textSize = 60f

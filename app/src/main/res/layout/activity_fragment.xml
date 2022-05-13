@@ -26,7 +26,6 @@
         app:layout_constraintTop_toBottomOf="@id/appBar"
         app:tabIndicatorHeight="@dimen/wh_1"
         app:tabSelectedTextColor="@color/color_333333"
-        app:tabBackground="@color/color_333333"
         app:tabTextAppearance="@style/Theme.MZ.TabsTextStyle"
         app:tabTextColor="@color/color_666666" />
 
