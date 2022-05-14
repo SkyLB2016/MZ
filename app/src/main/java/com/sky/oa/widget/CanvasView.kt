@@ -109,10 +109,11 @@ class CanvasView @JvmOverloads constructor(
 
         moveLayout(canvas)//移动布局坐标
         drawOval(canvas)//渐变圆
-        drawBezier(canvas)//画贝赛尔曲线与pathEffect应用
+        drawBezier(canvas)//画贝赛尔曲线
         setProgress(canvas)//环形进度条
         drawClock(canvas)//时钟
         maskFilter(canvas)//绘制遮罩
+        canvasLine(canvas)//画直线虚线与pathEffect应用
         canvasPanda(canvas)//画熊猫
 
         animate().alpha(1f)
@@ -123,10 +124,48 @@ class CanvasView @JvmOverloads constructor(
             .start()
     }
 
+    //画直线虚线：pathEffect应用
+    private fun canvasLine(canvas: Canvas) {
+        val paint = Paint()
+        paint.isAntiAlias = true
+        paint.style = Paint.Style.STROKE
+        paint.color = Color.RED
+        paint.strokeWidth = 5f
+
+        var list = (0..20).mapTo(ArrayList()) { Point(50 + it * 50, 1110) }
+        //pathEffect 应用
+        val effectPath = Path()
+        effectPath.moveTo(list[0].x * 1f, list[0].y * 1f)//设置Path的起点
+        for (i in 1 until list.size) effectPath.lineTo(list[i].x * 1f, list[i].y * 1f)
+        canvas.drawPath(effectPath, paint)
+
+        paint.pathEffect = CornerPathEffect(20f)//拐角圆角
+        canvas.drawLine(50f,1140f,1028f,1140f, paint)
+
+        paint.pathEffect = DiscretePathEffect(2f, 3f)//毛茸茸的线
+        canvas.drawLine(50f,1170f,1028f,1170f, paint)
+
+        paint.pathEffect = DashPathEffect(floatArrayOf(20f, 10f, 5f, 10f), 0f)//虚线
+        canvas.drawLine(50f,1200f,1028f,1200f, paint)
+        paint.pathEffect = DashPathEffect(floatArrayOf(20f, 10f), 100f)//虚线
+        canvas.drawLine(50f,1210f,1028f,1210f, paint)
+
+        paint.pathEffect = ComposePathEffect(CornerPathEffect(20f), DiscretePathEffect(2f, 3f))//组合
+        canvas.drawLine(50f,1230f,1028f,1230f, paint)
+
+        paint.pathEffect = SumPathEffect(CornerPathEffect(20f), DiscretePathEffect(2f, 3f))//组合
+        canvas.drawLine(50f,1260f,1028f,1260f, paint)
+
+        val pp = Path()
+        pp.addRect(0f, 0f, 8f, 8f, Path.Direction.CCW)
+        paint.pathEffect = PathDashPathEffect(pp, 12f, 0f, PathDashPathEffect.Style.ROTATE)//自定义的虚线
+        canvas.drawLine(50f,1290f,1028f,1290f, paint)
+    }
+
     private fun canvasPanda(canvas: Canvas) {
         val matrix = matrix
         matrix?.reset()
-        matrix.setTranslate(0f, 1100f)
+        matrix.setTranslate(0f, 1320f)
 //        matrix?.setScale(1.5f, 1.5f)
 //        if (!isScale)
 //            matrix?.setSkew(sx, 0f)
@@ -268,7 +307,7 @@ class CanvasView @JvmOverloads constructor(
         canvas.drawOval(rect, paint)
     }
 
-    //画贝赛尔曲线与pathEffect应用
+    //画贝赛尔曲线
     private fun drawBezier(canvas: Canvas) {
         val paint = Paint()
         paint.isAntiAlias = true

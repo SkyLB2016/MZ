@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sky.oa.widget.PersonCircleView
+    <com.sky.oa.widget.CanvasView
         android:id="@+id/touch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -3,6 +3,7 @@ package com.sky.oa.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -13,7 +14,11 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.sky.common.utils.ScreenUtils;
 import com.sky.oa.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description:
@@ -46,113 +51,90 @@ public class PersonLineView extends View {
         canvasCircle(canvas);
     }
 
-    float radius = 200;//大圆半径
-    float circleLineSize = 30f;//大圆线粗
-    int radiusSmall = 24;//小圆半径
-    String total = "190人";
-    String mark01 = "正式员工28人";
-    String mark02 = "劳务派遣9人";
-    String mark03 = "试用员工9人";
-
     private void canvasCircle(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(circleLineSize);
-        float left = getPaddingLeft() + circleLineSize / 2;
-        float top = getPaddingTop() + circleLineSize / 2;
-        float right = left + radius * 2;
-        float bottom = top + radius * 2;
-        RectF area = new RectF(left, top, right, bottom);
-
-
-        float start = -90f;//起始角度
-        float sweep = 225f;//旋转角度
-        paint.setColor(Color.parseColor("#437DFF"));
-        canvas.drawArc(area, start, sweep, false, paint);
-
-        start += sweep + 2;
-        sweep = 63f;
-        paint.setColor(Color.parseColor("#06CAFD"));
-        canvas.drawArc(area, start, sweep, false, paint);
-
-
-        start += sweep + 2;
-        sweep = 66f;
-        paint.setColor(Color.parseColor("#FFC512"));
-        canvas.drawArc(area, start, sweep, false, paint);
-
-        //小圆
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawCircle(area.right + radius, area.centerY() - radius / 2, radiusSmall, paint);
-
-        paint.setColor(Color.parseColor("#06CAFD"));
-        canvas.drawCircle(area.right + radius, area.centerY(), radiusSmall, paint);
-
-        paint.setColor(Color.parseColor("#FFC512"));
-        canvas.drawCircle(area.right + radius, area.centerY() + radius / 2, radiusSmall, paint);
-
+        int left = getPaddingLeft() + 50;
+        int right = getMeasuredWidth() - getPaddingRight() - 50;
+        int top = getPaddingTop() + 100;
+        int height = getMeasuredHeight();
 
         TextPaint textP = new TextPaint();
-        textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_18));
-        textP.setTextAlign(Paint.Align.CENTER);
+        textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_12));
+        textP.setTextAlign(Paint.Align.LEFT);
 
         Paint.FontMetricsInt metrics = textP.getFontMetricsInt();//文本的基线数据
         int textHeight = metrics.bottom - metrics.top;//文本框所占的高度
-//        textP.getTextBounds(text, 0, text.length, textBound)//不建议用
-
         //计算的文字所在的背景框的左侧，顶部，右侧，底部
-        Float leftX = left + radius / 2;
-        Float topY = top + radius - textHeight - 10;
-        Float rightX = left + radius / 2 * 3;
-        Float bottomY = top + radius - 10;
-        //文字背景所在矩形
-        Rect textRect = new Rect(leftX.intValue(), topY.intValue(), rightX.intValue(), bottomY.intValue());
-//        Drawable textbg = ContextCompat.getDrawable(getContext(), R.drawable.shape_ffc107);
-//        textbg.setBounds(textRect);//为文字设置背景
-//        textbg.draw(canvas);//画入画布中
-        //让文字居于背景中间，计算文字的左距离与底部距离
-        float baseline = textRect.exactCenterY() + textHeight / 2 - metrics.bottom;
-        canvas.drawText(total, textRect.exactCenterX(), baseline, textP);//画入画布中
+        int leftX = left;
+        int topY = top - textHeight / 2;
+        float baseline = top + textHeight / 2 - metrics.bottom;
+        List<String> leftText = new ArrayList<>();
+        for (int i = 7; i >= 0; i--) {
+            leftText.add(i + "");
+        }
+        for (int i = 0; i < 8; i++) {
+            canvas.drawText(leftText.get(i), leftX, baseline + 50 * i, textP);//画入画布中
+        }
 
 
-        textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_12));
-//        textP.setPathEffect(new CornerPathEffect(20f));//圆角
-//        textP.setTextAlign(Paint.Align.CENTER);
-        textP.setColor(getContext().getResources().getColor(R.color.color_666666));
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2f);
+//        canvas.drawCircle(area.right + radius, area.centerY() + radius / 2, radiusSmall, paint);
+
+        leftX += 60;
+        paint.setColor(Color.parseColor("#B4B4B4"));
+        canvas.drawLine(leftX, 450, right, 450, paint);
+
+        //画虚线
+        paint.setPathEffect(new DashPathEffect(new float[]{10f, 20f}, 0f));//虚线
+        for (int i = 0; i < 8; i++) {
+            canvas.drawLine(leftX, top + 50 * i, right, top + 50 * i, paint);
+        }
+
+        List<String> bottomText = new ArrayList<>();
+        bottomText.add("入职");
+        bottomText.add("转正");
+        bottomText.add("调薪");
+        bottomText.add("调岗");
+        bottomText.add("离职");
+        int part = (right - leftX) / 5;
+
+        textP.setTextAlign(Paint.Align.CENTER);
+        for (int i = 0; i < 5; i++) {
+            canvas.drawText(bottomText.get(i), leftX + part / 2 + part * i, baseline + 50 * 7 + 50, textP);//画入画布中
+        }
 
 
-        metrics = textP.getFontMetricsInt();//文本的基线数据
-        textHeight = metrics.bottom - metrics.top;//文本框所占的高度
-//        textP.getTextBounds(text, 0, text.length, textBound)//不建议用
+        RectF rectF = new RectF();
+        for (int i = 0; i < 5; i++) {
 
-        //计算的文字所在的背景框的左侧，顶部，右侧，底部
-//        leftX = left + radius / 2;
-        topY = top + radius + 10;
-//        rightX = left + radius / 2 * 3;
-        bottomY = top + radius + 10 + textHeight;
-        //文字背景所在矩形
-        textRect = new Rect(leftX.intValue(), topY.intValue(), rightX.intValue(), bottomY.intValue());
-//        Drawable textbg = ContextCompat.getDrawable(getContext(), R.drawable.shape_ffc107);
-//        textbg.setBounds(textRect);//为文字设置背景
-//        textbg.draw(canvas);//画入画布中
-        //让文字居于背景中间，计算文字的左距离与底部距离
-        baseline = textRect.exactCenterY() + textHeight / 2 - metrics.bottom;
-        canvas.drawText("总在职员工", textRect.exactCenterX(), baseline, textP);//画入画布中
+            rectF.left = leftX + part / 2 - 5 - 18 + part * i;
+//            rectF.right = leftX + part / 2 - 5;
+            rectF.right = rectF.left + 18;
+            rectF.top = top + 50 * 4;
+            rectF.bottom = top + 50 * 7;
 
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.parseColor("#437DFF"));
+            canvas.drawRect(rectF, paint);
 
-        textP.setTextAlign(Paint.Align.LEFT);
-        baseline = area.centerY() - radius / 2 + textHeight / 2 - metrics.bottom;
-
-        float leftMark = area.right + radius + radiusSmall * 3;
-        canvas.drawText(mark01, leftMark, baseline, textP);//画入画布中
-
-        baseline = area.centerY() + textHeight / 2 - metrics.bottom;
-        canvas.drawText(mark02, leftMark, baseline, textP);//画入画布中
+            //柱形图上的小圆盖
+            paint.setColor(Color.parseColor("#437DFF"));
+            canvas.drawCircle(rectF.left + 9, rectF.top, 9, paint);
 
 
-        baseline = area.centerY() + radius / 2 + textHeight / 2 - metrics.bottom;
-        canvas.drawText(mark03, leftMark, baseline, textP);//画入画布中
+            rectF.left = leftX + part / 2 + 5 + part * i;
+            rectF.right = rectF.left + 18;
+            rectF.top = top + 50 * 2;
+            paint.setColor(Color.parseColor("#06CAFD"));
+            canvas.drawRect(rectF, paint);
+            //柱形图上的小圆盖
+            paint.setColor(Color.parseColor("#06CAFD"));
+            canvas.drawCircle(rectF.left + 9, rectF.top, 9, paint);
+
+        }
+
 
     }
 }
