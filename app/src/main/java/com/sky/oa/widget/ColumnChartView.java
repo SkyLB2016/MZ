@@ -24,6 +24,7 @@ import java.util.List;
  * @Version: 1.0
  */
 public class ColumnChartView extends View {
+    
     private List<String> bottomTexts = new ArrayList<>();//底部文字集合
     private List<Float> columns = new ArrayList<>();//柱形图的所占比例的集合，是底部文字的两倍。
     private List<String> leftTexts = new ArrayList<>();//左侧文字
@@ -99,6 +100,7 @@ public class ColumnChartView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (null == leftTexts || leftTexts.size() == 0) return;
         int left = getPaddingLeft() + lineSpace;
         int right = getMeasuredWidth() - getPaddingRight() - lineSpace;
         int top = (int) (getPaddingTop() + lineSpace * 0.5);
@@ -119,10 +121,10 @@ public class ColumnChartView extends View {
         int leftLineX = left + 50;//虚线距离左边的距离，要跳过文字的宽度
         //先画最后一条实线
         canvas.drawLine(leftLineX, top + lineSpace * 7, right, top + lineSpace * 7, paint);
-        //画六条虚线
+        //画七条虚线
         paint.setPathEffect(new DashPathEffect(new float[]{10f, 10f}, 0f));//虚线
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < leftTexts.size(); i++) {
             //画左侧文字
             canvas.drawText(leftTexts.get(i), left, baseline + lineSpace * i, textP);//画入画布中
             //开始画线
