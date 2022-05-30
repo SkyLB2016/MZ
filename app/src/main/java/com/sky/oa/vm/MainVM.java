@@ -99,7 +99,7 @@ public class MainVM extends ViewModel {
         LogUtils.i("abs()：绝对值。==" + Math.abs(-19));
         LogUtils.i("pow(a,n)：a的n次方幂。==" + Math.pow(2, 4));
         LogUtils.i("ceil()：向上取整==" + Math.ceil(10.7));
-        LogUtils.i("floor()：向下取整==" + Math.floor(10.7));
+        LogUtils.i("floor()：向下取整==" + Math.floor(10.7d));
         LogUtils.i("round()：四舍五入。==" + Math.round(10.6));
         LogUtils.i("random()：随机数。==" + Math.random());
         LogUtils.i("min()：两个数的最小值。==" + Math.min(10, 11));

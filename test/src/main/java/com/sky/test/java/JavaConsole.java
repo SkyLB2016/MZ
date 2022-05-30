@@ -18,7 +18,9 @@ import java.io.ObjectOutputStream;
  */
 public class JavaConsole {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        int a = new PAA().a;
+//        int a = new PAA().a;
+        System.out.println("ceil()：向上取整==" + (3*24*60*60*1000));
+
     }
 
     private static void extracted1() throws IOException, ClassNotFoundException {
