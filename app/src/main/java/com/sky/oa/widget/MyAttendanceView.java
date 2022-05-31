@@ -196,13 +196,12 @@ public class MyAttendanceView extends View {
         for (int i = 0; i < weeks.size(); i++) {
             int centerX = everyWidth / 2 + everyWidth * i;
             canvas.drawText(weeks.get(i), centerX, weekBaseline, textPaint);
-            canvas.drawText(topMarg + "", centerX, weekBaseline + 50, textPaint);
 
             entity = attentances.get(i);
             int bgCenterY = weekTop + textHeight + topMarg + textHeight / 2;
             dayBgRect = new Rect(centerX - textHeight, bgCenterY - textHeight, centerX + textHeight, bgCenterY + textHeight);
             rects.add(dayBgRect);//点击日期时，需要知道比对点击的位置
-            if (selectDay == i) {
+            if (selectDay == Integer.parseInt(entity.getDays())) {
                 textPaint.setColor(getContext().getResources().getColor(R.color.color_437DFF));
                 dayBg.setBounds(dayBgRect);
                 dayBg.draw(canvas);

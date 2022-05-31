@@ -33,9 +33,13 @@ public class CircleProgressView extends View {
     private String subTitle = "";
     private float markSweepLine = 2f;//弧度之间的间隔
     private float start = -90f;//起始角度
-    List<String> marks = new ArrayList<>();//员工种类文字集合
-    List<Float> sweeps = new ArrayList<>();//员工所占角度集合
-    List<Integer> colors = new ArrayList<>();//进度条的颜色
+    private List<String> marks = new ArrayList<>();//员工种类文字集合
+    private List<Float> sweeps = new ArrayList<>();//员工所占角度集合
+    private List<Integer> colors = new ArrayList<>();//进度条的颜色
+
+    private RectF area;//进度条所在的背景框
+    private Paint paint;//进度条和小圆的画笔
+    private TextPaint textP;//文字的画笔
 
     public CircleProgressView(Context context) {
         this(context, null);
@@ -57,26 +61,35 @@ public class CircleProgressView extends View {
         marks.clear();
         marks.add("正式员工28人");
         marks.add("劳务派遣9人");
-//        marks.add("试用员工9人");
-//        marks.add("其他员工9人");
+        marks.add("试用员工9人");
+        marks.add("其他员工9人");
 
         //两组的
-        sweeps.clear();
-        sweeps.add(188f + 2);
-        sweeps.add(168f + 2);
+//        sweeps.clear();
+//        sweeps.add(188f + 2);
+//        sweeps.add(168f + 2);
 
         //四组的
-//        sweeps.clear();
-//        sweeps.add(118f + 2);
-//        sweeps.add(78f + 2);
-//        sweeps.add(68f + 2);
-//        sweeps.add(88f + 2);
+        sweeps.clear();
+        sweeps.add(118f + 2);
+        sweeps.add(78f + 2);
+        sweeps.add(68f + 2);
+        sweeps.add(88f + 2);
 
         colors.clear();
         colors.add(R.color.color_437DFF);
         colors.add(R.color.color_06CAFD);
         colors.add(R.color.color_FFC512);
         colors.add(R.color.color_DFDFDF);
+
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(circleStrokeSize);
+
+        //绘制文字的paint
+        textP = new TextPaint();
+        textP.setColor(getContext().getResources().getColor(R.color.color_666666));
+
     }
 
     public void setRadius(int radius) {
@@ -120,50 +133,30 @@ public class CircleProgressView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = radius * 2 + circleStrokeSize + getPaddingTop() + getPaddingBottom();
+
+        //圆形进度条所在矩形，线的宽度是从中间均分的。所以顶边的圆是会突破矩形所在空间的。
+        float left = getPaddingLeft() + circleStrokeSize / 2;
+        float top = getPaddingTop() + circleStrokeSize / 2;
+        area = new RectF(left, top, left + radius * 2, top + radius * 2);
+
         setMeasuredDimension(width, height);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvasCircle(canvas);
-    }
-
-    private void canvasCircle(Canvas canvas) {
         if (null == sweeps || 0 == sweeps.size()) return;
-        float startSweep = start;//起始角度
-        //圆形进度条所在矩形，线的宽度是从中间均分的。所以顶边的圆是会突破矩形所在空间的。
-        float left = getPaddingLeft() + circleStrokeSize / 2;
-        float top = getPaddingTop() + circleStrokeSize / 2;
-        float right = left + radius * 2;
-        float bottom = top + radius * 2;
-        RectF area = new RectF(left, top, right, bottom);
-
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(circleStrokeSize);
-//        canvas.drawRect(area, paint);//圆所在矩形
-
-        //绘制文字的paint
-        TextPaint textP = new TextPaint();
-
         textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_12));
-        textP.setColor(getContext().getResources().getColor(R.color.color_666666));
         textP.setTextAlign(Paint.Align.CENTER);//文本对齐方式，居中对齐
         Paint.FontMetricsInt metrics = textP.getFontMetricsInt();//文本的基线数据
         int textHeight = metrics.bottom - metrics.top;//文本框所占的高度
-        //计算的文字所在的背景框的左侧，顶部，右侧，底部，因为是居中对齐，宽度在圆形内即可
-//        Float leftX = left + radius / 2;
-//        Float rightX = left + radius / 2 * 3;
-        Float leftX = left;
-        Float rightX = left + radius * 2;
-        Float topY = top + radius + 10;
-        Float bottomY = top + radius + 10 + textHeight;
-        Rect textRect = new Rect(leftX.intValue(), topY.intValue(), rightX.intValue(), bottomY.intValue());
-        float baseline = textRect.exactCenterY() + textHeight / 2 - metrics.bottom;
-        canvas.drawText(subTitle, textRect.exactCenterX(), baseline, textP);//画入画布中
+
+        //先画副标题的线
+        float baseline = area.centerY() + 10 - metrics.top;
+        canvas.drawText(subTitle, area.centerX(), baseline, textP);//副标题
 
         textP.setTextAlign(Paint.Align.LEFT);
+        float startSweep = start;//起始角度
         float smallCenterY;
         float sweep;
         int length = sweeps.size();
@@ -195,20 +188,13 @@ public class CircleProgressView extends View {
             canvas.drawText(marks.get(i), leftMark, baseline, textP);//画入画布中
         }
 
-
         textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_18));
         textP.setTextAlign(Paint.Align.CENTER);//文本对齐方式，居中对齐
         //改变文字大小后，再一次获取文本的基线数据，好像不再次获取也可以。
         metrics = textP.getFontMetricsInt();//文本的基线数据
 
-        textHeight = metrics.bottom - metrics.top;//文本框所占的高度
-        //计算左右上下间距
-        topY = top + radius - textHeight - 10;
-        rightX = left + radius * 2;
-        bottomY = top + radius - 10;
-        textRect = new Rect(leftX.intValue(), topY.intValue(), rightX.intValue(), bottomY.intValue());
         //让文字居于背景中间，计算文字的左距离与底部距离
-        baseline = textRect.exactCenterY() + textHeight / 2 - metrics.bottom;
-        canvas.drawText(title, textRect.exactCenterX(), baseline, textP);//画入画布中
+        baseline = area.centerY() - 10 - metrics.bottom;
+        canvas.drawText(title, area.centerX(), baseline, textP);//主标题文字
     }
 }

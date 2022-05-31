@@ -24,12 +24,14 @@ import java.util.List;
  * @Version: 1.0
  */
 public class ColumnChartView extends View {
-    
     private List<String> bottomTexts = new ArrayList<>();//底部文字集合
     private List<Float> columns = new ArrayList<>();//柱形图的所占比例的集合，是底部文字的两倍。
     private List<String> leftTexts = new ArrayList<>();//左侧文字
     private List<Integer> columnColors = new ArrayList<>();//柱形图的颜色
     private int lineSpace = 50;//线之间的间隔
+    private TextPaint textP;
+    private Paint paint;
+    private int columnWidth = 18;//柱形图宽度
 
     public ColumnChartView(Context context) {
         this(context, null);
@@ -53,7 +55,6 @@ public class ColumnChartView extends View {
         bottomTexts.add("入职");
         bottomTexts.add("转正");
         bottomTexts.add("调薪");
-        bottomTexts.add("调岗");
         bottomTexts.add("离职");
 
         columns.clear();
@@ -65,12 +66,21 @@ public class ColumnChartView extends View {
         columns.add(4f);
         columns.add(5f);
         columns.add(6f);
-        columns.add(5f);
-        columns.add(5f);
 
         columnColors.clear();
         columnColors.add(R.color.color_437DFF);
         columnColors.add(R.color.color_06CAFD);
+
+        columnWidth = getContext().getResources().getDimensionPixelSize(R.dimen.wh_10);//柱形图宽度
+
+        textP = new TextPaint();
+        textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_12));
+
+        paint = new Paint();//线与柱形图的画笔
+        paint.setAntiAlias(true);
+//        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2f);
+
     }
 
     public void setBottomTexts(List<String> bottomTexts) {
@@ -105,32 +115,24 @@ public class ColumnChartView extends View {
         int right = getMeasuredWidth() - getPaddingRight() - lineSpace;
         int top = (int) (getPaddingTop() + lineSpace * 0.5);
 
-        TextPaint textP = new TextPaint();
-        textP.setTextSize(getContext().getResources().getDimension(R.dimen.text_12));
         textP.setTextAlign(Paint.Align.LEFT);
         Paint.FontMetricsInt metrics = textP.getFontMetricsInt();//文本的基线数据
         int textHeight = metrics.bottom - metrics.top;//文本框所占的高度
         float baseline = top + textHeight / 2 - metrics.bottom;//左侧第一行文字的基准线
 
-        Paint paint = new Paint();//线与柱形图的画笔
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(2f);
+        //线的颜色
         paint.setColor(ContextCompat.getColor(getContext(), R.color.color_B4B4B4));
-
         int leftLineX = left + 50;//虚线距离左边的距离，要跳过文字的宽度
-        //先画最后一条实线
-        canvas.drawLine(leftLineX, top + lineSpace * 7, right, top + lineSpace * 7, paint);
-        //画七条虚线
         paint.setPathEffect(new DashPathEffect(new float[]{10f, 10f}, 0f));//虚线
-
         for (int i = 0; i < leftTexts.size(); i++) {
-            //画左侧文字
-            canvas.drawText(leftTexts.get(i), left, baseline + lineSpace * i, textP);//画入画布中
-            //开始画线
-            canvas.drawLine(leftLineX, top + lineSpace * i, right, top + lineSpace * i, paint);
+            canvas.drawText(leftTexts.get(i), left, baseline + lineSpace * i, textP);//画左侧文字
+            if (i == leftTexts.size() - 1) {
+                paint.setPathEffect(null);//去掉虚线，画实线。
+            }
+            canvas.drawLine(leftLineX, top + lineSpace * i, right, top + lineSpace * i, paint);//画线
         }
 
+        //底部文字居中画
         textP.setTextAlign(Paint.Align.CENTER);//从每部分中间开始画文本
         //画底部文字，文本和柱形图，都按文本数组长度分组，
         int part = (right - leftLineX) / bottomTexts.size();
@@ -138,7 +140,6 @@ public class ColumnChartView extends View {
         baseline = top + lineSpace * 7 + lineSpace * 0.5f - metrics.top;
 
         RectF rectF = new RectF();//柱形图所在的矩形
-        int columnWidth = 18;//柱形图宽度
         int smallRadius = columnWidth / 2;//柱形图上圆盖的半径
         for (int i = 0; i < bottomTexts.size(); i++) {
             //画底部文字

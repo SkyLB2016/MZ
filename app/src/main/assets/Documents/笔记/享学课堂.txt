@@ -1850,12 +1850,15 @@ ViewGroup 消费 down 后，再次消费move与up时，会直接跳过此 ViewGr
 获取基线baseline：
 val metrics = textP.fontMetricsInt//文本的基线数据
 val textHeight = metrics.bottom - metrics.top//文本框所占的高度
-有背景框的基线计算
+
+1.知道顶点 top 的位置：
+val baseline=top - metrics.top;//文字baseline
+
+2.知道底边 bottomY 的位置：
+val baseline=bottmY - metrics.bottom;//文字baseline
+
+3.有背景框的基线计算
 val baseline=背景框的中心点Y + textHeight/2 - metrics.bottom;//文字baseline
-无背景框的基线计算
-val baseline=textHeight - metrics.bottom;//文字baseline
-其实就是
-val baseline= - metrics.top;//文字baseline
 
 9）getTextBounds(String text, int start, int end, Rect bounds):获取文字宽高
 10）measureText(text)：获取文字宽度
