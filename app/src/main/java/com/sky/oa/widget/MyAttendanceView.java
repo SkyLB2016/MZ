@@ -34,10 +34,10 @@ public class MyAttendanceView extends View {
     private int drawablePadding;//小圆与文字的间隔
     private int textSpace;//状态文字间的间隔
 
-    private String weekText;//第几周
-    private String weekTotal;//周工作时长
-    private String monthTotal;//月工作时长
-    private String weekOrMonth;//本月还是本周
+    private String weekText = "";//第几周
+    private String weekTotal = "";//周工作时长
+    private String monthTotal = "";//月工作时长
+    private String weekOrMonth = "";//本月还是本周
     private boolean isMonth;//是否本周
     Bitmap icChange;//本周与本月的图标
     private Rect monthRect;
@@ -98,11 +98,6 @@ public class MyAttendanceView extends View {
         attentanceHeight = Math.max(textHeight, radius * 2);
         workTimebg = ContextCompat.getDrawable(getContext(), R.drawable.shape_f5f5f5_radius_10);
 
-        weekText = "2022年05月 第四周";//第几周
-        weekTotal = "累计：12h";//周工作时长
-        monthTotal = "累计：100小时";//月工作时长
-        weekOrMonth = "本周";//本月还是本周
-
         colors.clear();
         colors.add(R.color.color_BFE12A);
         colors.add(R.color.color_F86A55);
@@ -130,6 +125,12 @@ public class MyAttendanceView extends View {
     }
 
     private void initAttendance() {
+
+        weekText = "2022年05月 第四周";//第几周
+        weekTotal = "累计：12h";//周工作时长
+        monthTotal = "累计：100小时";//月工作时长
+        weekOrMonth = "本周";//本月还是本周
+
         attentances.clear();
         long current = System.currentTimeMillis();
         long date = 24 * 60 * 60 * 1000;
@@ -140,7 +141,7 @@ public class MyAttendanceView extends View {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         if (dayOfWeek == 1) {//1是周日
             selectDayIndex = 6;//当天
-        } else {//其他减一就行
+        } else {//其他减2就行
             selectDayIndex = dayOfWeek - 2;//当天
         }
         MyAttendanceEntity entity;
@@ -277,7 +278,7 @@ public class MyAttendanceView extends View {
     }
 
     private void canvasLineText(Canvas canvas) {
-        int left = getLeft();
+        int left = getPaddingLeft();
         int baseline = getPaddingTop() - metrics.top;
         //第几周
         canvas.drawText(weekText, left, baseline, textPaint);
@@ -296,9 +297,10 @@ public class MyAttendanceView extends View {
             weekOrMonth = "本周";
             left = (int) (left + textPaint.measureText(weekTotal) + textSpace);
         }
+        //本周与本月的切换图标
         Bitmap ic = Bitmap.createBitmap(icChange, 0, 0, icChange.getWidth(), icChange.getHeight(), null, true);
-        canvas.drawBitmap(ic, left, (textHeight - icChange.getHeight()) / 2, null);
-        monthRect = new Rect(left, getPaddingTop(), (int) (left + textPaint.measureText(weekOrMonth) + 10), 0 + textHeight * 2);
+        canvas.drawBitmap(ic, left, getPaddingTop() + (textHeight - icChange.getHeight()) / 2, null);
+        monthRect = new Rect(left, getPaddingTop(), (int) (left + icChange.getWidth() + 10 + textPaint.measureText(weekOrMonth)), getPaddingTop() + textHeight * 2);
 
         left = left + icChange.getWidth() + 10;
         textPaint.setColor(getContext().getResources().getColor(R.color.color_89a5b1));
@@ -309,7 +311,7 @@ public class MyAttendanceView extends View {
         textPaint.setColor(getContext().getResources().getColor(R.color.color_666666));
         //考勤状态开始的y点
         int attendanceTop = getPaddingTop() + textHeight + lineSpace;
-        int left = getLeft();
+        int left = getPaddingLeft();
         //计算圆心，需要比较半径与文字高度的一半比较大小
         int textWidthTotal = 0;//文字的累计宽度
         int baseline = attendanceTop + attentanceHeight / 2 + textHeight / 2 - metrics.bottom;
@@ -326,6 +328,7 @@ public class MyAttendanceView extends View {
     }
 
     private void canvasThreeText(Canvas canvas) {
+        if (attentances == null || attentances.size() == 0) return;
         int left = getPaddingLeft();
         int right = getPaddingRight();
         int width = getMeasuredWidth() - left - right;//占据的宽度
@@ -372,6 +375,8 @@ public class MyAttendanceView extends View {
             rects.add(dayBgRect);//保存需要点击日期背景框位置，比对点击的位置
             //画对应天的对应日期
             canvas.drawText(entity.getDays(), dayCenterX, dayBaseline, textPaint);
+
+            if (selectDayIndex < i) continue;
             //画每天的状态。
             List<Integer> status = entity.getDayStatus();
             int temp = 2;
@@ -380,7 +385,6 @@ public class MyAttendanceView extends View {
             } else if (status.size() == 2 || status.size() == 3) {
                 temp = 1;
             }
-
             for (int j = 0; j < status.size(); j++) {
                 paint.setColor(getContext().getResources().getColor(colors.get(status.get(j))));
                 canvas.drawCircle(dayCenterX + radius * (j - temp), dayBottom + radius, radius, paint);
