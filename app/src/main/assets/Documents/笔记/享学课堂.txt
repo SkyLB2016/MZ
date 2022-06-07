@@ -1851,14 +1851,15 @@ ViewGroup 消费 down 后，再次消费move与up时，会直接跳过此 ViewGr
 val metrics = textP.fontMetricsInt//文本的基线数据
 val textHeight = metrics.bottom - metrics.top//文本框所占的高度
 
-1.知道顶点 top 的位置：
-val baseline=top - metrics.top;//文字baseline
+1.知道顶点 topY 的位置：
+val baseline = topY - metrics.top;//文字baseline
 
 2.知道底边 bottomY 的位置：
-val baseline=bottmY - metrics.bottom;//文字baseline
+val baseline = bottmY - metrics.bottom;//文字baseline
 
-3.有背景框的基线计算
-val baseline=背景框的中心点Y + textHeight/2 - metrics.bottom;//文字baseline
+3.有背景框的基线计算：居于背景框中间，根据背景框中心点先计算出，顶点或底点
+val baseline = 背景框的中心点Y + textHeight/2 - metrics.bottom;//文字baseline
+val baseline = 背景框的中心点Y - textHeight/2 - metrics.top;//文字baseline
 
 9）getTextBounds(String text, int start, int end, Rect bounds):获取文字宽高
 10）measureText(text)：获取文字宽度
@@ -2308,3 +2309,8 @@ public static final Executor THREAD_POOL_EXECUTOR;
 
 总结：AsyncTask不失为一个非常好用的异步任务处理类，只要不是频繁大量对UI进行更新，可以考虑使用。
 而Handler在处理大量UI更新时可以考虑使用。
+
+第十七章 Calendar
+1.Calendar 获取的周是从周日到周六，数值是从1到7。
+2.Calendar 获取的年中周，第一周是包括上一年的日期，这算是新年的第一周。上一年的最后一周不包含这几个日期
+3.Calendar 获取的月份数值是从0到11，设置的时候，也需要这么设置。也就是0是一月份。

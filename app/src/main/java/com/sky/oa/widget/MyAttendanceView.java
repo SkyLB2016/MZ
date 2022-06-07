@@ -126,17 +126,28 @@ public class MyAttendanceView extends View {
 
     private void initAttendance() {
 
-        weekText = "2022年05月 第四周";//第几周
-        weekTotal = "累计：12h";//周工作时长
-        monthTotal = "累计：100小时";//月工作时长
+//        weekText = "2022年05月 第四周";//第几周
+        weekTotal = "累计：无";//周工作时长
+        monthTotal = "累计：无";//月工作时长
         weekOrMonth = "本周";//本月还是本周
 
-        attentances.clear();
+        long date = 24 * 60 * 60 * 1000;//一天的时间
         long current = System.currentTimeMillis();
-        long date = 24 * 60 * 60 * 1000;
-//        long start = current - date * 3;
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(current);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int week = calendar.get(Calendar.WEEK_OF_YEAR);
+        StringBuilder builder = new StringBuilder();
+        builder.append(year);
+        builder.append("年");
+        builder.append(month);
+        builder.append(" 第");
+        builder.append(week);
+        builder.append("周");
+        weekText = builder.toString();
+
         //周获取的是周日到周六，对应数字1到7，所以1，是周日，需要除去
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         if (dayOfWeek == 1) {//1是周日
@@ -144,20 +155,19 @@ public class MyAttendanceView extends View {
         } else {//其他减2就行
             selectDayIndex = dayOfWeek - 2;//当天
         }
+
+        attentances.clear();
         MyAttendanceEntity entity;
         for (int i = 0; i < 7; i++) {
             entity = new MyAttendanceEntity();
-            entity.setDate(current - (selectDayIndex - i) * date);
-            calendar.setTimeInMillis(entity.getDate());
+            entity.setDate(current - (selectDayIndex - i) * date);//时间戳
 
+            calendar.setTimeInMillis(entity.getDate());//计算当前的日期
             entity.setDays(calendar.get(Calendar.DAY_OF_MONTH) + "");
+
             entity.setToday(selectDayIndex == i);
             entity.setWorkTime("早班+晚班   工时：8h");
-
-//            entity.setOver(false);//false,是否加班
-//            entity.setLeaves();//false,是否休假
-//            entity.setOnBusiness();//false,是否调休
-//            entity.setOutdoor();//false是否外勤
+            entity.setWorkTime("无");
             attentances.add(entity);
         }
     }
@@ -363,7 +373,7 @@ public class MyAttendanceView extends View {
         int dayCenterX;//日期的中心X
         int dayCenterY;//日期的中心Y
         for (int i = 0; i < weeks.size(); i++) {
-            dayCenterX = everyWidth / 2 + everyWidth * i;
+            dayCenterX = left + everyWidth / 2 + everyWidth * i;
             //画周文字
             canvas.drawText(weeks.get(i), dayCenterX, weekBaseline, textPaint);
 

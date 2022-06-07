@@ -101,6 +101,7 @@ public class DateUtil {
         return new SimpleDateFormat(type, Locale.CHINA).format(new Date(time));
     }
 
+
     public static long dateToTimeStamp(String time) {
         return dateToTimeStamp(time, YMDHM);
     }
