@@ -20,6 +20,7 @@ public class MyAttendanceEntity {
     private boolean over;//false,是否加班
     private boolean leaves;//false,是否休假
     private boolean onBusiness;//false,是否调休
+
     private boolean outdoor;//false是否外勤
     private boolean queka;//false缺卡
 

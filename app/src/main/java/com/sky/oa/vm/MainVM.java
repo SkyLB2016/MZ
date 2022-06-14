@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -263,4 +264,39 @@ public class MainVM extends ViewModel {
 //        Lock
 //        RUUR'U'RUUL'UR'U'L
     }
+
+    public void setCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        LogUtils.i("Calendar.ERA==" + Calendar.ERA + "==" + calendar.get(Calendar.ERA));
+        LogUtils.i("Calendar.YEAR==" + Calendar.YEAR + "==" + calendar.get(Calendar.YEAR));
+        //MONTH 的数值是从0到11，一月份是0.
+        LogUtils.i("Calendar.MONTH==" + Calendar.MONTH + "==" + calendar.get(Calendar.MONTH));
+        //WEEK_OF_YEAR 年尾跨年周，只算是下年的第一周，不算本年的最后一周。
+        LogUtils.i("Calendar.WEEK_OF_YEAR==" + Calendar.WEEK_OF_YEAR + "==" + calendar.get(Calendar.WEEK_OF_YEAR));
+        //WEEK_OF_MONTH 跨月周，既是本月的最后一周，也是下月的第一周。
+        LogUtils.i("Calendar.WEEK_OF_MONTH==" + Calendar.WEEK_OF_MONTH + "==" + calendar.get(Calendar.WEEK_OF_MONTH));
+        LogUtils.i("Calendar.DATE==" + Calendar.DATE + "==" + calendar.get(Calendar.DATE));
+        LogUtils.i("Calendar.DAY_OF_MONTH==" + Calendar.DAY_OF_MONTH + "==" + calendar.get(Calendar.DAY_OF_MONTH));
+        LogUtils.i("Calendar.DAY_OF_YEAR==" + Calendar.DAY_OF_YEAR + "==" + calendar.get(Calendar.DAY_OF_YEAR));
+        //本周周几，统计是从周日到周六，数值是从1到7。周日是1，周六是7
+        LogUtils.i("Calendar.DAY_OF_WEEK==" + Calendar.DAY_OF_WEEK + "==" + calendar.get(Calendar.DAY_OF_WEEK));
+        LogUtils.i("Calendar.DAY_OF_WEEK_IN_MONTH==" + Calendar.DAY_OF_WEEK_IN_MONTH + "==" + calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+        //12小时制
+        LogUtils.i("Calendar.HOUR==" + Calendar.HOUR + "==" + calendar.get(Calendar.HOUR));
+        //24小时制
+        LogUtils.i("Calendar.HOUR_OF_DAY==" + Calendar.HOUR_OF_DAY + "==" + calendar.get(Calendar.HOUR_OF_DAY));
+        LogUtils.i("Calendar.MINUTE==" + Calendar.MINUTE + "==" + calendar.get(Calendar.MINUTE));
+        LogUtils.i("Calendar.SECOND==" + Calendar.SECOND + "==" + calendar.get(Calendar.SECOND));
+        LogUtils.i("Calendar.MILLISECOND==" + Calendar.MILLISECOND + "==" + calendar.get(Calendar.MILLISECOND));
+        LogUtils.i("Calendar.ZONE_OFFSET==" + Calendar.ZONE_OFFSET + "==" + calendar.get(Calendar.ZONE_OFFSET));
+        LogUtils.i("Calendar.DST_OFFSET==" + Calendar.DST_OFFSET + "==" + calendar.get(Calendar.DST_OFFSET));
+        LogUtils.i("Calendar.firstDayOfWeek==" + calendar.getFirstDayOfWeek());
+        LogUtils.i("Calendar.minimalDaysInFirstWeek==" + calendar.getMinimalDaysInFirstWeek());
+    }
+
+    private String substringWeek(String time) {
+        return time.substring(0, time.indexOf("("));
+    }
+
 }

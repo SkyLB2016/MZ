@@ -2,6 +2,7 @@ package com.sky.oa.activity
 
 import android.Manifest
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -12,6 +13,7 @@ import com.sky.oa.R
 import com.sky.oa.databinding.ActivityMainBinding
 import com.sky.oa.vm.MainVM
 import com.sky.ui.activity.BaseActivity
+import org.json.JSONObject
 import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -110,58 +112,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        LogUtils.i("返回最小a2==" + a.coerceAtMost(b))
 //        LogUtils.i("返回2==" + b.coerceAtMost(a))
 //        LogUtils.i("返回3==" + b.coerceAtLeast(a))
-//        DateUtil.timeStampToDate("yyyy-MM-dd HH:mm")
-        DateUtil.dateToTimeStamp("yyyy-MM-dd HH:mm")
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
-        var week = calendar.get(Calendar.WEEK_OF_YEAR)
-
-
-
-
-
-
-        LogUtils.i("当前周==$week")
-
-        LogUtils.i("Calendar.DAY_OF_WEEK==${calendar.get(Calendar.DAY_OF_WEEK)}")
-        LogUtils.i("Calendar.DAY_OF_WEEK_IN_MONTH==${calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH)}")
-        LogUtils.i("Calendar.DAY_OF_MONTH==${calendar.get(Calendar.DAY_OF_MONTH)}")
-        LogUtils.i("Calendar.DAY_OF_YEAR==${calendar.get(Calendar.DAY_OF_YEAR)}")
-        LogUtils.i("Calendar.HOUR_OF_DAY==${calendar.get(Calendar.HOUR_OF_DAY)}")
-        LogUtils.i("Calendar.FRIDAY==${calendar.get(Calendar.FRIDAY)}")
-        LogUtils.i("Calendar.WEEK_OF_YEAR==${calendar.get(Calendar.WEEK_OF_YEAR)}")
-        LogUtils.i("Calendar.WEEK_OF_MONTH==${calendar.get(Calendar.WEEK_OF_MONTH)}")
-        LogUtils.i("Calendar.firstDayOfWeek==${calendar.firstDayOfWeek}")
-        LogUtils.i("Calendar.minimalDaysInFirstWeek==${calendar.minimalDaysInFirstWeek}")
-
-        calendar.set(2022, 4, 30, 12, 0, 0)
-        week = calendar.get(Calendar.WEEK_OF_MONTH)
-        LogUtils.i("5月30日==$week")
-
-        calendar.set(2022, 4, 31, 12, 0, 0)
-        week = calendar.get(Calendar.WEEK_OF_MONTH)
-        LogUtils.i("5月31日==$week")
-
-        calendar.set(2022, 5, 1, 12, 0, 0)
-        week = calendar.get(Calendar.WEEK_OF_MONTH)
-        LogUtils.i("6月1日==$week")
-
-        calendar.set(2021, 11, 31, 12, 0, 0)
-        week = calendar.get(Calendar.WEEK_OF_YEAR)
-        LogUtils.i("12月31日==$week")
-
-        calendar.set(2022, 0, 4, 12, 0, 0)
-        week = calendar.get(Calendar.WEEK_OF_YEAR)
-        LogUtils.i("1月1日==$week")
-
-        LogUtils.i("1月1日==${"ind(j(".indexOf("(")}")
-        LogUtils.i("1月1日==${substringWeek("ind(j(")}")
-
-
     }
 
-    private fun substringWeek(time: String): String? {
-        return time.substring(0, time.indexOf("("))
-    }
 }
-///

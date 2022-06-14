@@ -2311,6 +2311,12 @@ public static final Executor THREAD_POOL_EXECUTOR;
 而Handler在处理大量UI更新时可以考虑使用。
 
 第十七章 Calendar
-1.Calendar 获取的周是从周日到周六，数值是从1到7。
-2.Calendar 获取的年中周，第一周是包括上一年的日期，这算是新年的第一周。上一年的最后一周不包含这几个日期
-3.Calendar 获取的月份数值是从0到11，设置的时候，也需要这么设置。也就是0是一月份。
+01.calendar.get(Calendar.Month)，是直接从 fields 数组中取出数据，
+fields是一个17个位置的数组
+需要注意的点：
+01）MONTH：月份，数值是从0到11，设置的时候，也需要这么设置。也就是0是一月份。
+02）WEEK_OF_YEAR：年中周，年尾跨年周，只算是下年的第一周，不算本年的最后一周。
+03）WEEK_OF_MONTH：月中周，跨越的周，既是这个月的最后一周，也是下月的第一周。
+04）DAY_OF_WEEK：本周周几，统计是从周日到周六，数值是从1到7。周日是1，周六是7。
+05）HOUR：是12小时制
+06）HOUR_OF_DAY：是24小时制

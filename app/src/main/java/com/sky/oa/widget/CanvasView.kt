@@ -13,6 +13,8 @@ import android.widget.Scroller
 import com.sky.common.utils.LogUtils
 import com.sky.oa.R
 import java.util.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * Created by SKY on 2017/3/9 20:52.
@@ -107,21 +109,21 @@ class CanvasView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        moveLayout(canvas)//移动布局坐标
         drawOval(canvas)//渐变圆
-        drawBezier(canvas)//画贝赛尔曲线
-        setProgress(canvas)//环形进度条
-        drawClock(canvas)//时钟
-        maskFilter(canvas)//绘制遮罩
-        canvasLine(canvas)//画直线虚线与pathEffect应用
-        canvasPanda(canvas)//画熊猫
+//        drawBezier(canvas)//画贝赛尔曲线
+//        moveLayout(canvas)//移动布局坐标
+//        setProgress(canvas)//环形进度条
+//        drawClock(canvas)//画时钟，通过操作画布原点来画时钟
+//        maskFilter(canvas)//绘制遮罩
+//        canvasLine(canvas)//画直线虚线与pathEffect应用
+//        canvasPanda(canvas)//画熊猫
 
-        animate().alpha(1f)
-            .rotation(180f)
-            .setDuration(3000)
-            .withStartAction { }
-            .withEndAction { }
-            .start()
+//        animate().alpha(1f)
+//            .rotation(180f)
+//            .setDuration(3000)
+//            .withStartAction { }
+//            .withEndAction { }
+//            .start()
     }
 
     //画直线虚线：pathEffect应用
@@ -140,26 +142,26 @@ class CanvasView @JvmOverloads constructor(
         canvas.drawPath(effectPath, paint)
 
         paint.pathEffect = CornerPathEffect(20f)//拐角圆角
-        canvas.drawLine(50f,1140f,1028f,1140f, paint)
+        canvas.drawLine(50f, 1140f, 1028f, 1140f, paint)
 
         paint.pathEffect = DiscretePathEffect(2f, 3f)//毛茸茸的线
-        canvas.drawLine(50f,1170f,1028f,1170f, paint)
+        canvas.drawLine(50f, 1170f, 1028f, 1170f, paint)
 
         paint.pathEffect = DashPathEffect(floatArrayOf(20f, 10f, 5f, 10f), 0f)//虚线
-        canvas.drawLine(50f,1200f,1028f,1200f, paint)
+        canvas.drawLine(50f, 1200f, 1028f, 1200f, paint)
         paint.pathEffect = DashPathEffect(floatArrayOf(20f, 10f), 100f)//虚线
-        canvas.drawLine(50f,1210f,1028f,1210f, paint)
+        canvas.drawLine(50f, 1210f, 1028f, 1210f, paint)
 
         paint.pathEffect = ComposePathEffect(CornerPathEffect(20f), DiscretePathEffect(2f, 3f))//组合
-        canvas.drawLine(50f,1230f,1028f,1230f, paint)
+        canvas.drawLine(50f, 1230f, 1028f, 1230f, paint)
 
         paint.pathEffect = SumPathEffect(CornerPathEffect(20f), DiscretePathEffect(2f, 3f))//组合
-        canvas.drawLine(50f,1260f,1028f,1260f, paint)
+        canvas.drawLine(50f, 1260f, 1028f, 1260f, paint)
 
         val pp = Path()
         pp.addRect(0f, 0f, 8f, 8f, Path.Direction.CCW)
         paint.pathEffect = PathDashPathEffect(pp, 12f, 0f, PathDashPathEffect.Style.ROTATE)//自定义的虚线
-        canvas.drawLine(50f,1290f,1028f,1290f, paint)
+        canvas.drawLine(50f, 1290f, 1028f, 1290f, paint)
     }
 
     private fun canvasPanda(canvas: Canvas) {
@@ -214,21 +216,24 @@ class CanvasView @JvmOverloads constructor(
         canvas.save()
         canvas.translate(0f, 800f)
 
+        canvas.drawCircle(110f, 150f, 80f, paint)
+        canvas.drawText("正常", 110f, 166f, textP)
+
         paint.maskFilter = BlurMaskFilter(50f, BlurMaskFilter.Blur.NORMAL)
-        canvas.drawCircle(150f, 150f, 100f, paint)
-        canvas.drawText("NORMAL", 150f, 166f, textP)
+        canvas.drawCircle(320f, 150f, 80f, paint)
+        canvas.drawText("NORMAL", 320f, 166f, textP)
 
         paint.maskFilter = BlurMaskFilter(50f, BlurMaskFilter.Blur.SOLID)
-        canvas.drawCircle(400f, 150f, 100f, paint)
-        canvas.drawText("SOLID", 400f, 166f, textP)
+        canvas.drawCircle(530f, 150f, 80f, paint)
+        canvas.drawText("SOLID", 530f, 166f, textP)
 
         paint.maskFilter = BlurMaskFilter(50f, BlurMaskFilter.Blur.OUTER)
-        canvas.drawCircle(650f, 150f, 100f, paint)
-        canvas.drawText("OUTER", 650f, 166f, textP)
+        canvas.drawCircle(740f, 150f, 80f, paint)
+        canvas.drawText("OUTER", 740f, 166f, textP)
 
         paint.maskFilter = BlurMaskFilter(50f, BlurMaskFilter.Blur.INNER)
-        canvas.drawCircle(900f, 150f, 100f, paint)
-        canvas.drawText("INNER", 900f, 166f, textP)
+        canvas.drawCircle(950f, 150f, 80f, paint)
+        canvas.drawText("INNER", 950f, 166f, textP)
         canvas.restore()
     }
 
@@ -241,6 +246,7 @@ class CanvasView @JvmOverloads constructor(
         val num = canvas.saveLayerAlpha(0f, 0f, 1100f, 700f, 122, Canvas.ALL_SAVE_FLAG)
         paint.color = Color.GREEN
         canvas.drawCircle(1000f, 600f, 100f, paint)
+        paint.color = Color.BLUE
         canvas.drawCircle(1100f, 700f, 100f, paint)
         canvas.restoreToCount(num)//移除
     }
@@ -249,44 +255,45 @@ class CanvasView @JvmOverloads constructor(
         val paint = Paint()
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 10f
-        canvas.drawCircle(610f, 600f, 200f, paint)
+        val centerX = 600f
+        val centerY = 600f
+        canvas.drawCircle(centerX, centerY, 200f, paint)
         paint.style = Paint.Style.FILL
-        for (i in 0..11) {
-            when (i) {
-                0, 3, 6, 9 -> {
-                    paint.strokeWidth = 8f
-                    paint.textSize = 30f
-                    canvas.drawLine(600f, 410f, 600f, 440f, paint)
-                    val w = paint.measureText("$i")
-                    canvas.drawText(
-                        "$i",
-                        600f - w / 2,
-                        440f + paint.descent() - paint.ascent(),
-                        paint
-                    )
-                }
-                else -> {
-                    paint.strokeWidth = 6f
-                    paint.textSize = 20f
-                    canvas.drawLine(600f, 410f, 600f, 420f, paint)
-                    val w = paint.measureText("$i")
-                    canvas.drawText(
-                        "$i",
-                        600f - w / 2,
-                        420f + paint.descent() - paint.ascent(),
-                        paint
-                    )
-                }
+
+        for (i in 1..60) {
+            canvas.rotate(6f, centerX, centerY)
+            if (i % 5 == 0) {
+                paint.strokeWidth = 8f
+                canvas.drawLine(centerX, 410f, centerX, 440f, paint)
+            } else {
+                paint.strokeWidth = 6f
+                canvas.drawLine(centerX, 410f, centerX, 420f, paint)
             }
-            canvas.rotate(30f, 600f, 600f)
         }
+
+        val textP = TextPaint()
+        textP.textAlign = Paint.Align.CENTER
+//        var textWidth = 0f//文字宽度
+        var textCenterX = 0.0
+        var textCenterY = 0.0
+        var startAngle = 270f//默认的角度在X，为0度，是3点所在的位置，12点，就应该在270度
+        textP.textSize = 40f
+        var metrics = textP.fontMetrics
+        val textheight = metrics.bottom - metrics.top
+        for (i in 1..12) {
+            textCenterX = 135f * cos((startAngle + 30 * i) / 180 * Math.PI) + centerX
+            textCenterY = 135f * sin((startAngle + 30 * i) / 180 * Math.PI) + centerY
+//            canvas.drawCircle(textCenterX.toFloat(), textCenterY.toFloat() + textheight / 2 - metrics.bottom, 5f, paint)
+            canvas.drawText("$i", textCenterX.toFloat(), textCenterY.toFloat() + textheight / 2 - metrics.bottom, textP)
+        }
+        //画表芯，时针，分针
         paint.strokeWidth = 12f
         canvas.save()
-        canvas.translate(600f, 600f)
-        canvas.drawCircle(0f, 0f, 16f, paint)
-        canvas.drawLine(0f, 0f, 75f, 30f, paint)
+        canvas.translate(centerX, centerY)
+        canvas.drawCircle(0f, 0f, 16f, paint)//表芯
+        canvas.drawLine(0f, 0f, 75f, 25f, paint)//时针
         paint.strokeWidth = 8f
-        canvas.drawLine(0f, 0f, 0f, 100f, paint)
+        canvas.drawLine(0f, 0f, 0f, 100f, paint)//分针
         canvas.restore()
     }
 
@@ -314,11 +321,13 @@ class CanvasView @JvmOverloads constructor(
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 20f
         paint.color = Color.GREEN
+
         val random = Random()
         val list = (0..20).mapTo(ArrayList()) { Point(400 + it * 30, random.nextInt(390) + 10) }
         val bezierPath = calculateCubicPath(list)//获取三次方贝赛尔曲线
         canvas.drawPath(bezierPath, paint)//画出贝塞尔曲线
 
+        //画出实际的线
         val effectPath = Path()
         effectPath.moveTo(list[0].x * 1f, list[0].y * 1f)//设置Path的起点
         for (i in 1 until list.size) effectPath.lineTo(list[i].x * 1f, list[i].y * 1f)
@@ -341,21 +350,25 @@ class CanvasView @JvmOverloads constructor(
         paint.color = ContextCompat.getColor(context, R.color.color_CB03810F)
         paint.style = Paint.Style.FILL
 
-        val area = RectF(0f, 400f, 400f, 800f)
+        //圆所在矩形
+        val area = RectF(50f, 450f, 350f, 750f)
         canvas.drawRect(area, paint)
 
         paint.style = Paint.Style.STROKE
         paint.color = Color.RED
         paint.strokeWidth = 10f
 
+        //画圆，这里的半径是圆心到线中心的距离，所以圆的实际半径 = 线宽的一半+画圆的半径
         var start = 140f//起始角度
         var sweep = 260f//旋转角度
-        paint.maskFilter = BlurMaskFilter(25f, BlurMaskFilter.Blur.OUTER)
-        val areaCircle = RectF(5f, 405f, 395f, 795f)
+        paint.maskFilter = BlurMaskFilter(25f, BlurMaskFilter.Blur.SOLID)
+        //真实的圆所在的矩形
+        val areaCircle = RectF(area.left + 5f, area.top + 5f, area.right - 5f, area.bottom - 5f)
         canvas.drawArc(areaCircle, start, sweep, false, paint)
 
+        //文字画笔
         val textP = TextPaint()
-        textP.textSize = 60f
+        textP.textSize = 40f
         textP.pathEffect = CornerPathEffect(20f)//圆角
         textP.textAlign = Paint.Align.CENTER
 
@@ -366,17 +379,16 @@ class CanvasView @JvmOverloads constructor(
 
         val radius = area.height() / 2
         //计算的文字所在的背景框的左侧，顶部，右侧，底部
-        val leftX =
-            radius * Math.cos(Math.PI / 180 * start) + area?.centerX() + 20//(20的偏移量，是向右移动的，所以加)
-        val topY = radius * Math.sin(Math.PI / 180 * start) + area.centerY() - textHeight
-        val rightX =
-            radius * Math.cos(Math.PI / 180 * (start + sweep)) + area?.centerX() - 20//(20的偏移量)
-        val bottomY = topY + textHeight * 1.5
+        val leftX = radius * cos(start / 180 * Math.PI) + area.centerX() + 20//(20的偏移量，是向右移动的，所以加)
+        val topY = radius * sin(start / 180 * Math.PI) + area.centerY() - textHeight
+        val rightX = radius * Math.cos((start + sweep) / 180 * Math.PI) + area.centerX() - 20//(20的偏移量)
+        val bottomY = topY + textHeight * 1.5//背景框一倍半的文字高度
         //文字背景所在矩形
         val textRect = Rect(leftX.toInt(), topY.toInt(), rightX.toInt(), bottomY.toInt())
         val textbg = ContextCompat.getDrawable(context, R.drawable.sel_rect_green)
-        textbg?.bounds = textRect//为文字设置背景
-        textbg?.draw(canvas)//画入画布中
+        textbg?.bounds = textRect//为文字设置背景框
+        textbg?.draw(canvas)//把背景框画入画布中
+
         //让文字居于背景中间，计算文字的左距离与底部距离
         val baseline = textRect.exactCenterY() + textHeight / 2 - metrics.bottom
         canvas.drawText(text, textRect.exactCenterX(), baseline, textP)//画入画布中
