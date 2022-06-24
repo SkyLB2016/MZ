@@ -48,6 +48,7 @@ public class MyAttendanceView extends View {
     private List<String> weeks = new ArrayList<>();//一周的文字周文字
     private List<MyAttendanceEntity> attentances = new ArrayList<>();//考勤信息
 
+    private int todayIndex = -1;//当天日期的位置
     private int selectDayIndex = -1;//点击后选中的位置
     private List<Rect> rects = new ArrayList<>();//每天日期的点击事件
     //    private OnItemClickListener itemClickListener;
@@ -99,14 +100,14 @@ public class MyAttendanceView extends View {
         workTimebg = ContextCompat.getDrawable(getContext(), R.drawable.shape_f5f5f5_radius_10);
 
         colors.clear();
-        colors.add(R.color.color_BFE12A);
+//        colors.add(R.color.color_BFE12A);
         colors.add(R.color.color_F86A55);
         colors.add(R.color.color_FFC512);
         colors.add(R.color.color_4C97EE);
         colors.add(R.color.color_8B6AFF);
 
         attendanceStatus.clear();
-        attendanceStatus.add("正常");
+//        attendanceStatus.add("正常");
         attendanceStatus.add("缺卡");
         attendanceStatus.add("迟到早退");
         attendanceStatus.add("请假");
@@ -152,8 +153,10 @@ public class MyAttendanceView extends View {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         if (dayOfWeek == 1) {//1是周日
             selectDayIndex = 6;//当天
+            todayIndex = 6;//当天
         } else {//其他减2就行
             selectDayIndex = dayOfWeek - 2;//当天
+            todayIndex = dayOfWeek - 2;//当天
         }
 
         attentances.clear();
@@ -166,8 +169,12 @@ public class MyAttendanceView extends View {
             entity.setDays(calendar.get(Calendar.DAY_OF_MONTH) + "");
 
             entity.setToday(selectDayIndex == i);
-            entity.setWorkTime("早班+晚班   工时：8h");
             entity.setWorkTime("无");
+            entity.setMissingCard(i < 1);
+            entity.setLateEarly(i < 2);
+            entity.setLeaves(i < 3);
+            entity.setOutdoor(i < 4);
+
             attentances.add(entity);
         }
     }
@@ -226,10 +233,12 @@ public class MyAttendanceView extends View {
 
     public void setAttentances(List<MyAttendanceEntity> attentances) {
         this.attentances = attentances;
-    }
-
-    public void setSelectDayIndex(int selectDayIndex) {
-        this.selectDayIndex = selectDayIndex;
+        for (int i = 0; i < attentances.size(); i++) {
+            if (attentances.get(i).isToday()) {
+                selectDayIndex = i;
+                todayIndex = i;
+            }
+        }
     }
 
     public void setRects(List<Rect> rects) {
@@ -386,18 +395,14 @@ public class MyAttendanceView extends View {
             //画对应天的对应日期
             canvas.drawText(entity.getDays(), dayCenterX, dayBaseline, textPaint);
 
-            if (selectDayIndex < i) continue;
+            if (todayIndex < i) continue;
             //画每天的状态。
             List<Integer> status = entity.getDayStatus();
-            int temp = 2;
-            if (status.size() == 1) {
-                temp = 0;
-            } else if (status.size() == 2 || status.size() == 3) {
-                temp = 1;
-            }
+            if (status.size() == 0) continue;
+            int startX = dayCenterX - radius * (status.size() + 1) / 2 + radius;
             for (int j = 0; j < status.size(); j++) {
                 paint.setColor(getContext().getResources().getColor(colors.get(status.get(j))));
-                canvas.drawCircle(dayCenterX + radius * (j - temp), dayBottom + radius, radius, paint);
+                canvas.drawCircle(startX + radius * j, dayBottom + radius, radius, paint);
             }
         }
         //画选中的日期

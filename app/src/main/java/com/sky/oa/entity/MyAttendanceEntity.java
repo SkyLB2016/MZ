@@ -1,15 +1,16 @@
 package com.sky.oa.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @Description:
  * @Author: 李彬
- * @CreateDate: 2022/5/28 5:50 下午
+ * @CreateDate: 2022/5/16 6:24 下午
  * @Version: 1.0
  */
-public class MyAttendanceEntity {
+public class MyAttendanceEntity implements Serializable {
     private long date;//1653235200000,
 
     private String days;//"22",每月几号
@@ -17,18 +18,13 @@ public class MyAttendanceEntity {
 
     private String workTime;//"无",工作时长
 
-    private boolean over;//false,是否加班
-    private boolean leaves;//false,是否休假
-    private boolean onBusiness;//false,是否调休
+//    private boolean over;//false,是否加班
+//    private boolean onBusiness;//false,是否出差
 
-    private boolean outdoor;//false是否外勤
-    private boolean queka;//false缺卡
-
-//    private String yearMonth;// 年月 格式："2022年5月"（直接显示即可）
-//    private String week;//年内第几周
-//    private String month;// 年内第几月
-//    private String totalWorkTime;//	总计加班时长 （直接显示即可）
-
+    private boolean missingCard;//是否缺卡
+    private boolean lateEarly;//是否迟到早退
+    private boolean leaves;//是否休假
+    private boolean outdoor;//是否外勤
 
     public MyAttendanceEntity() {
     }
@@ -70,63 +66,39 @@ public class MyAttendanceEntity {
         this.workTime = workTime;
     }
 
-    public boolean isOver() {
-        return over;
+    public void setMissingCard(boolean missingCard) {
+        this.missingCard = missingCard;
     }
 
-    public void setOver(boolean over) {
-        this.over = over;
-    }
-
-    public boolean isLeaves() {
-        return leaves;
+    public void setLateEarly(boolean lateEarly) {
+        this.lateEarly = lateEarly;
     }
 
     public void setLeaves(boolean leaves) {
         this.leaves = leaves;
     }
 
-    public boolean isOnBusiness() {
-        return onBusiness;
-    }
-
-    public void setOnBusiness(boolean onBusiness) {
-        this.onBusiness = onBusiness;
-    }
-
-    public boolean isOutdoor() {
-        return outdoor;
-    }
-
     public void setOutdoor(boolean outdoor) {
         this.outdoor = outdoor;
     }
 
-    public boolean isQueka() {
-        return queka;
-    }
-
-    public void setQueka(boolean queka) {
-        this.queka = queka;
-    }
-
     public List<Integer> getDayStatus() {
         List<Integer> status = new ArrayList<>();
-        if (!over && !leaves && !onBusiness && !outdoor) {
+//        if (!over && !leaves && !onBusiness && !outdoor) {
+//            status.add(0);
+//            return status;
+//        }
+        if (missingCard) {//是否缺卡
             status.add(0);
-            return status;
         }
-        if (over) {//false,是否加班
+        if (lateEarly) {//是否迟到早退
             status.add(1);
         }
-        if (onBusiness) {//false,是否出差
+        if (leaves) {//是否休假
             status.add(2);
         }
-        if (leaves) {//false,是否休假
+        if (outdoor) {//是否外勤
             status.add(3);
-        }
-        if (outdoor) {//false是否外勤
-            status.add(4);
         }
         return status;
     }
