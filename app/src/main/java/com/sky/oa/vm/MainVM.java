@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.sky.common.utils.FileUtils;
 import com.sky.common.utils.LogUtils;
+import com.sky.oa.entity.KeyValue;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -27,7 +28,13 @@ import java.util.List;
  * @Version: 1.0
  */
 public class MainVM extends ViewModel {
+    boolean iscompletedTask = true;
+    boolean iscompleted;
+
     public void TestMethod(Context context) {
+        LogUtils.i("iscompletedTask==" + iscompletedTask);
+        LogUtils.i("iscompleted==" + iscompleted);
+
         LogUtils.i("onbackpress==");
         //        new InterAA().getA();
 
@@ -77,7 +84,21 @@ public class MainVM extends ViewModel {
 //        collectionsTest();
 //        stringTest();
 //        hashCollision();
-        getDeviceId(context);
+//        getDeviceId(context);
+
+        List<KeyValue> list = new ArrayList<>();
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        list.add(new KeyValue("1", "2"));
+        LogUtils.i(context.getFilesDir().getAbsolutePath());
+        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data", list);
+        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data1", new KeyValue("1", "2"));
+
     }
 
     @RequiresPermission(value = "android.permission.READ_PRIVILEGED_PHONE_STATE")

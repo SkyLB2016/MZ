@@ -110,13 +110,13 @@ class CanvasView @JvmOverloads constructor(
         super.onDraw(canvas)
 
         drawOval(canvas)//渐变圆
-//        drawBezier(canvas)//画贝赛尔曲线
-//        moveLayout(canvas)//移动布局坐标
-//        setProgress(canvas)//环形进度条
-//        drawClock(canvas)//画时钟，通过操作画布原点来画时钟
-//        maskFilter(canvas)//绘制遮罩
-//        canvasLine(canvas)//画直线虚线与pathEffect应用
-//        canvasPanda(canvas)//画熊猫
+        drawBezier(canvas)//画贝赛尔曲线
+        moveLayout(canvas)//移动布局坐标
+        setProgress(canvas)//环形进度条
+        drawClock(canvas)//画时钟，通过操作画布原点来画时钟
+        maskFilter(canvas)//绘制遮罩
+        canvasLine(canvas)//画直线虚线与pathEffect应用
+        canvasPanda(canvas)//画熊猫
 
 //        animate().alpha(1f)
 //            .rotation(180f)

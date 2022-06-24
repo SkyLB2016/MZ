@@ -1,12 +1,14 @@
 package com.sky.oa.entity;
 
+import java.io.Serializable;
+
 /**
  * @Description:
  * @Author: 李彬
  * @CreateDate: 2022/5/25 6:33 下午
  * @Version: 1.0
  */
-public class KeyValue {
+public class KeyValue implements Serializable {
     private String key;
     private String value;
 

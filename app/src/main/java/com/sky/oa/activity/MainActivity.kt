@@ -2,19 +2,14 @@ package com.sky.oa.activity
 
 import android.Manifest
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.sky.common.utils.AppUtils
-import com.sky.common.utils.DateUtil
-import com.sky.common.utils.LogUtils
 import com.sky.oa.R
 import com.sky.oa.databinding.ActivityMainBinding
 import com.sky.oa.vm.MainVM
 import com.sky.ui.activity.BaseActivity
-import org.json.JSONObject
-import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -99,19 +94,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             ),
             1119
         )
-
     }
 
     val vm = MainVM()
 
     private fun testMethod() {
-//        vm.TestMethod(this)
+        vm.TestMethod(this)
         var a = 2
         var b = 3
 //        LogUtils.i("返回最大b3==" + a.coerceAtLeast(b))
 //        LogUtils.i("返回最小a2==" + a.coerceAtMost(b))
 //        LogUtils.i("返回2==" + b.coerceAtMost(a))
 //        LogUtils.i("返回3==" + b.coerceAtLeast(a))
-    }
 
+    }
 }

@@ -1728,10 +1728,10 @@ UNSPECIFIED，想要多大即多大，所以可以超过屏幕尺寸，显示不
 6）ViewPager 与 Galler 是 继承自 LayoutParams
 
 03.MarginLayoutParams 继承自 VG 的 LayoutParams。
-1）leftMagin：距左边的距离，layout_marginLeft，layout_marginHorizontal（级别更高）
-2）rightMargin：距左边的距离，layout_marginRight，layout_marginHorizontal（级别更高）
-3）topMargin：距左边的距离，layout_marginTop，layout_marginVertical（级别更高）
-4）bottomMargin：距左边的距离，layout_marginBottom，layout_marginVertical（级别更高）
+1）leftMagin：距左边的距离，layout_marginLeft；layout_marginHorizontal（级别更高）
+2）rightMargin：距左边的距离，layout_marginRight；layout_marginHorizontal（级别更高）
+3）topMargin：距左边的距离，layout_marginTop；layout_marginVertical（级别更高）
+4）bottomMargin：距左边的距离，layout_marginBottom；layout_marginVertical（级别更高）
 
 获取级别问题
 layout_margin > layout_marginHorizontal 与 layout_marginVertical > layout_marginLeft（几个）

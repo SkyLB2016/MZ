@@ -35,7 +35,6 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
     private var firstTail = false //第一次到达底部
     lateinit var adapter: LoaderURLAdapter
 
-
     override fun getViewBinding() = ActivityUrlBinding.inflate(layoutInflater)
     override fun getVModel() = ViewModelProvider(this, object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = ImageUriVM(ImageRepository()) as T
