@@ -1,4 +1,3 @@
-
 #签名文件账号密码
 STOREFILE=sky.jks
 STOREPASSWORD=1qaz2wsx

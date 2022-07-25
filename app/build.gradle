@@ -60,8 +60,8 @@ def key = new Properties()
 //def keyPass = rootProject.file("gradle.properties")
 //key.load(new FileInputStream(keyPass))
 
-//自定义文件中的参数必须载入才能获取
-def textkey = rootProject.file("text.txt")
+//独立的签名文件中的参数必须载入才能获取
+def textkey = rootProject.file("SignDebugFile.txt")
 key.load(new FileInputStream(textkey))
 
 //android项目的环境配置
@@ -91,13 +91,14 @@ android {
 
 //        ndk {
 //            //添加对应cpu类型的.so库。
-//            abiFilters 'armeabi-v7a', 'armeabi-v8a', 'armeabi', 'x86'
+//            abiFilters 'armeabi-v7a', 'arm64-v8a', 'armeabi', 'x86'
 //        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     //02.签名文件配置
     signingConfigs {
         debug {
+            //把签名文件作为一个独立的文件保存起来：SignDebugFile.txt
             storeFile file("$rootDir/${key['STOREFILE']}")
             storePassword key['STOREPASSWORD']
             keyAlias key['KEYALIAS']

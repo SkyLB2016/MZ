@@ -12,8 +12,11 @@ buildscript {//构建项目使用。android{}中的配置使用
         OKHTTP_VERSION = '4.4.0'
 //        println "getVersion==${getVersion()}"
     }
+    //签名文件配置
     ext.STOREFILE = 'sky.jks'
     ext.STOREPASSWORD = '1qaz2wsx'
+    //签名文件配置
+
     //配置项目的基础仓库
     repositories {
         google()

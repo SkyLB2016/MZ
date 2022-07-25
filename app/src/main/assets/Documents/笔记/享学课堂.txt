@@ -1798,11 +1798,14 @@ height = mBottom - mTop
 
 09.MeasureSpec 宽高的格式与具体的值
 32位二进制，高2位表示宽高的格式，低30位表示宽高的值，最大到2的30次方减1
-1）MODE_MASK 标记，3的二进制是11，向左移30位得到的，也就是说高2位是11，其他都是0，
-2）mode
+1）MODE_MASK 标记，3的二进制是11，向左移30位得到 MODE_MASK，也就是说高2位是11，其他都是0，
+ MODE_MASK = 11000000000000000000000000000000
+~MODE_MASK = 00111111111111111111111111111111
+
+2）mode，模式：
 UNSPECIFIED： 0左移30得到的二进制，高2位为 00 表示  左移多少都是0，系统内部使用
-EXACTLY：精确模式， 1左移30得到的二进制，1的二进制 01 ，左移30位，1，在第二位上，match_parent模式 或 具体数值
-AT_MOST：自适应模式， 2左移30得到的二进制，2的二进制 10 ，左移30位，1，在第一位上，wrap_content
+EXACTLY：精确模式， 1左移30得到的二进制，1的二进制 01 ，左移30位，是0100..(30个0)..000，0在第二位上，match_parent模式 或 具体数值
+AT_MOST：自适应模式， 2左移30得到的二进制，2的二进制 10 ，左移30位，是100..(31个0)..000，1在第一位上，wrap_content
 
 父类为 EXACTLY 时，子类模式不变。
 父类为 AT_MOST 时，子类是具体dp值时才是 EXACTLY ；match_parent 时也会是 AT_MOST
@@ -1811,11 +1814,12 @@ AT_MOST：自适应模式， 2左移30得到的二进制，2的二进制 10 ，�
 此方法在 onMeasure 中调用
 
 3）二进制计算
+MeasureSpec = (mode & MODE_MASK) | (size & ~MODE_MASK)
 mode & MODE_MASK 取得是高2位的交集
 size & ~MODE_MASK 取得是低30位的交集
-两者取并集就是 MeasureSpec
-measureSpec & MODE_MASK 取出高2位的数值，就是 mode
-measureSpec & ~MODE_MASK 取出低30位的数值，就是宽/高
+
+mode = measureSpec & MODE_MASK 取出高2位的数值
+宽/高 = measureSpec & ~MODE_MASK 取出低30位的数值
 
 10.通常自定义View需要考虑那些？
 1）padding 是需要算在 View 的宽高里的。
