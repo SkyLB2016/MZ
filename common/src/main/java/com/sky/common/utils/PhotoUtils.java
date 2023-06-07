@@ -43,12 +43,9 @@ public class PhotoUtils {
         this.photoPath = photoPath;
         new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AlertDialog))
                 .setItems(new String[]{"拍照", "本地照片"},
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (which == 0) checkCamera();//拍照
-                                else checkAlbum();//本地图库
-                            }
+                        (dialog, which) -> {
+                            if (which == 0) checkCamera();//拍照
+                            else checkAlbum();//本地图库
                         })
                 .show();
     }
@@ -63,6 +60,7 @@ public class PhotoUtils {
     //打开相机
     private void checkCamera() {
         //检测是否有相机和读写文件权限
+
         if (AppUtils.isPermission(activity, Manifest.permission.CAMERA)) {
             startCamera();
         } else {

@@ -49,6 +49,7 @@ dependencies {
 
 
 //    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation project(':uidesign')
     implementation project(':common')
@@ -143,12 +144,12 @@ android {
     }
     //05.设置对应的Java版本
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     //06.kotlin的Java版本配置
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     //07.通道配置，应用市场或者主地址配置
 //    flavorDimensions "sky"

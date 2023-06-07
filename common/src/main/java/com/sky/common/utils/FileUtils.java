@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -54,12 +55,20 @@ public class FileUtils {
      */
     public static boolean deleteFile(File dirOrFile) {
         if (dirOrFile == null || !dirOrFile.exists()) return false;
-        if (dirOrFile.isFile()) dirOrFile.delete();
-        else if (dirOrFile.isDirectory())
+        if (dirOrFile.isFile()) {
+            dirOrFile.delete();
+        } else if (dirOrFile.isDirectory()) {
             for (File file : dirOrFile.listFiles()) {
                 deleteFile(file);// 递归
             }
+        }
         dirOrFile.delete();
+//        if (dirOrFile.isDirectory()) {
+//            for (File file : dirOrFile.listFiles()) {
+//                deleteFile(file);// 递归
+//            }
+//        }
+//        dirOrFile.delete();
         return true;
     }
 
@@ -85,14 +94,30 @@ public class FileUtils {
      * @return
      */
     public static long getNumberOfFiles(File folder) {
-        File flist[] = folder.listFiles();
-        long size = flist.length;
-        for (int i = 0; i < flist.length; i++) {
-            if (flist[i].isDirectory()) {
-                size = size + getNumberOfFiles(flist[i]);
+        File fileList[] = folder.listFiles();
+        long size = fileList.length;
+        for (int i = 0; i < fileList.length; i++) {
+            if (fileList[i].isDirectory()) {
+                size = size + getNumberOfFiles(fileList[i]);
                 size--;
             }
         }
+
+//        String paths[] = folder.list();
+//
+//        int length = paths.length;
+//        File dirOrFile;
+//        for (int i=0;i<length;i++){
+//            dirOrFile=new File(paths[i]);
+//            if (dirOrFile.isDirectory()){
+//
+//            }
+//        }
+
+
+
+
+
         return size;
     }
 

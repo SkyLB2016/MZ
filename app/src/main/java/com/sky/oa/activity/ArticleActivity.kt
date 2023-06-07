@@ -45,6 +45,7 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
     }
 
     override fun getBinding() = ActivityPoetryBinding.inflate(layoutInflater)
+
     override fun getViewModel() =
 //        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ArtivleVM::class.java)
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -175,7 +176,8 @@ class ArticleActivity : MVVMActivity<ActivityPoetryBinding, ArtivleVM>() {
         floderPop?.datas = adapter?.datas!!
         floderPop?.setOnItemClickListener { _, position -> moveToChapter(position) }
         floderPop?.showAtLocation(window.decorView, Gravity.CENTER, 0, 0)
-    }
+
+      }
 
     private fun moveToChapter(position: Int) {
         val layoutManager = binding!!.recycler.layoutManager as LinearLayoutManager

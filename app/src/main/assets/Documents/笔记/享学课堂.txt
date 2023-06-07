@@ -2000,6 +2000,7 @@ android:requestLegacyExternalStorage="true"
 4）类别筛选category（addCategory()）：Java代码中存在几个匹配几个，xml中可存在多个。
 5）数据类型data与type：setDataAndType()，地址有特定规则，要么同时设置，要么单独只设置一个。
 6）启动模式LaunchMode四种（manifest中用）：
+android:launchMode="singleTask"
 standard（标准），
 singleTop（栈顶复用），
 singleTask（类似于单例，独一份，再次进入后清空在其之上的实例），
@@ -2007,7 +2008,6 @@ singleInstance（每次启动都是独立栈中的独一份）
 7）标志也即启动模式（Intent中用）：
 FLAG_ACTIVITY_NEW_TASK(需要搭配FLAG_ACTIVITY_CLEAR_TASK使用)；
 FLAG_ACTIVITY_SINGLE_TOP,FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS(跳转页面后自动finish）；
-android:excludeFromRecents="true"，目前未起作用)。
 8）数据传递bundle：Intent内部已经封装好，不用自己封了，serializable，parcelable，也可以转成json字符串传过去。
 9）也可以定义一个静态类，每次跳转页面前添加数据到静态类，跳转完成后从静态类中取出，同时移除。
 
@@ -2015,7 +2015,7 @@ android:excludeFromRecents="true"，目前未起作用)。
 1）handler中执行enqueueMessage()方法将消息放入队列中，等待loop循环并找到此消息。
 2）Looper.loop()方法是死循环，其中选取消息的方法Message msg = queue.next();也是一个死循环，没有消息时，其中的nativePollOnce()方法会阻塞主线程，释放CPU资源，进入休眠状态，直到取到消息或者发生事件，开始往下执行；
 3）取到消息后开始执行handler的分发方法dispatchMessage()开始回调，方法执行完成后，此次消息处理完成。
-4）handler分发dispatchMessage()：先检测message中的callback是否为空，不为空消费此消息；为空则检测handler自己的callback，return true则消费此消息，终止传递；为false则执行handler自带的handleMessage()。
+4）handler分发dispatchMessage()：先检测message中的callback是否为空，不为空消费此消息；为空则检测handler自己的callback，return true 则消费此消息，终止传递；为 false 则执行handler自带的handleMessage()。
 5）异步线程中创建，需要先调用Looper.prepare().
 
 public void run(){

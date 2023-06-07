@@ -1,11 +1,13 @@
 package com.sky.oa.vm;
 
+import android.Manifest;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.RequiresPermission;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModel;
 
 import com.sky.common.utils.FileUtils;
@@ -32,10 +34,64 @@ public class MainVM extends ViewModel {
     boolean iscompleted;
 
     public void TestMethod(Context context) {
-        LogUtils.i("iscompletedTask==" + iscompletedTask);
-        LogUtils.i("iscompleted==" + iscompleted);
+//        String[] texts = new String[5];
 
-        LogUtils.i("onbackpress==");
+//        LogUtils.i("iscompletedTask==" + texts[1]);
+//        LogUtils.i("iscompletedTask==" + texts[7]);
+//        LogUtils.i("iscompletedTask==" + iscompletedTask);
+//        LogUtils.i("iscompleted==" + iscompleted);
+//
+//        LogUtils.i("onbackpress==");
+//        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR);
+//        LogUtils.i("日历 ；READ_CALENDAR的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR);
+//        LogUtils.i("日历 ；WRITE_CALENDAR的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
+//        LogUtils.i("相机 ；CAMERA的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS);
+//        LogUtils.i("联系人 ；READ_CONTACTS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS);
+//        LogUtils.i("联系人 ；WRITE_CONTACTS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.GET_ACCOUNTS);
+//        LogUtils.i("联系人 ；GET_ACCOUNTS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+//        LogUtils.i("位置 ；ACCESS_FINE_LOCATION的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+//        LogUtils.i("位置 ；ACCESS_COARSE_LOCATION的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO);
+//        LogUtils.i("麦克风 ；RECORD_AUDIO的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE);
+//        LogUtils.i("电话 ；READ_PHONE_STATE的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
+//        LogUtils.i("电话 ；CALL_PHONE的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG);
+//        LogUtils.i("电话 ；READ_CALL_LOG的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALL_LOG);
+//        LogUtils.i("电话 ；WRITE_CALL_LOG的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ADD_VOICEMAIL);
+//        LogUtils.i("电话 ；ADD_VOICEMAIL的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.USE_SIP);
+//        LogUtils.i("电话 ；USE_SIP的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.PROCESS_OUTGOING_CALLS);
+//        LogUtils.i("电话 ；PROCESS_OUTGOING_CALLS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.BODY_SENSORS);
+//        LogUtils.i("传感器 ；BODY_SENSORS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS);
+//        LogUtils.i("短信 ；SEND_SMS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_SMS);
+//        LogUtils.i("短信 ；RECEIVE_SMS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS);
+//        LogUtils.i("短信 ；READ_SMS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_WAP_PUSH);
+//        LogUtils.i("短信 ；RECEIVE_WAP_PUSH的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_MMS);
+//        LogUtils.i("短信 ；RECEIVE_MMS的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
+//        LogUtils.i("存储 ；READ_EXTERNAL_STORAGE的权限==" + permissionCheck);
+//        permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        LogUtils.i("存储 ；WRITE_EXTERNAL_STORAGE的权限==" + permissionCheck);
+//        LogUtils.i(" ；getDeviceId(context)==" + getDeviceId(context));
+
         //        new InterAA().getA();
 
 //        double a = 60 >> 3;
@@ -86,19 +142,86 @@ public class MainVM extends ViewModel {
 //        hashCollision();
 //        getDeviceId(context);
 
-        List<KeyValue> list = new ArrayList<>();
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        list.add(new KeyValue("1", "2"));
-        LogUtils.i(context.getFilesDir().getAbsolutePath());
-        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data", list);
-        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data1", new KeyValue("1", "2"));
+//        List<KeyValue> list = new ArrayList<>();
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        list.add(new KeyValue("1", "2"));
+//        LogUtils.i(context.getFilesDir().getAbsolutePath());
+//        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data", list);
+//        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data1", new KeyValue("1", "2"));
+//
+        double distance = lineDistance(39.930713, 116.385936, 39.930709, 116.38589);
+        LogUtils.i("两点间的距离==" + distance);
 
+
+        String address = "河北省保定市竞秀区万博广场";
+        int start = address.indexOf("省") + 1;
+        address = address.substring(start , address.indexOf("市") + 1);
+        LogUtils.i("截取出来的字段1为==" + address);
+        address = "北京市海淀区圣熙八号";
+        start = address.indexOf("省") + 1;
+        int end = address.indexOf("市");
+        end = address.indexOf("市");
+        address = address.substring(start , address.indexOf("市") + 1);
+        LogUtils.i("截取出来的字段1为==" + address);
+        address = "北京市海淀区圣熙八号";
+        address = address.substring(0, 0);
+        LogUtils.i("截取出来的字段1为==" + address);
+        LogUtils.i("截取出来的字段1为==" + start);
+
+
+    }
+
+    public static double rad(double d) {
+        return d * Math.PI / 180;
+    }
+
+    public static double lineDistance(double startLat, double startLng, double endLat, double endLng) {
+        double R = 6378137;
+
+        startLat = rad(startLat);
+        startLng = rad(startLng);
+        endLat = rad(endLat);
+        endLng = rad(endLng);
+
+        if (startLat < 0) {
+            startLat = Math.PI / 2 + Math.abs(startLat);
+        }
+        if (startLat > 0) {
+            startLat = Math.PI / 2 - Math.abs(startLat);
+        }
+        if (startLng < 0) {
+            startLng = Math.PI * 2 - Math.abs(startLng);
+        }
+
+        if (endLat < 0) {
+            endLat = Math.PI / 2 + Math.abs(endLat);
+        }
+        if (endLat > 0) {
+            endLat = Math.PI / 2 - Math.abs(endLat);
+        }
+        if (endLng < 0) {
+            endLng = Math.PI * 2 - Math.abs(endLng);
+        }
+
+        double x1 = R * Math.cos(startLng) * Math.sin(startLat);
+        double y1 = R * Math.sin(startLng) * Math.sin(startLat);
+        double z1 = R * Math.cos(startLat);
+
+        double x2 = R * Math.cos(endLng) * Math.sin(endLat);
+        double y2 = R * Math.sin(endLng) * Math.sin(endLat);
+        double z2 = R * Math.cos(endLat);
+
+
+        double d = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2));
+        double cos = (R * R + R * R - d * d) / (2 * R * R);
+        double theta = Math.acos(cos);
+        return theta * R;
     }
 
     @RequiresPermission(value = "android.permission.READ_PRIVILEGED_PHONE_STATE")

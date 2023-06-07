@@ -95,6 +95,8 @@ keytool -delete -alias 秘钥名称 -keystore 文件名
 11）搜索历史命令：Ctrl + R
 12）Mac终端上选中即复制，单击滚轮粘贴。
 13）按住 ⌘ ，单击路径可以打开此地址
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDUMfrgdC4x0pfe3UaF7tyB//nYt/1q/QbO1c4DRNfIG 1136096189@qq.com
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFB2/l5kiXFxm8Ix6RA1ydGR2zG0qRjl6vl6BmUXO+OSB/ZzBPd5tnZMKeUegfj337SpcVi1gHZ4vXhVgRvsPYMSjQWme9lffJm2R6y+ZQ+frDVzW46Dq9vg/1plTaA9F54fU1NzuBZAF+cVidiNdQ+IErGixctnUyk9EGrmGUwNsFy4um2749h5ZEoc9i8EAoesQVpX7QJc2/rRB2UJYC3m8elkei/XkoqcYjcmwopiSxr9akhJRBXDt+ZvX5e90rf8MPS1hllWakPGg1yv3fLs5xH3i4yIBWABFVoSkPMccLEWAZUNIIgSI9+23Enw+47qgyib6+w/8/uZeccuSf8LUSM0hXhtJ8c/D97rkX1onJGZsN/B1KGZ4N2cwkd4UfQWmDamzDaMZ6nuzLTEMV9YxGjuq9Rp18S3t1TDMN9lnQJTaiBI5ryM8PlNFa7gIUOOKH9xHyDzwOBcko8A5jav6hqSsiyw+Sjj0vqbpcd/2CsnrFuUo0tcXEZvo3+UU= 1136096189@qq.com
 
 02.快捷小命令
 01）history （num）：显示使用过的历史命令

@@ -31,13 +31,13 @@ class NotesRepository {
         dirs.add(directory)
 
         var dir: String
-        var files: Array<String>? = null//文件夹中包含的数组
+        var fileNames: Array<String>? = null//文件夹中包含的数组
         var poetry: PoetryEntity
         var poetries: ArrayList<PoetryEntity>? = arrayListOf()
         while (dirs.isNotEmpty()) {
             dir = dirs.removeFirst()
-            files = assets.list(dir)
-            files?.forEach { fileName ->
+            fileNames = assets.list(dir)
+            fileNames?.forEach { fileName ->
                 if (fileName.endsWith(".txt")) {
                     poetry = PoetryEntity(
                         fileName.substring(0, fileName.length - 4),

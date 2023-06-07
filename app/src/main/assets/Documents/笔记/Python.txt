@@ -1,0 +1,456 @@
+Python笔记
+
+第一章
+1.数据类型和变量
+整数，浮点数，字符串，布尔值，空值 None
+1）二进制转十进制算法
+从低位开始，等于当前数（0或1）乘以2的n次方，n代表当前数所在的位置，从零开始计数。比如
+1111=2³+2²+2+1（2的零次方）=15
+
+2）十六进制用0x前缀，字符转换前缀用\u。0-9，abcdef；10=16，f=15，ff=15*16+15=255
+十六进制转十进制算法
+从低位开始，等于当前数（包括0）乘以2的4n次方，n代表当前数所在的位置，从零开始计数。比如
+3456=3*2的(4*3)次方+4*2的(4*2)次方+5*2的(4*1)次方+6*2的(4*0)次方=13398
+
+3）Python允许在大数字中间以_分隔，如1000000可写成1_000_000
+4)e代表10，1.23e2=123
+5）整数运算是精确的，浮点数运算，可能会有四舍五入的误差
+6）字符串以单引号'或双引号括起来，用双引号括起来的单引号也是字符。
+7）转义字符 \，在字符串内转义使用；比如
+\n表示换行，
+\t表示制表符，
+字符\本身也要转义，所以 \\ 表示的字符就是\
+r'' 代表r之后的字符串不需要转义。
+
+8）命令行中输入'''...''' 表示把多行字符串串联起来，用来代替\n
+print('''line1
+...line2
+...line3''')
+
+9）布尔值：True False，区分大小写。
+10）逻辑运算 and（相当于java 的 &&） ，or（相当于java 的 ||），not 取反，相当于 java 的 !
+11）空值 none
+12）变量名必须是大小写英文、数字和_的组合，不能以数字开头。
+13）变量可以反复赋值，且可以是不同的类型的变量，这种变量本身类型不固定的语言称之为动态语言，与之对应的是静态语言，java就是静态的。
+14）除法 /，最后都会得到浮点数，要是想得到整数，需要用 //，且除数和被除数都是整数
+15）Python的整数和浮点数都没有大小限制，但是超出一定范围后就会直接表示为inf 无限大。
+
+2.字符串
+1）ASCII 是1个字节，2的8次方，最大256个，0-255
+2）Unicode 通常是2个字节，多的会有4个字节
+3）UTF-8是可变长编码，英文字母通常是1个字节，汉字通常是是3个字节，特别生僻的字符会被编码成4-6个字节。
+4）UTF-8 包含ASCII编码。
+5）ord() 查看字符的整数表示，chr() 把数字转成对应的字符
+6）Python对bytes类型的数据用带b前缀的单引号或双引号表示：
+  x = b'ABC'
+
+'ABC'.encode('ascii') = b'ABC'
+'中文'.encode('utf-8') = b'中文'
+
+b'ABC'.decode('ascii') = 'ABC'
+b'\xe4\xb8\xad\xe6\x96\x87'.decode('utf-8') = '中文'
+
+7）bytes数据有一部分是错误的，可以用errors='ignore'，表示忽略这部分错误字节
+b'\xe4\xb8\xad\xe6\x96'.decode('utf-8') = '中'
+
+8）len() 显示字符串长度，或bytes类型的字节数。
+
+3.格式化字符串输出
+%串联格式化
+1）%s，字符串占位，同时也适用于其他所有类型
+2）%d，整数占位
+3）%f，浮点数占位
+4）%x，十六进制占位
+5）格式化整数和浮点数还可以指定是否补0、空位、与小数的位数
+print('%3d-%03d'%(3,2))：%3d代表数字d前补两个空位。%03d，代表三位数，不足补0
+print('%.2f'%3.1415926)：取两位小数
+6）使用%格式化字符串时，字符串中 %% 代表一个 %
+
+7）format() 格式化
+'hello，{0}，花了{1:.2f}%'.format('小明'，12.256)
+
+8）f-string 字符串格式化
+r = 2.5
+s = 3.14 * r ** 2
+print(f'The area of a circle with radius {r} is {s:.2f}')
+The area of a circle with radius 2.5 is 19.62
+
+4.list
+1）list = ['a','b','c']，有序集合可随时添加、删除，各个元素可以是不同类型
+2）list[-1] 代表取出最后一个元素，可依次倒推
+list[-2] 代表取出倒数第二个元素
+3）list.append() 末尾添加；
+4）list.insert(1,'dd') 插入
+5）list.pop() 末位删除
+list.pop(1) 指定删除
+
+用大扩号定义的list，添加用add(),移除用remove(),和用中括号定义的list 不一样。
+
+
+5.tuple list变种
+1）tuple = ('a','b','c')，有序列表，叫元组，初始化后不可变
+1）tuple 陷阱：一元素定义，也需要加 , 分割
+
+6.if..elif..else..
+1） if x：x是非零数值、费控字符串、非空list等，就判断为True，否则为False
+
+7.循环
+1）for 循环
+for x in list
+for x in range(1001) 循环0到1000
+2）while 循环
+break 提前结束整个循环
+continue 结束此次循环
+
+8.dict：dictionary，相当于java 的 map，key-value 形式
+map = { 'a':8,'b':9}
+1）查找元素的时候，先在字典的索引表里（首字母表，部首表）查key对应的页码，然后翻到该页。
+2）map['c'] = 10 key-value 形式直接添加
+3）通过 key 查找对应的元素
+map[key] key不存在会报错
+  key in map 判断map中是否存在key
+  map.get(key) key不存在，返回None
+  map.get(key,value) key不存在，返回指定的value
+4）pop(key) 删除对应的key
+
+9.和list比较，dict有以下几个特点：
+    查找和插入的速度极快，不会随着key的增加而变慢；
+    需要占用大量的内存，内存浪费多。
+而list相反：
+    查找和插入的时间随着元素的增加而增加；
+    占用空间小，浪费内存很少。
+所以，dict是用空间来换取时间的一种方法。
+
+10.set 类似dict，一组 key 的集合，无序，由于key不能重复，所以在set中，没有重复的key
+要创建一个set，需要提供一个list作为输入集合，重复元素被自动过滤
+s1 = set([1,2,3])
+1）add(key) 添加
+2）remove(key) 移除
+3）可以做交集和并集操作
+s1 & s2 交集
+s1 | s2 并集
+
+11.数据类型转换
+int()
+float()
+str()
+bool()
+hex() 十进制转16进制
+a= abs 为 abs 起一个别名，感觉多此一举啊
+a(-1)
+
+12.定义函数（方法） def 不限制返回参数的类型和个数；没有return 时，默认返回为 return None
+1）空函数
+def pop():
+   pass
+2）函数可返回多个数值，其实返回的是一个 tuple；多个变量可以同时接收一个tuple，按顺序赋值。要是接收对象只有一个，那就是一个 tuple
+3）def power(x,n=2) 可以设置默认参数，必选在前，默认在后，这样就相当于 java 的重载
+当不按顺序提供默认参数时，需要把参数名写上。
+默认参数，是可以被改变的，使用的时候，必须指向不变对象，或者做判断，只改变一次。
+def add_end(L=None):
+    if L is None:
+        L = []
+    L.append('END')
+    return L
+
+13.可变参数 * 接收的是一个tuple
+    def calc1(numbers): 只能放入list或者tuple等类型
+    def calc1(*numbers): 可以直接放入基本类型参数，最后是以封装成 tuple类型作为参数的
+
+14.关键字参数 **：以 dict（map） 的 key=value 的形式，作为可变参数传入。
+可以拓展函数的功能，自定义参数，自定义解析
+1）**other 不限制关键字参数的个数
+    def person(name, age, **other):
+        print('name:', name, 'age:', age, 'other:', other)
+
+custom.person('lll', 33, gender='man', city='北京', year=2023)
+
+json = {city='北京', year=2023}
+custom.person('lll', 33, gender='man',**json)
+2）* 限制关键字参数的名字
+*,x,y  *之后被视为确定的关键字名字
+def person(name, age, *, city, job):
+    print(name, age, city, job)
+3）如果已经定义了可变参数，后边跟着的命名关键字参数就不需要 * 分割了
+def person(name, age, *args, city, job):
+    print(name, age, args, city, job)
+
+15.递归，尾部递归，但是python没有做尾部优化，所以没卵用，尼玛，浪费感情
+
+16.切片操作符
+list1=list(range(100)) 0到99
+list1[0:3] 在list中 从索引0开始，到3为止，不包括3.
+1）如果第一个所以是0，可以省略，写成 list1[:3]
+list1[3:9]
+2）倒数切片
+list1[-7:-1]：从小到大
+最后一个是0 可以省略
+list1[-7:]：从小到大
+3）list1[:] 取出全部
+4）list1[::2] 从0开始，间隔2，取出全部
+5）list1[:20:2] 从0开始，间隔2，取到20
+6）字符串也可以使用
+
+17.迭代
+1）isinstance(item, Iterable)：判断是否可迭代
+item 可以是数组，也可以是字符串，
+整数不行
+
+2）enumerate(text) 方法key返回一个索引-元素队，等同于k-v
+for i,v in enumerate(text):
+    print(i,v)
+for k, v in map.items():
+    print(k, v)
+for x, y in [(1, 1), (2, 4), (3, 9)]:
+     print(x, y)
+
+18.列表生成式 List Comprehensions，用[] 括起来的就是列表生成式
+print([k + '=' + v for k, v in distAndMap.items()])
+print([x if x % 2 == 0 else -x for x in range(1, 9)])
+print([x * (x if x % 2 == 0 else -x) for x in range(1, 9)])
+print([(x if x % 2 == 0 else -x) * (x if x % 2 == 0 else -x) for x in range(1, 9)])
+
+19.生成器 generator 用小括号 () 括起来的就是生成器
+1）列表生成式的[] 改为 ()
+generator 中保存的是一个算法，使用时，才开始计算。也是可以迭代的对象。
+列表生成式是已经计算好的列表
+2）使用 yield 定义：中断操作
+遇到 yield 返回，再次执行时从 yield 语句继续执行
+
+20.迭代器
+1）可直接作用于for循环的数据类型有
+一类是集合数据类型：list、tuple、dict、set、str
+一类是 generator，包括生成器 和 带 yield 的generator function
+这些可直接作用于 for 循环的对象统称为可迭代对象： Iterable
+使用 isinstance() 判断一个对象是否是 Iterable 对象
+
+2）可以被 next() 函数调用并不断返回下一个值的对象称为迭代器：Iterator，惰性计算的序列，相当于打一巴掌，动一下。
+生成器都是 iterator 对象，但list，dict，str不是iterator，
+list、dict、str等iterable 别称iterator 可以使用 iter() 函数
+
+
+21.为什么list、dict、str等数据类型不是Iterator？
+这是因为Python的Iterator对象表示的是一个数据流，Iterator对象可以被next()函数调用并不断返回下一个数据，直到没有数据时抛出StopIteration错误。
+可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时它才会计算。
+Iterator甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可能存储全体自然数的。
+
+python 的 for循环本质上就是通过不断调用next 函数实现的
+for x in [1, 2, 3, 4, 5]:
+    pass
+
+实际上完全等价于：
+
+# 首先获得Iterator对象:
+it = iter([1, 2, 3, 4, 5])
+# 循环:
+while True:
+    try:
+        # 获得下一个值:
+        x = next(it)
+    except StopIteration:
+        # 遇到StopIteration就退出循环
+        break
+
+22.高阶函数：接收函数作为参数
+1）map(function,list):方法和参数的调用，传入的方法只接收一个参数，最后的返回需要用list接收
+2）reduce(function,list):方法和参数的调用，传入的方法接收两个参数，最后返回一个返回值
+3）filter(function,list)：一个参数，用于过滤序列。
+4）sorted(list)：序列排序，默认排序
+sorted(list，key=abs)：序列排序，排序方式
+sorted(list，key=str.lower)：序列排序，排序方式
+sorted(list，key=str.upper)：序列排序，排序方式
+
+23.函数可作为返回值，这种称为闭包 closure
+
+24.匿名函数 lambda x: x*x
+print('匿名函数应用==', list(map(lambda x: x * x, [1, 2, 3, 4, 5])))
+lambda 表示匿名函数， 冒号前的x 表示参数；函数内只能有一句表达式，结果为返回值。
+
+25.装饰器：_
+
+26.偏函数
+int('1234') 字符转整型，默认是十进制转成十进制
+int('1234'，base=16)，字符转整型，定义成是16进制转成十进制
+int('1234'，16)，字符转整型，定义成是16进制转成十进制
+
+functools。partial(int,base=2)：用于创建偏函数，本质上是把函数的参数设置默认值。可以接收可变参数和关键字参数
+
+27.文件结构
+1）#!/usr/bin/env python3 ：运行环境
+2）# -*- coding: utf-8 -*-：编码环境
+3）' a test module ' ：文件注释书名
+4）__author__ = '李彬' ：文件作者
+
+__XXX__ 是特殊变量，这种特殊标量是可以被直接引用
+_xxx __xxx 这样的函数或变量是非公开的，不应该被直接应用
+
+28.类 Class  和 实例 Instance
+属性的公开，私有化，半私有化
+类是创建实例的模板，而实例则是一个一个具体的对象，各个实例拥有的数据都互相独立，互不影响；
+方法就是与实例绑定的函数，和普通函数不同，方法可以直接访问实例的数据；
+通过在实例上调用方法，我们就直接操作了对象内部的数据，但无需知道方法内部的实现细节。
+和静态语言不同，Python允许对实例变量绑定任何数据，也就是说，对于两个实例变量，虽然它们都是同一个类的不同实例，但拥有的变量名称都可能不同：
+
+如果要把属性私有化，加 __
+self.__name ：__name为私有变量，外部不可访问。其实是变成了_student__name，可以调用此名，但是最好不要。
+self._name ：_name 虽然被视为私有变量，但可以被外部访问，
+
+29.继承与多态，基本等同于java
+
+30.
+1）type() 获取变量对应的类型
+2）isinstance(v,object) ：判断变量v 是否是 object 的类型
+3）dir() ： 获取一个对象的所有属性和方法。是一个字符串的list
+4）len() 长度方法，如有需要，可以重写 __len__，返回数字类型
+5）hasattr(obj,'x') ：是否有x属性
+setattr(obj,'x')：设置x属性的值
+getattr(obj,'x')：获取x属性对应的值
+getattr(obj,'x',default)：获取x属性对应的值
+相当于java的属性反射
+
+31.在class类中直接定义的属性是类属性，相当于java 静态变量
+在实例对象中，可覆写实例内的变量，但类变量是没变的。也可以删除对象的变量，但是找不到之后会自动查找类变量。
+如要改变，通过类直接覆写该属性。
+
+实例属性是各个实例所有，互不干扰。
+类属性属于类所有，所有实例共享一个属性，但之后每个实例可以自己修改。
+名称不要相同。
+
+32.动态绑定方法
+1）types 的 MethodType 动态给一个实例绑定已有的方法
+MethodType(methodName，obj)
+def set_age(self, age):
+    self.age = age
+stu.set_age = types.MethodType(set_age, stu)
+stu.set_age(67)
+
+2）给类绑定方法，相当于给所有实例都绑定方法
+Student.set_age=set_age
+
+33.__slots__  绑定属性
+class Student(object):
+    __slots__ = ('name', 'age') # 用tuple定义允许绑定的属性名称
+类中只能定义 name 和age 属性。
+对继承的子类不起作用。
+
+
+34.
+@property 代表只读属性，会派生一个xx.setter，代表设置属性，可不用
+方法名和属性名不能一样。
+
+35.多重继承 MixIn
+class A(B,CMixIn,DMixIn)
+
+36.__xx__：特殊属性
+1）__slots__ ：绑定属性
+    __slots__ = ('name', 'age', '_score')
+2）__len__ ：重写长度函数
+    def __len__(self):
+3）__str__ 相当于重写 java 的 toString 方法
+4）__repr__ ：输出对象的地址
+__repr__ == __str__
+
+5）__iter__ ：自定义迭代
+需要搭配  __next__ 使用
+
+6）__getitem__： 懵逼方法，以后再说
+
+7）__getattr__: 获取关键字参数等自定义属性的值
+def __getattr__(self, attr):
+        if attr=='score':
+            return 99
+
+8）__call__ :实例本身调用
+callable():判断是否重写了call 方法
+
+36.枚举类
+
+37.元类 类似于反射
+Hello = type('Hello', (object,), dict(hello=fn))
+要创建一个class对象，type()函数依次传入3个参数：
+
+1）class的名称；
+2）继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法；
+3）class的方法名称与函数绑定，这里我们把函数fn绑定到方法名hello上。
+
+metaclass 元类：当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。
+
+38.try...except...finally...  相当于 java 的 try...catch...finally...
+
+
+39.assert 断言 等同于 java 的assert
+为true 继续执行，为假，报错 AssertionException
+
+40.文件读取，用with 语句 替代 try捕捉，with语句结束自动调用close 方法，
+with open('python.txt','r') as f:
+print(f.read())
+读取文本文件，以utf-8编码的文本
+1）read() ：读取全部，适用于小文件读取。
+2）read(size) ：读取指定size个字节的内容，适用于大文件读取
+3）readline()：读取一行，适用于 配置文件
+4）readlines()：按行读取全部内容，返回一个list，适用于 配置文件
+
+5）file-like Object，str字符串中有使用
+
+6）读取二进制文件，非utf-8编码，用  rb 模式
+open('x','rb'）
+
+7）读取其他非utf-8文本，需要加encoding 参数
+open('x',encoding='gbk'）
+open('x',encoding='gbk',errors='ignore'）：忽略其中的错误文本。
+
+8）文件写入，标识符以 w  或 wb
+
+41.标识符的含义
+1）r：读取
+2）w：写入，全覆盖写入
+3）x：创建并打开文件，文件已存在，则失败
+4）a：追加写入
+5）b：二级制模式，可与r，w联动，
+6）t：文本模式，默认
+7）+：开放更新
+rb r+ r+b wb w+ w+b
+
+42.StringIO 字符串操作，BytesIO 二进制操作
+1）write ：写入
+2）getvalue() :读取
+
+43.OS系统操作
+1）os.name：posix 说明是Linux，unix，Mac；nt 就是windows
+2）os.path：python 的配置路径
+3）os.uname()：系统详情
+4）os.environ：环境变量
+os.environ.get('PATH')
+5）os.path.abspath('.'))：获取当前文件目录的绝对地址
+6）os.path.join('xx/xx','dir')：拼接，在xx/xx下加入目录 自定义目录 dir，但是没有创建，返回的事全路径。
+os.mkdir('路径')：创建文件夹，可以是绝对路径，也可以是相对路径
+os.rmdir('路径')：删除文件夹，可以是绝对路径，也可以是相对路径
+
+os.path.join()主要用于字符串的拼接过程中的分隔符转换
+
+7）os.rename('c','d') 重命名
+8）os.remove('d') 删掉文件d
+9）shutil模块提供了copyfile()的函数，你还可以在shutil模块中找到很多实用函数，它们可以看做是os模块的补充。
+
+44.序列化 pickle
+1）pickle.dumps(d) 序列化，二进制，此时只保存在内存中
+2）f = open('xx.txt','wb')
+pickle.dumps(d,f) 序列化成本地文件
+3）pickle.load(f) 反序列化，从file-like Object 中读取
+pickle.loads() 反序列化，直接反序列化出对象
+
+45.json与python内置的数据类型对应
+1）{} 对应 dict （map）
+
+2）[] 对应 list
+3）'string' 对应 str
+4）123.123 对应 int/float
+5）true/false 对应  True/False
+6）null 对应 None
+
+import json
+7)json.dumps(dict) dict序列化成 json
+8)json.loads(json_str) json字符串反序列化成 dict，直接反序列化出对象
+8)json.load(json_str) json字符串反序列化成 dict，从file-like Object 中读取，并反序列化
+
+

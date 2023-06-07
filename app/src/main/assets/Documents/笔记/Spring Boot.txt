@@ -1,0 +1,161 @@
+Spring Boot笔记
+https://spring.io
+
+
+1.Spring Boot 版本的标签
+1）CURRENT 当前  (CURRENT GA 当前稳定版）
+2)SNAPSHOT 迭代备份，快照版本
+3)GA 稳定版
+4)PRE 预发布版本
+
+2.application
+存放于根目录下，会默认扫描controller和service，以及mapper相关注解组件。
+扫描完成后，会放入到spring/springboot 的容器中。
+
+3.注解
+1）@controller
+2）@service
+3）@ResponseBody
+5）@restController
+4）@RequestMapping("hello")
+@GetMapping：查询
+@PostMapping：查询，修改，保存，form提交，所以可以通用。
+@PutMapping：保存
+@DeleteMapping：删除
+5）@configuration 配置类注解
+@Bean
+@Controller
+@Service
+@repository
+@component
+
+6)@Autowired 注入配置
+
+4.bootstrap.yml 与 application.yml
+bootstrap.yml 加载优先于 application.yml
+aoolication.yml 比bootstrap.yml 常用
+application.yml 主要用于 springboot 项目的配置
+bootstrap.yml：主要用于
+springCloud
+加密解密
+固定参数
+
+5.static 静态资源默认文件目录，可默认引用，也可自定义引用的路径。但文件名不会变。
+
+6.lombok：bean注解类
+1）@Data 生成参数的get与set
+2）@ToString  生成tostring方法
+3）@NoArgsConstructor  生成默认构造函数
+4）@AllArgsConstructor 生成全参构造函数
+5）@Slf4j 日志输出
+
+7.RestFul 接口请求风格
+1）@GetMapping：查询
+2）@PostMapping：查询，修改，保存，form提交，所以可以通用。
+3）@PutMapping：保存
+4）@DeleteMapping：删除
+
+全都使用的话为强制规范，
+只使用get与post是弱规范
+
+8.接收参数的常用用注解
+1）@RequestParam  用于获得url中?后的参数，如果参数变量名保持一致，该注解可以省略
+2）@PathVariable  路径的参数，?之前配置的动态参数，如id之类的。
+3）@RequestBody   请求体的对象 json请求体，
+4）@RequestHeader 请求头的参数，token
+5）@CookieValue   cookie
+
+09.定时任务
+1）@configuration
+//@Configuration          //1.标记配置类，让springboot容器可以扫描到
+//@EnableScheduling       //2.开启定时任务
+//    @Scheduled(cron = "*/5 * * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
+    public void publicMsg(){
+        log.warn("开始执行定时任务："+ LocalDateTime.now());
+    }
+    // Cron表达式范例：
+    // */5 * * * * ?：每隔5秒执行一次
+    // 0 */1 * * * ?：每隔1分钟执行一次
+    // 0 0 23 * * ?：每天23点执行一次
+    // 0 0 1 * * ?：每天凌晨1点执行一次：
+    // 0 0 1 1 * ?：每月1号凌晨1点执行一次
+    // 0 0 23 L * ?： 每月最后一天23点执行一次
+    // 0 0 1 ? * L：每周星期天凌晨1点实行一次
+    // 0 26,29,33 * * * ?： 在26分、29分、33分执行一次
+    // 0 0 0,13,18,21 * * ?： 每天的0点、13点、18点、21点都执行一次
+}
+
+10.异步任务
+@Component          //1.标记配置类，让springboot容器可以扫描到
+@EnableAsync       //2.开启延时任务
+@Slf4j
+public class MyAsyncTask {
+
+//    @Scheduled(cron = "*/5 * * * * ?")
+    @Async
+    public void publicMsg(){
+        try {
+            Thread.sleep(5000);
+            log.warn("异步任务执行完成："+ LocalDateTime.now());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+11.数据操作层
+持久层框架
+1）Hibernate
+2）JPA
+3）MyBatis：主要的。
+
+12.数据源
+1）C3P0：老项目有些会用
+2）DBCP：阿帕奇的
+3）druid：阿里的，springboot2.0以前用
+4）BoneCP：不更新了
+
+springBoot默认的数据源：
+HicariCp
+性能高效，速度快
+代码精简化
+
+mysql/mariadb
+mariadb.org
+
+13.Hibernate 常用校验注解
+1）@NotNull      不能为空
+2）@NotEmpty     不为空，空字符也不行
+3）@NotBlank     字符串不能为空
+4）@Min(Value)
+5）@Max(Value)
+6）@Size(max,min)        指定集合长度范围
+7）@Length(min=,max=)    字符串的长度
+8）@Email
+9）@Range
+10）@Valid
+
+14.添加数据 insert
+
+15.查询数据 select
+
+16.添加数据 update
+1）updateByExample(stu, example);            更新全部，为null，也会覆盖更新
+2）updateByExampleSelective(stu, example);   有选择的更新，即为null的数据不更新
+3）updateByPrimaryKey(stu);                  更新全部，为null，也会覆盖更新
+4）updateByPrimaryKeySelective(stu);         有选择的更新，即为null的数据不更新
+
+17.删除数据 delete
+1）studentMapper.delete(stu);                            根据对象中属性值匹配做条件删除
+2）studentMapper.deleteByExample(stu, example);          自定义删除条件
+3）studentMapper.deleteByPrimaryKey(stu.getUserid());    通过主键来删除
+
+18.事务：把一段代码同合成一个整体，中途发生错误，这段代码已经执行过的操作，会被回滚。
+    @Transactional(propagation = Propagation.REQUIRED)
+0）REQUIRED(0)
+1）SUPPORTS(1)
+2）MANDATORY(2)
+3）REQUIRES_NEW(3)
+4）NOT_SUPPORTED(4)
+5）NEVER(5)
+6）NESTED(6)

@@ -54,7 +54,7 @@ class HomeVM : BaseVM() {
 
         //去掉前边的数字。
 //            var iterator = activityInfos.iterator()
-//            while (iterator.hasNext()) {
+//            while (iterator.hasNext())
 //                val activityInfo = iterator.next()
 //                var name = activityInfo.activityName!!
 //                val index = name.indexOfFirst { char -> char == '.' }
@@ -71,3 +71,4 @@ class HomeVM : BaseVM() {
     private val sort =
         Comparator<Double> { first, second -> if (first > second) 1 else if (first < second) -1 else 0 }
 }
+
