@@ -1,6 +1,11 @@
 Spring Boot笔记
 https://spring.io
-
+https://spring.io/projects/spring-boot#learn
+https://docs.spring.io/spring-boot/docs/current/reference/html/documentation.html#documentation.web
+包含的默认配置
+https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.build-systems.starters
+yml里默认的配置
+https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties
 
 1.Spring Boot 版本的标签
 1）CURRENT 当前  (CURRENT GA 当前稳定版）
@@ -8,41 +13,74 @@ https://spring.io
 3)GA 稳定版
 4)PRE 预发布版本
 
-2.application
-存放于根目录下，会默认扫描controller和service，以及mapper相关注解组件。
+2.Application
+@SpringBootApplication
+存放于根目录下，会默认扫描 controller 和 service，以及 mapper 相关注解组件。
 扫描完成后，会放入到spring/springboot 的容器中。
 
-3.注解
-1）@controller
-2）@service
-3）@ResponseBody
-5）@restController
-4）@RequestMapping("hello")
+后台的一个简单构成就是： 一个 Application 主程序入口，加若干个 controller 、service、mapper 组件，以及配合组件的若干文件类
+配置文件：application.yml  或者 application.properties(不常用)
+
+3.注解分类，按程序结构分
+第一种：启动类注解
+1）@SpringBootApplication ：Application启动注解
+
+第二种：组件类注解，标记为配置类，会被容器扫描
+1）@Service
+
+2）@Controller：定义接口的注解
+1、@ResponseBody
+2、@RestController：相当于 @Controller 和 @ResponseBody结合，因为现在的规范都是一样的。
+3、@RequestMapping("hello")：主要使用以下四种
 @GetMapping：查询
 @PostMapping：查询，修改，保存，form提交，所以可以通用。
 @PutMapping：保存
 @DeleteMapping：删除
-5）@configuration 配置类注解
-@Bean
-@Controller
-@Service
-@repository
-@component
+4、@Autowired 依赖注入，@Configuration 关联定义的 bean 配置类 ；或者 @component 关联的bean 类
 
-6)@Autowired 注入配置
+3）@Configuration
+4）@Bean
+5）@repository
+6）@Component
+这些组件注解也都能使用，根据场景以及累的业务去使用和定义
+
+具体使用：properties文件关联
+1）@Component //被容器扫描，并放入容器中
+2）@ConfigurationProperties(prefix = "person")//配置的前缀
+3）@PropertySource(value= "classpath:Person.properties",encoding = "utf-8")//关联配置文件
+resource下的 Person.properties 文件编译后的路径是在 classpath 下。
+
+相关配置工具
+<artifactId>spring-boot-configuration-processor</artifactId>
 
 4.bootstrap.yml 与 application.yml
 bootstrap.yml 加载优先于 application.yml
-aoolication.yml 比bootstrap.yml 常用
-application.yml 主要用于 springboot 项目的配置
-bootstrap.yml：主要用于
-springCloud
-加密解密
-固定参数
+aoolication.yml 比 bootstrap.yml 常用
+application.yml 主要用于 springboot 项目的配置,服务于 Application
+bootstrap 中的属性不会被覆盖。
+bootstrap.yml：主要用于 springCloud 加密解密 固定参数
 
-5.static 静态资源默认文件目录，可默认引用，也可自定义引用的路径。但文件名不会变。
+5.application.yml 配置
+resource 文件编译后的路径是 classpath ，之后的相同
 
-6.lombok：bean注解类
+1）可以配置自定义属性。
+2）static 静态资源默认文件目录，在resource下创建 static 目录，可默认引用，也可自定义引用的路径。但文件名不会变。
+  #  mvc:
+  #    static-path-pattern: /custompath/** # 修改静态文件static默认引用的路径，默认是不加 static 的。
+3）修改启动logo：文件在 resource 下的 banner 目录下
+第一种
+  banner:
+    location: classpath:banner/banner.txt
+第二种
+  banner:
+    image:
+      location: classpath:banner/banner06.png
+      pixelmode: text
+      pixelmode: block
+4）static 中定义的 index.html
+
+
+6.lombok：bean（pojo） 文件类的注解,一旦使用，开发团队需要统一使用。不然会有编译不通过的问题。
 1）@Data 生成参数的get与set
 2）@ToString  生成tostring方法
 3）@NoArgsConstructor  生成默认构造函数
@@ -55,36 +93,36 @@ springCloud
 3）@PutMapping：保存
 4）@DeleteMapping：删除
 
-全都使用的话为强制规范，
-只使用get与post是弱规范
+全都使用的话为强制规范，只使用get与post是弱规范
 
 8.接收参数的常用用注解
 1）@RequestParam  用于获得url中?后的参数，如果参数变量名保持一致，该注解可以省略
 2）@PathVariable  路径的参数，?之前配置的动态参数，如id之类的。
-3）@RequestBody   请求体的对象 json请求体，
+3）@RequestBody   请求体的对象 json请求体
 4）@RequestHeader 请求头的参数，token
 5）@CookieValue   cookie
 
+
+
 09.定时任务
-1）@configuration
+1）@Configuration
 //@Configuration          //1.标记配置类，让springboot容器可以扫描到
 //@EnableScheduling       //2.开启定时任务
-//    @Scheduled(cron = "*/5 * * * * ?")
     @Scheduled(cron = "0 */1 * * * ?")
     public void publicMsg(){
         log.warn("开始执行定时任务："+ LocalDateTime.now());
     }
-    // Cron表达式范例：
-    // */5 * * * * ?：每隔5秒执行一次
-    // 0 */1 * * * ?：每隔1分钟执行一次
-    // 0 0 23 * * ?：每天23点执行一次
-    // 0 0 1 * * ?：每天凌晨1点执行一次：
-    // 0 0 1 1 * ?：每月1号凌晨1点执行一次
-    // 0 0 23 L * ?： 每月最后一天23点执行一次
-    // 0 0 1 ? * L：每周星期天凌晨1点实行一次
-    // 0 26,29,33 * * * ?： 在26分、29分、33分执行一次
-    // 0 0 0,13,18,21 * * ?： 每天的0点、13点、18点、21点都执行一次
-}
+Cron表达式范例：
+*/5 * * * * ?：每隔5秒执行一次
+0 */1 * * * ?：每隔1分钟执行一次
+0 0 23 * * ?：每天23点执行一次
+0 0 1 * * ?：每天凌晨1点执行一次：
+0 0 1 1 * ?：每月1号凌晨1点执行一次
+0 0 23 L * ?： 每月最后一天23点执行一次
+0 0 1 ? * L：每周星期天凌晨1点实行一次
+0 26,29,33 * * * ?： 在26分、29分、33分执行一次
+0 0 0,13,18,21 * * ?： 每天的0点、13点、18点、21点都执行一次
+
 
 10.异步任务
 @Component          //1.标记配置类，让springboot容器可以扫描到
