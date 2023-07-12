@@ -846,8 +846,6 @@ baseName 已弃用，
 09）archiveFileName：文件的绝对路径以及名称，优先级最高
 10）archiveFile：不知道
 
-
-
 第七章 gradle.properties 属性配置
 01.org.gradle.daemon
 当设置为 true 时，Gradle 守护进程会运行构建。对于本地开发者的构建而言，这是我们最喜欢的属性。开发人员的环境在速度和反馈上会优化，所以我们几乎总是使用守护进程运行 Gradle 作业。由于 CI 环境在一致性和可靠性上的优化，我们不通过守护进程运行 CI 构建（即长时间运行进程）。
@@ -1009,4 +1007,9 @@ rm -rf ~/.android
 
 
 
-
+10.gradle-wrapper.properties 文件里的属性配置
+distributionBase：下载的Gradle压缩包解压后存储的主目录
+distributionPath：相对于distributionBase的解压缩后的Gradle压缩包的路径
+zipStoreBase：同distributionBase，只不过是存放zip压缩包的
+zipStorePath：同distributionPath，只不过是存放zip压缩包的
+distributionUrl：Gradle发行版压缩包的下载地址
