@@ -119,6 +119,11 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
     }
 
     override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.tv->{
+
+            }
+        }
         binding.tvDisplay.text = when (v?.tag) {
             "字符替换与数组化" -> replaceStr() + "\n" + toArray()
             "hash相同" -> equalHashCode()

@@ -188,7 +188,7 @@ BaseObservor
 @Bindable
 notifyPropertyChanged(BR.xxx)
 
-02.ViewBinding 与 DataBinding 的区别
+02.ViewBinding（视图绑定） 与 DataBinding（数据视图双向绑定） 的区别
 1）ViewBinding，相当于简化版的 DataBinding
 仅支持绑定 View，不支持数据绑定
 无需在布局文件中添加 layout 标签，自动生成 binding 文件

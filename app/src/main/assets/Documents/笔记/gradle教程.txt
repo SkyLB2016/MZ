@@ -717,8 +717,8 @@ dataBinding 可以将View 和界面上的数据进行双向绑定，viewBinding 
 
 10.设置对应的Java版本
 compileOptions {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
 }
 
 11.kotlin的Java版本配置
@@ -1005,11 +1005,30 @@ rm -rf ~/.gradle
 4）删除模拟器
 rm -rf ~/.android
 
-
-
-10.gradle-wrapper.properties 文件里的属性配置
+第十章：一些文件的配置属性
+01.gradle-wrapper.properties 文件里的属性配置
 distributionBase：下载的Gradle压缩包解压后存储的主目录
 distributionPath：相对于distributionBase的解压缩后的Gradle压缩包的路径
 zipStoreBase：同distributionBase，只不过是存放zip压缩包的
 zipStorePath：同distributionPath，只不过是存放zip压缩包的
 distributionUrl：Gradle发行版压缩包的下载地址
+
+02.buildscript 中的 repositories 和 allprojects 的 repositories 的作用和区别是什么呢？
+1）buildscript 里是gradle脚本执行所需依赖，分别是对应的 maven 库和插件
+2）allprojects 里是项目本身需要的依赖，比如我现在要依赖我自己maven库的toastutils库，那么我应该将maven {url 'https://dl.bintray.com/calvinning/maven'}写在这里，而不是buildscript中，不然找不到。
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "My"
+include ':app'

@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sky.common.utils.FileUtils
 import com.sky.common.utils.JumpAct
 import com.sky.common.utils.LogUtils
+import com.sky.oa.R
 import com.sky.oa.adapter.HomeAdapter
 import com.sky.oa.adapter.itemtouch.ItemTouchHelperCallback
 import com.sky.oa.databinding.FragmentHomeBinding
+import com.sky.oa.databinding.ItemFoot2Binding
+import com.sky.oa.databinding.ItemFootBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.vm.HomeVM
 import com.sky.ui.fragment.MVVMFragment
@@ -51,6 +54,11 @@ class HomeFragment : MVVMFragment<FragmentHomeBinding, HomeVM>() {
         viewModel.activitiesData.observe(viewLifecycleOwner, {
             adapter.datas = it
         })
+        var footBinding = ItemFootBinding.inflate(layoutInflater);
+//        var footBinding = ItemFootBinding.bind(ItemFoot2Binding.inflate(layoutInflater).root);//行不通
+        binding.root.addView(footBinding.root, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT))
+//        binding.root.addView(footBinding.root)
+
     }
 
     override fun getViewModel() =

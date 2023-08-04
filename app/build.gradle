@@ -137,7 +137,7 @@ android {
             createName()
         }
     }
-    //04.MVVM模式配置 dataBinding 包含 viewBinding
+    //04.MVVM模式配置 dataBinding（数据绑定） 包含 viewBinding（视图绑定）
     buildFeatures {
 //        dataBinding = true
         viewBinding true
