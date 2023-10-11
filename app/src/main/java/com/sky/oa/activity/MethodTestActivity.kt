@@ -119,8 +119,8 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.tv->{
+        when (v!!.id) {
+            R.id.tv -> {
 
             }
         }
@@ -980,7 +980,7 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
                 showToast("始制文字，乃服衣裳。")
             }
         }, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)//点击事件
-//        tv.setMovementMethod(LinkMovementMethod.getInstance())//点击事件还需要加入这句
+//        v.setMovementMethod(LinkMovementMethod.getInstance())//点击事件还需要加入这句，好像不加也没事
 
         start = span.length
         span.append("日月盈昃，辰宿列张。\n")

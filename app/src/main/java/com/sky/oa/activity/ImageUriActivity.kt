@@ -117,12 +117,12 @@ class ImageUriActivity : MVActivity<ActivityUriBinding, ImageUriVM>() {
         if (!SDCardUtils.isSDCardEnable()) showToast("暂无外部存储")
         else viewModel.checkDiskImage(this)
 
-        viewModel.liveDataFloders.observe(this, {
+        viewModel.liveDataFloders.observe(this) {
             showFloderPop(it)
-        })
-        viewModel.liveDataParent.observe(this, {
+        }
+        viewModel.liveDataParent.observe(this) {
             setAdapterData(it)
-        })
+        }
     }
 
     var total=0

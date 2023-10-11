@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
+import com.sky.common.utils.LogUtils;
 import com.sky.common.utils.SPUtils;
 import com.sky.common.utils.ToastUtils;
 import com.sky.ui.api.IView;
@@ -43,6 +44,7 @@ public abstract class MVVMFragment<V extends ViewBinding, VM extends BaseVM> ext
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = getBinding(inflater, container);
+        LogUtils.i("mvvmfragment的oncreateview");
         return binding.getRoot();
     }
 

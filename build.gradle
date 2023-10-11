@@ -25,7 +25,7 @@ buildscript {//构建项目使用。android{}中的配置使用
         //阿里云的 maven 地址
         //isAllowInsecureProtocol=true //gradle会默认禁用非官方的仓库，如需使用，需要先声明。
 //        maven { url 'https://maven.aliyun.com/repository/public' }
-//        maven { url 'https://maven.aliyun.com/repository/google' }
+//        maven { url ' https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/central' }
         //阿里云的 maven 地址
 

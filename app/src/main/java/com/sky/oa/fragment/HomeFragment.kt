@@ -10,18 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sky.common.utils.FileUtils
 import com.sky.common.utils.JumpAct
 import com.sky.common.utils.LogUtils
-import com.sky.oa.R
 import com.sky.oa.adapter.HomeAdapter
 import com.sky.oa.adapter.itemtouch.ItemTouchHelperCallback
 import com.sky.oa.databinding.FragmentHomeBinding
-import com.sky.oa.databinding.ItemFoot2Binding
 import com.sky.oa.databinding.ItemFootBinding
 import com.sky.oa.entity.PoetryEntity
 import com.sky.oa.vm.HomeVM
 import com.sky.ui.fragment.MVVMFragment
 import java.text.Collator
-import java.util.*
-import kotlin.Comparator
+import java.util.LinkedList
+import java.util.Locale
 
 /**
  *
@@ -34,6 +32,11 @@ class HomeFragment : MVVMFragment<FragmentHomeBinding, HomeVM>() {
     //    lateinit var adapter: HomeAdapter
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentHomeBinding.inflate(inflater, container, false)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        LogUtils.i("Homefragment的oncreateview")
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

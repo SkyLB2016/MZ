@@ -100,9 +100,9 @@ class ImageUrlActivity : MVActivity<ActivityUrlBinding, ImageUriVM>() {
 
         viewModel.getImageUrl()
 
-        viewModel.liveDataUrl.observe(this, {
+        viewModel.liveDataUrl.observe(this) {
             adapter.datas = it
-        })
+        }
     }
 
     private fun loadMore() {

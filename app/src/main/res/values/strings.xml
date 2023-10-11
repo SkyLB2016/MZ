@@ -117,5 +117,6 @@
     <string name="act_ninth">07.九宫解锁图案</string>
 
     <string name="act_fragment">08.fragment的切换</string>
+    <string name="act_web">09.web相关</string>
 
 </resources>
