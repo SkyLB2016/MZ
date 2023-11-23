@@ -1,0 +1,1012 @@
+登录接口
+1.配置信息：security/idc/  三端一致。
+
+2.Android 是/auth/login，与iOS的接口： profile/login 不同，返回结构也不同。接口字段有些相同，有些不同
+Android  /auth/login 返回：
+{
+  "status": "0",
+  "data": {
+    "profile": {
+      "id": "3775084",
+      "tenantId": "2618230",
+      "updatedAt": "1697701863000",
+      "status": "1",
+      "fullname": "张琪",
+      "avatar": "https://www.weibangong.com/files/611225426e38ffcd63f11839",
+      "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzc1MDg0MTY5ODA0ODMwOCIsInN1YiI6IjM3NzQ5MjMiLCJhaWQiOjM3NzUwODQsInRpZCI6MjYxODIzMCwiaWF0IjowfQ.fgxfjtIYjzjwRarJu1eCvre-FuYELyI3M0MX9yTQK64",
+      "loginAccount": "18531022252",
+      "mobile": "18531022252",
+      "email": "zhangqi1@linlongyun.com",
+      "jobTitle": "高级测试工程师",
+      "sn": "00760",
+      "birthday": "668016000000",
+      "joinedAt": "1628438400000",
+      "allDepartmentIds": [
+        "2849334"
+      ],
+      "roles": [
+        "0"
+      ],
+      "nationalId": "130406199103042714",
+      "sex": "1",
+      "organization": {
+        "id": "2618230",
+        "fullname": "霖珑云科",
+        "plan": "40"
+      },
+      "allProfiles": [
+        {
+          "id": "3775084",
+          "fullname": "张琪",
+          "avatar": "https://www.weibangong.com/files/611225426e38ffcd63f11839",
+          "status": "1",
+          "organization": {
+            "id": "2618230",
+            "fullname": "霖珑云科",
+            "plan": "40"
+          },
+          "jobtitle": "高级测试工程师"
+        },
+        {
+          "id": "3777349",
+          "fullname": "张琪",
+          "status": "1",
+          "organization": {
+            "id": "3777348",
+            "fullname": "ZQtest",
+            "plan": "48"
+          }
+        },
+        {
+          "id": "3796826",
+          "fullname": "张琪",
+          "organization": {
+            "id": "885029",
+            "fullname": "[测试]赵飞s1测试公司",
+            "plan": "38"
+          }
+        },
+        {
+          "id": "3808265",
+          "fullname": "张琪",
+          "status": "1",
+          "organization": {
+            "id": "3754977",
+            "fullname": "微办公演示",
+            "plan": "39"
+          }
+        },
+        {
+          "id": "3906815",
+          "fullname": "张琪",
+          "status": "1",
+          "organization": {
+            "id": "884805",
+            "fullname": "首页改版体验",
+            "plan": "38"
+          }
+        }
+      ],
+      "plan": "40",
+      "industry": "2017010005",
+      "companyGroup": true,
+      "jobTime": "1385827200000",
+      "idType": "1",
+      "postiveAt": "1636300800000",
+      "directDepartmentStr": "中台团队/集团研发部/测试组",
+      "weimiId": "2618233",
+      "openHomeRevision": true,
+      "featureRoles": [
+
+      ],
+      "cacheVos": [
+
+      ]
+    },
+    "settings": {
+      "apiUri": "http://103.235.225.10:8888/",
+      "fileUri": "https://www.weibangong.com/files/",
+      "wsUri": "ws://ws.weibangong.com:1889/",
+      "mqttUri": "tcp://im-wbg.weibangong.com:1883",
+      "mqttTopic": "messages/add",
+      "reviewEnabled": true,
+      "crmEnabled": true,
+      "mailEnabled": true,
+      "marketingUrl": "",
+      "host": "https://www.weibangong.com",
+      "disabledFeatures": [
+
+      ],
+      "qiniuUri": "https://static.weibangong.com/files/",
+      "upMaster": "http://upload.qiniu.com",
+      "upBackup": "http://up.qiniu.com",
+      "downMaster": "https://static.weibangong.com/files",
+      "sslMqttUri": "ssl://im-wbg.weibangong.com:8884",
+      "sslHttpApi": "https://www.weibangong.com/",
+      "safeWaterMark": true,
+      "HZUID": "1",
+      "mobileUrl": "https://mobile.weibangong.com/",
+      "agoraEnabled": true,
+      "mailBaseUrl": "https://263mail.weibangong.com/",
+      "kaoqinHost": "https://kaoqin.weibangong.com/",
+      "siriHost": "http://ia.weibangong.com/",
+      "docViewHost": "https://docview.weibangong.com/view/url",
+      "sdkUrl": "https://qysdk.weibangong.com/hybrid/",
+      "subAccess": true,
+      "openemail": true
+    }
+  }
+}
+
+iOS profile/login 返回：
+{
+  "status": "0",
+  "data": {
+    "updatedAt": "1697701863000",
+    "id": "3775084",
+    "openHomeRevision": true,
+    "loginAccount": "18531022252",
+    "directDepartmentStr": "中台团队/集团研发部/测试组",
+    "tenantId": "2618230",
+    "salary": "0",
+    "fullname": "张琪",
+    "positiveAt": "1636300800000",
+    "privacy": "0",
+    "emailPassword": "",
+    "type": "2",
+    "talentLibrary": false,
+    "role": "0",
+    "roles": [
+      "0"
+    ],
+    "sex": "1",
+    "email": "zhangqi1@linlongyun.com",
+    "employType": "0",
+    "companyGroup": true,
+    "birthday": "668016000000",
+    "createdAt": "1628495075000",
+    "signInCount": "2",
+    "organization": {
+      "id": "2618230",
+      "updatedAt": "1564477120000",
+      "insurance": "0",
+      "industry": "2017010005",
+      "salary": "0",
+      "settings": {
+        "loginFunc": "0"
+      },
+      "featureRoles": [
+      ],
+      "managerId": "2849433",
+      "avatar": "",
+      "defaultAvatar": false,
+      "talentLibrary": false,
+      "plan": "40",
+      "fullname": "霖珑云科",
+      "companyGroup": false,
+      "createdAt": "1538275144000",
+      "revisionTip": false
+    },
+    "insurance": "0",
+    "allDepartmentIds": [
+      "2849334"
+    ],
+    "status": "1",
+    "settings": {
+      "host": "https://www.weibangong.com",
+      "crmEnabled": true,
+      "file": {
+        "baseUri": "https://static.weibangong.com/files",
+        "host": "https://www.weibangong.com",
+        "qiniuUri": "https://static.weibangong.com/files",
+        "port": "443"
+      },
+      "hrm": true,
+      "cdn": {
+        "upBackups": [
+          "up.qiniu.com"
+        ],
+        "downMaster": "https://static.weibangong.com/files/",
+        "httpsUp": "up.qbox.me",
+        "upMaster": "upload.qiniu.com"
+      },
+      "reviewEnabled": true,
+      "background": "0",
+      "subAccess": true,
+      "kaoqinHost": "https://kaoqin.weibangong.com/",
+      "sslMsg": {
+        "user": "haizhi",
+        "ssl_ws_uri": "wss://im-wbg.weibangong.com:9002/mqtt",
+        "pass": "MpK2dTV8P",
+        "ssl_mqtt_uri": "ssl://im-wbg.weibangong.com:8884"
+      },
+      "webLogo": "",
+      "siriHost": "http://ia.weibangong.com/",
+      "sslHttpApi": "https://www.weibangong.com/",
+      "adminHost": "https://admin.weibangong.com",
+      "kaoqinApiHost": "https://api.qiyukaoqin.com/api/portal/wework",
+      "webAdminLogo": "",
+      "appLogo": "",
+      "customBackground": "",
+      "industry": "2017010005",
+      "kaoqinAdminHost": "https://kaoqin.weibangong.com/admin",
+      "marketingUrl": "",
+      "disabledFeatures": [
+      ],
+      "mqtt": {
+        "uri": "tcp://im-wbg.weibangong.com:1883",
+        "host": "im-wbg.weibangong.com",
+        "topic": "messages/add",
+        "syncTopic": "sync",
+        "port": "1883"
+      },
+      "docViewHost": "https://docview.weibangong.com/view/url",
+      "api": {
+        "baseUri": "http://103.235.225.10:8888/",
+        "host": "https://www.weibangong.com",
+        "port": "443"
+      },
+      "mobileUrl": "https://mobile.weibangong.com/",
+      "openemail": true,
+      "agoraEnabled": true,
+      "ws": {
+        "baseUri": "ws://im-wbg.weibangong.com:9001/mqtt",
+        "host": "im-wbg.weibangong.com",
+        "port": "9001"
+      },
+      "plan": "40",
+      "safeWaterMark": true,
+      "sdkUrl": "https://qysdk.weibangong.com/hybrid/",
+      "mailBaseUrl": "https://mail.weibangong.com/",
+      "clientId": "34496091698048099",
+      "skin": "1",
+      "mailEnabled": true,
+      "msg": {
+        "ws": {
+          "host": "im-wbg.weibangong.com",
+          "port": "9001"
+        },
+        "user": "haizhi",
+        "ws_uri": "ws://im-wbg.weibangong.com:9001/mqtt",
+        "mqtt_uri": "tcp://im-wbg.weibangong.com:1883",
+        "pass": "MpK2dTV8P",
+        "mqtt": {
+          "host": "im-wbg.weibangong.com",
+          "port": "1883"
+        }
+      },
+      "HZUID": "1"
+    },
+    "root": false,
+    "avatar": "https://www.weibangong.com/files/611225426e38ffcd63f11839",
+    "mobile": "18531022252",
+    "updatedById": "3832390",
+    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNDQ5NjA5MTY5ODA0ODA5OSIsInN1YiI6IjM3NzQ5MjMiLCJhaWQiOjM3NzUwODQsInRpZCI6MjYxODIzMCwiaWF0IjowfQ.P2SH1El8B8lMDFwJmwpimndpcVzEZnAEYGXwzgdBXXs",
+    "idNum": "130406199103042714",
+    "alternativeProfiles": [
+      {
+        "id": "3777349",
+        "insurance": "0",
+        "roles": [
+          "5",
+          "12",
+          "13",
+          "4",
+          "11",
+          "0",
+          "7",
+          "14",
+          "15",
+          "16",
+          "3",
+          "8",
+          "20",
+          "21",
+          "22",
+          "18",
+          "1",
+          "6",
+          "9",
+          "19",
+          "10"
+        ],
+        "salary": "0",
+        "settings": {
+        },
+        "featureRoles": [
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "1",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "1",
+        "organization": {
+          "id": "3777348",
+          "updatedAt": "1683712090000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+          ],
+          "managerId": "3777349",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "48",
+          "fullname": "ZQtest",
+          "companyGroup": false,
+          "createdAt": "1628758319000",
+          "revisionTip": false
+        }
+      },
+      {
+        "id": "3796826",
+        "insurance": "0",
+        "roles": [
+          "0"
+        ],
+        "salary": "0",
+        "settings": {
+        },
+        "featureRoles": [
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "0",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "0",
+        "organization": {
+          "id": "885029",
+          "updatedAt": "1474192626000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+          ],
+          "managerId": "885031",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "38",
+          "fullname": "[测试]赵飞s1测试公司",
+          "companyGroup": false,
+          "createdAt": "1474192626000",
+          "revisionTip": false
+        }
+      },
+      {
+        "id": "3808265",
+        "insurance": "0",
+        "roles": [
+          "5",
+          "12",
+          "17",
+          "13",
+          "4",
+          "11",
+          "0",
+          "7",
+          "14",
+          "15",
+          "16",
+          "3",
+          "8",
+          "20",
+          "21",
+          "22",
+          "18",
+          "1",
+          "6",
+          "9",
+          "19",
+          "10"
+        ],
+        "salary": "0",
+        "settings": {
+        },
+        "featureRoles": [
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "1",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "1",
+        "organization": {
+          "id": "3754977",
+          "updatedAt": "1649312608000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+          ],
+          "managerId": "3883075",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "39",
+          "fullname": "微办公演示",
+          "companyGroup": false,
+          "createdAt": "1626142388000",
+          "revisionTip": false
+        }
+      },
+      {
+        "id": "3906815",
+        "insurance": "0",
+        "roles": [
+          "0"
+        ],
+        "salary": "0",
+        "settings": {
+        },
+        "featureRoles": [
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "0",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "1",
+        "organization": {
+          "id": "884805",
+          "updatedAt": "1474189733000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+          ],
+          "managerId": "884807",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "38",
+          "fullname": "首页改版体验",
+          "companyGroup": false,
+          "createdAt": "1474189733000",
+          "revisionTip": false
+        }
+      }
+    ],
+    "sn": "00760",
+    "featureRoles": [
+    ],
+    "jobTitle": "高级测试工程师",
+    "jobTime": "1385827200000",
+    "revisionTip": false,
+    "defaultAvatar": false,
+    "idType": "1",
+    "joinedAt": "1628438400000"
+  }
+}
+3：选择公司：
+Android接口：/auth/runas
+iOS 接口：/profile/runas
+返回结构也不相同，字段有些不一样，跟第二部一样。
+Android 返回：
+{
+  "status": "0",
+  "data": {
+    "profile": {
+      "id": "3775084",
+      "tenantId": "2618230",
+      "updatedAt": "1697701863000",
+      "status": "1",
+      "fullname": "张琪",
+      "avatar": "https://www.weibangong.com/files/611225426e38ffcd63f11839",
+      "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzc1MDg0MTY5ODA0ODMwOCIsInN1YiI6IjM3NzQ5MjMiLCJhaWQiOjM3NzUwODQsInRpZCI6MjYxODIzMCwiaWF0IjowfQ.fgxfjtIYjzjwRarJu1eCvre-FuYELyI3M0MX9yTQK64",
+      "loginAccount": "18531022252",
+      "mobile": "18531022252",
+      "email": "zhangqi1@linlongyun.com",
+      "jobTitle": "高级测试工程师",
+      "sn": "00760",
+      "birthday": "668016000000",
+      "joinedAt": "1628438400000",
+      "allDepartmentIds": [
+        "2849334"
+      ],
+      "roles": [
+        "0"
+      ],
+      "nationalId": "130406199103042714",
+      "sex": "1",
+      "organization": {
+        "id": "2618230",
+        "fullname": "霖珑云科",
+        "plan": "40"
+      },
+      "allProfiles": [
+        {
+          "id": "3775084",
+          "fullname": "张琪",
+          "avatar": "https://www.weibangong.com/files/611225426e38ffcd63f11839",
+          "status": "1",
+          "organization": {
+            "id": "2618230",
+            "fullname": "霖珑云科",
+            "plan": "40"
+          },
+          "jobtitle": "高级测试工程师"
+        },
+        {
+          "id": "3777349",
+          "fullname": "张琪",
+          "status": "1",
+          "organization": {
+            "id": "3777348",
+            "fullname": "ZQtest",
+            "plan": "48"
+          }
+        },
+        {
+          "id": "3796826",
+          "fullname": "张琪",
+          "organization": {
+            "id": "885029",
+            "fullname": "[测试]赵飞s1测试公司",
+            "plan": "38"
+          }
+        },
+        {
+          "id": "3808265",
+          "fullname": "张琪",
+          "status": "1",
+          "organization": {
+            "id": "3754977",
+            "fullname": "微办公演示",
+            "plan": "39"
+          }
+        },
+        {
+          "id": "3906815",
+          "fullname": "张琪",
+          "status": "1",
+          "organization": {
+            "id": "884805",
+            "fullname": "首页改版体验",
+            "plan": "38"
+          }
+        }
+      ],
+      "plan": "40",
+      "industry": "2017010005",
+      "companyGroup": true,
+      "jobTime": "1385827200000",
+      "idType": "1",
+      "postiveAt": "1636300800000",
+      "directDepartmentStr": "中台团队/集团研发部/测试组",
+      "weimiId": "2618233",
+      "openHomeRevision": true,
+      "featureRoles": [
+
+      ],
+      "cacheVos": [
+
+      ]
+    },
+    "settings": {
+      "apiUri": "http://103.235.225.10:8888/",
+      "fileUri": "https://www.weibangong.com/files/",
+      "wsUri": "ws://ws.weibangong.com:1884/",
+      "mqttUri": "tcp://im-wbg.weibangong.com:1883",
+      "mqttTopic": "messages/add",
+      "reviewEnabled": true,
+      "crmEnabled": true,
+      "mailEnabled": true,
+      "marketingUrl": "",
+      "host": "https://www.weibangong.com",
+      "disabledFeatures": [
+
+      ],
+      "qiniuUri": "https://static.weibangong.com/files/",
+      "upMaster": "http://upload.qiniu.com",
+      "upBackup": "http://up.qiniu.com",
+      "downMaster": "https://static.weibangong.com/files",
+      "sslMqttUri": "ssl://im-wbg.weibangong.com:8884",
+      "sslHttpApi": "https://www.weibangong.com/",
+      "safeWaterMark": true,
+      "HZUID": "1",
+      "mobileUrl": "https://mobile.weibangong.com/",
+      "agoraEnabled": true,
+      "mailBaseUrl": "https://263mail.weibangong.com/",
+      "kaoqinHost": "https://kaoqin.weibangong.com/",
+      "siriHost": "http://ia.weibangong.com/",
+      "docViewHost": "https://docview.weibangong.com/view/url",
+      "sdkUrl": "https://qysdk.weibangong.com/hybrid/",
+      "subAccess": true,
+      "openemail": true
+    }
+  }
+}
+
+iOS 返回
+{
+  "status": "0",
+  "data": {
+    "updatedAt": "1697701863000",
+    "id": "3775084",
+    "loginAccount": "18531022252",
+    "directDepartmentStr": "中台团队/集团研发部/测试组",
+    "tenantId": "2618230",
+    "salary": "0",
+    "fullname": "张琪",
+    "positiveAt": "1636300800000",
+    "privacy": "0",
+    "emailPassword": "",
+    "type": "2",
+    "talentLibrary": false,
+    "role": "0",
+    "roles": [
+      "0"
+    ],
+    "sex": "1",
+    "email": "zhangqi1@linlongyun.com",
+    "employType": "0",
+    "companyGroup": true,
+    "birthday": "668016000000",
+    "createdAt": "1628495075000",
+    "signInCount": "2",
+    "organization": {
+      "id": "2618230",
+      "updatedAt": "1564477120000",
+      "insurance": "0",
+      "industry": "2017010005",
+      "salary": "0",
+      "settings": {
+        "loginFunc": "0"
+      },
+      "featureRoles": [
+
+      ],
+      "managerId": "2849433",
+      "avatar": "",
+      "defaultAvatar": false,
+      "talentLibrary": false,
+      "plan": "40",
+      "fullname": "霖珑云科",
+      "companyGroup": false,
+      "createdAt": "1538275144000",
+      "revisionTip": false
+    },
+    "insurance": "0",
+    "allDepartmentIds": [
+      "2849334"
+    ],
+    "status": "1",
+    "settings": {
+      "host": "https://www.weibangong.com",
+      "crmEnabled": true,
+      "file": {
+        "baseUri": "https://static.weibangong.com/files",
+        "host": "https://www.weibangong.com",
+        "qiniuUri": "https://static.weibangong.com/files",
+        "port": "443"
+      },
+      "hrm": true,
+      "cdn": {
+        "upBackups": [
+          "up.qiniu.com"
+        ],
+        "downMaster": "https://static.weibangong.com/files/",
+        "httpsUp": "up.qbox.me",
+        "upMaster": "upload.qiniu.com"
+      },
+      "reviewEnabled": true,
+      "background": "0",
+      "subAccess": true,
+      "kaoqinHost": "https://kaoqin.weibangong.com/",
+      "sslMsg": {
+        "user": "haizhi",
+        "ssl_ws_uri": "wss://im-wbg.weibangong.com:9002/mqtt",
+        "pass": "MpK2dTV8P",
+        "ssl_mqtt_uri": "ssl://im-wbg.weibangong.com:8884"
+      },
+      "webLogo": "",
+      "siriHost": "http://ia.weibangong.com/",
+      "sslHttpApi": "https://www.weibangong.com/",
+      "adminHost": "https://admin.weibangong.com",
+      "kaoqinApiHost": "https://api.qiyukaoqin.com/api/portal/wework",
+      "webAdminLogo": "",
+      "appLogo": "",
+      "customBackground": "",
+      "industry": "2017010005",
+      "kaoqinAdminHost": "https://kaoqin.weibangong.com/admin",
+      "marketingUrl": "",
+      "disabledFeatures": [
+
+      ],
+      "mqtt": {
+        "uri": "tcp://im-wbg.weibangong.com:1883",
+        "host": "im-wbg.weibangong.com",
+        "topic": "messages/add",
+        "syncTopic": "sync",
+        "port": "1883"
+      },
+      "docViewHost": "https://docview.weibangong.com/view/url",
+      "api": {
+        "baseUri": "http://103.235.225.10:8888/",
+        "host": "https://www.weibangong.com",
+        "port": "443"
+      },
+      "mobileUrl": "https://mobile.weibangong.com/",
+      "openemail": true,
+      "agoraEnabled": true,
+      "ws": {
+        "baseUri": "ws://im-wbg.weibangong.com:9001/mqtt",
+        "host": "im-wbg.weibangong.com",
+        "port": "9001"
+      },
+      "plan": "40",
+      "safeWaterMark": true,
+      "sdkUrl": "https://qysdk.weibangong.com/hybrid/",
+      "mailBaseUrl": "https://mail.weibangong.com/",
+      "clientId": "34496091698048099",
+      "skin": "1",
+      "mailEnabled": true,
+      "msg": {
+        "ws": {
+          "host": "im-wbg.weibangong.com",
+          "port": "9001"
+        },
+        "user": "haizhi",
+        "ws_uri": "ws://im-wbg.weibangong.com:9001/mqtt",
+        "mqtt_uri": "tcp://im-wbg.weibangong.com:1883",
+        "pass": "MpK2dTV8P",
+        "mqtt": {
+          "host": "im-wbg.weibangong.com",
+          "port": "1883"
+        }
+      },
+      "HZUID": "1"
+    },
+    "root": false,
+    "avatar": "https://www.weibangong.com/files/611225426e38ffcd63f11839",
+    "mobile": "18531022252",
+    "updatedById": "3832390",
+    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNDQ5NjA5MTY5ODA0ODA5OSIsInN1YiI6IjM3NzQ5MjMiLCJhaWQiOjM3NzUwODQsInRpZCI6MjYxODIzMCwiaWF0IjowfQ.P2SH1El8B8lMDFwJmwpimndpcVzEZnAEYGXwzgdBXXs",
+    "idNum": "130406199103042714",
+    "alternativeProfiles": [
+      {
+        "id": "3777349",
+        "insurance": "0",
+        "roles": [
+          "16",
+          "0",
+          "21",
+          "1",
+          "10",
+          "6",
+          "5",
+          "15",
+          "14",
+          "3",
+          "8",
+          "19",
+          "12",
+          "13",
+          "11",
+          "4",
+          "22",
+          "9",
+          "18",
+          "7",
+          "20"
+        ],
+        "salary": "0",
+        "settings": {
+
+        },
+        "featureRoles": [
+
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "1",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "1",
+        "organization": {
+          "id": "3777348",
+          "updatedAt": "1683712090000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+
+          ],
+          "managerId": "3777349",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "48",
+          "fullname": "ZQtest",
+          "companyGroup": false,
+          "createdAt": "1628758319000",
+          "revisionTip": false
+        }
+      },
+      {
+        "id": "3796826",
+        "insurance": "0",
+        "roles": [
+          "0"
+        ],
+        "salary": "0",
+        "settings": {
+
+        },
+        "featureRoles": [
+
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "0",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "0",
+        "organization": {
+          "id": "885029",
+          "updatedAt": "1474192626000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+
+          ],
+          "managerId": "885031",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "38",
+          "fullname": "[测试]赵飞s1测试公司",
+          "companyGroup": false,
+          "createdAt": "1474192626000",
+          "revisionTip": false
+        }
+      },
+      {
+        "id": "3808265",
+        "insurance": "0",
+        "roles": [
+          "16",
+          "0",
+          "21",
+          "1",
+          "10",
+          "6",
+          "5",
+          "15",
+          "14",
+          "3",
+          "8",
+          "19",
+          "12",
+          "13",
+          "11",
+          "4",
+          "22",
+          "9",
+          "18",
+          "7",
+          "17",
+          "20"
+        ],
+        "salary": "0",
+        "settings": {
+
+        },
+        "featureRoles": [
+
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "1",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "1",
+        "organization": {
+          "id": "3754977",
+          "updatedAt": "1649312608000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+
+          ],
+          "managerId": "3883075",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "39",
+          "fullname": "微办公演示",
+          "companyGroup": false,
+          "createdAt": "1626142388000",
+          "revisionTip": false
+        }
+      },
+      {
+        "id": "3906815",
+        "insurance": "0",
+        "roles": [
+          "0"
+        ],
+        "salary": "0",
+        "settings": {
+
+        },
+        "featureRoles": [
+
+        ],
+        "avatar": "",
+        "defaultAvatar": false,
+        "talentLibrary": false,
+        "role": "0",
+        "fullname": "张琪",
+        "revisionTip": false,
+        "companyGroup": false,
+        "status": "1",
+        "organization": {
+          "id": "884805",
+          "updatedAt": "1474189733000",
+          "insurance": "0",
+          "salary": "0",
+          "settings": {
+            "loginFunc": "0"
+          },
+          "featureRoles": [
+
+          ],
+          "managerId": "884807",
+          "avatar": "",
+          "defaultAvatar": false,
+          "talentLibrary": false,
+          "plan": "38",
+          "fullname": "首页改版体验",
+          "companyGroup": false,
+          "createdAt": "1474189733000",
+          "revisionTip": false
+        }
+      }
+    ],
+    "sn": "00760",
+    "featureRoles": [
+
+    ],
+    "jobTitle": "高级测试工程师",
+    "jobTime": "1385827200000",
+    "revisionTip": false,
+    "defaultAvatar": false,
+    "idType": "1",
+    "joinedAt": "1628438400000"
+  }
+}

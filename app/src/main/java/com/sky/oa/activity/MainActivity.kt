@@ -80,8 +80,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
         binding.fab.setOnClickListener {
-//                testMethod();
-            testMethod1();
+                testMethod();
+//            testMethod1();
         }
 
         //    content://    com.android.fileexplorer.myprovider/external_files/AFile/ICP%E5%A4%87%E6%A1%88.txt
@@ -166,6 +166,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         LogUtils.i("文件夹是否存在==" + folder.exists())
         FileUtils.copyFile(File("/storage/emulated/0/AFile/ICP备案.txt"), File("/storage/emulated/0/AFile"), "copy.txt");
 //            FileUtils.deleteFile("/storage/emulated/0/AFile")
-
     }
 }

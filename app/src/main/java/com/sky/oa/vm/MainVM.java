@@ -174,7 +174,7 @@ public class MainVM extends ViewModel {
         LogUtils.i("截取出来的字段1为==" + address);
         LogUtils.i("截取出来的字段1为==" + start);
 
-
+        equalPoetry(context);
     }
 
     public static double rad(double d) {
@@ -354,18 +354,6 @@ public class MainVM extends ViewModel {
                 .replaceAll("　", "")
                 .replaceAll("\n", "");
         LogUtils.i("长度==" + (poetry.length()));
-        int aa =
-                115
-                        + 70
-                        + 38
-                        + 61
-                        + 43
-                        + 56
-                        + 50
-                        + 129
-                        + 136
-                        + 21;
-        LogUtils.i("长度==" + aa);
         //        Character
 //        Boolean
 //        Number

@@ -1,0 +1,74 @@
+apply plugin: 'AndResGuard'
+
+andResGuard {
+//    def mapFile = file("${bakPath}/oa-base-${preVersion}-resource_mapping.txt")
+//    if (mapFile != null && mapFile.exists()) {
+//        mappingFile = mapFile
+//    }
+
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    use7zip = true
+    useSign = true
+    // It will keep the origin path of your resources when it's true
+    keepRoot = false
+    // If set, name column in arsc those need to proguard will be kept to this value
+    fixedResName = "arg"
+    // It will merge the duplicated resources, but don't rely on this feature too much.
+    // it's always better to remove duplicated resource from repo
+    mergeDuplicatedRes = true
+
+    whiteList = [
+            "R.drawable.icon",
+            "R.drawable.hzemoticon_big_*",
+            "R.drawable.hzemoticon_*",
+            "R.drawable.hz_action_emotion*",
+            "R.drawable.didi_*",
+            "R.layout.activity_di_di_web",
+            "R.id.didi_*",
+            "R.anim.alphaout",
+            "R.anim.no_anim",
+            "R.anim.push_left_in",
+            "R.anim.push_left_out",
+            "R.anim.push_right_in",
+            "R.anim.push_right_out",
+            "R.anim.push_up_in",
+            "R.anim.push_up_out",
+            "R.anim.zoomin",
+            "R.drawable.default_divider_line",
+            "R.drawable.notification_default_icon",
+            "R.drawable.icon_camcard",
+            "R.drawable.agora_float_window_voice",
+            "R.drawable.agora_float_window_video",
+            "R.layout.layout_download_notification",
+            "R.layout.notification_view",
+            "R.string.app_name",
+
+            //华为推送配置白名单
+            "R.string.hms*",
+            "R.string.connect_server_fail_prompt_toast",
+            "R.string.getting_message_fail_prompt_toast",
+            "R.string.no_available_network_prompt_toast",
+            "R.string.third_app_*",
+            "R.string.upsdk_*",
+            "R.layout.hms*",
+            "R.layout.upsdk_*",
+            "R.drawable.upsdk*",
+            "R.color.upsdk*",
+            "R.dimen.upsdk*",
+            "R.style.upsdk*"
+            //华为推送配置白名单
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+//            "resources.arsc"
+    ]
+
+    sevenzip {
+//        artifact = 'com.tencent.mm:SevenZip:1.2.18'
+        artifact = 'com.tencent.mm:SevenZip:1.2.21'
+    }
+}

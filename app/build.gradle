@@ -9,6 +9,7 @@ plugins {
 }
 //apply from: "$rootDir/common.gradle"
 //apply from: "$rootDir/app/copysrc/test.gradle"
+//apply from: "${rootDir}/resguard.gradle"
 
 //设置依赖的jar，遵循group:artifactId:version
 dependencies {
@@ -85,10 +86,10 @@ android {
         versionCode 1       //版本号
         versionName "1.0"   //版本名
         multiDexEnabled true//添加分包支持，突破65535的限制
-        vectorDrawables.useSupportLibrary = true //库支持矢量图
+//        vectorDrawables.useSupportLibrary = true //库支持矢量图
 
-        flavorDimensions "sky" //渠道号
-        manifestPlaceholders = [CHANNEL_VALUE: "umeng"]//默认是umeng的渠道
+//        flavorDimensions "sky" //渠道号
+//        manifestPlaceholders = [CHANNEL_VALUE: "umeng"]//默认是umeng的渠道
 
 //        ndk {
 //            //添加对应cpu类型的.so库。
@@ -104,8 +105,8 @@ android {
             storePassword key['STOREPASSWORD']
             keyAlias key['KEYALIAS']
             keyPassword key['KEYPASSWORD']
-//            println "debug==$storePassword"
-//            println STOREPASSWORD //自定义文件，不能直接获取
+            println "debug==$storePassword"
+            println STOREPASSWORD //自定义文件，不能直接获取
         }
 
         release {
@@ -113,8 +114,8 @@ android {
             storePassword STOREPASSWORD
             keyAlias KEYALIAS
             keyPassword KEYPASSWORD
-//            println "release==$STOREPASSWORD"
-//            println "$rootDir/${STOREFILE}"
+            println "release==$STOREPASSWORD"
+            println "$rootDir/${STOREFILE}"
         }
     }
     //03.打包方式配置
@@ -122,19 +123,19 @@ android {
         debug {
             minifyEnabled false
             zipAlignEnabled true //Zipalign优化
-            versionNameSuffix "-debug"
+//            versionNameSuffix "-debug"
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            createName()
+//            createName()
         }
         release {
             minifyEnabled true
             zipAlignEnabled true //Zipalign优化
-            versionNameSuffix "-release"
+//            versionNameSuffix "-release"
             signingConfig signingConfigs.release
             shrinkResources true// 移除无用的resource文件
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            createName()
+//            createName()
         }
     }
     //04.MVVM模式配置 dataBinding（数据绑定） 包含 viewBinding（视图绑定）
@@ -156,19 +157,19 @@ android {
     }
     //07.通道配置，应用市场或者主地址配置
 //    flavorDimensions "sky"
-    productFlavors {
-        sky {//搭配下方的 productFlavors.all 使用
-            dimension "sky"
-        }
-//        baidu{
-//            manifestPlaceholders = [CHANNEL_VALUE: baidu]
+//    productFlavors {
+//        sky {//搭配下方的 productFlavors.all 使用
+//            dimension "sky"
 //        }
-        te {
-            buildConfigField 'String', 'API_URL', '"https://xxx/"'
-            buildConfigField 'String', 'APK_SUFFIX', '"SKYP"'
-        }
-    }
-    productFlavors.all { flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name] }
+////        baidu{
+////            manifestPlaceholders = [CHANNEL_VALUE: baidu]
+////        }
+//        te {
+//            buildConfigField 'String', 'API_URL', '"https://xxx/"'
+//            buildConfigField 'String', 'APK_SUFFIX', '"SKYP"'
+//        }
+//    }
+//    productFlavors.all { flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name] }
 
     //08.设置自定义的资源目录，通常都是老项目转AS才会用到
 //    sourceSets {//设置自定义的资源目录
@@ -207,14 +208,17 @@ def createName() {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             if (variant.buildType.name == "debug") {
-                outputFileName = "${variant.baseName}-${variant.versionName}.apk"
-//                println "basename==${variant.baseName}"
-//                println "versionName==${variant.versionName}"
-//                println "buildTime()==${buildTime()}"
+                println "outputFileName == ${outputFileName}"
+//                outputFileName = "${variant.baseName}-${variant.versionName}.apk"
+                println "basename == ${variant.baseName}"
+                println "versionName == ${variant.versionName}"
+                println "buildTime() == ${buildTime()}"
             } else {
-                outputFileName = "${variant.baseName}-${variant.versionName}-${buildTime()}.apk"
-//                println "basename==${variant.baseName}"
-//                println "versionName==${variant.versionName}"
+                println "outputFileName == ${outputFileName}"
+//                outputFileName = "${variant.baseName}-${variant.versionName}-${buildTime()}.apk"
+                println "basename == ${variant.baseName}"
+                println "versionName == ${variant.versionName}"
+                println "buildTime() == ${buildTime()}"
             }
         }
     }

@@ -95,12 +95,14 @@ keytool -delete -alias 秘钥名称 -keystore 文件名
 11）搜索历史命令：Ctrl + R
 12）Mac终端上选中即复制，单击滚轮粘贴。
 13）按住 ⌘ ，单击路径可以打开此地址
+14）sudo lsof -i:8888  查找占用此端口号的程序
+15）sudo kill pid  停止该对应pid 的程序
 
 02.快捷小命令
 01）history （num）：显示使用过的历史命令
 02）open . ：打开当前目录
 03）pwd：(print working directory的缩写)显示当前文件夹的绝对路径。
-04）which 应用名：显示$path里配置的信息
+04）which 应用名：显示应用的配置信息，.bash_profile里$path里配置的信息，或者其他地方配置的信息
 05）w/who 查看当前登录用户
 06）ifconfig  查看网络连接
 07）df 查看分区信息

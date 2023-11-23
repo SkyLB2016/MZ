@@ -19,16 +19,40 @@ buildscript {//构建项目使用。android{}中的配置使用
 
     //配置项目的基础仓库
     repositories {
+        mavenLocal()//maven本地仓库
         google()
         mavenCentral()//maven中央仓库
-        mavenLocal()//maven本地仓库
         //阿里云的 maven 地址
-        //isAllowInsecureProtocol=true //gradle会默认禁用非官方的仓库，如需使用，需要先声明。
-//        maven { url 'https://maven.aliyun.com/repository/public' }
-//        maven { url ' https://maven.aliyun.com/repository/google' }
-//        maven { url 'https://maven.aliyun.com/repository/central' }
+//        isAllowInsecureProtocol=true //gradle会默认禁用非官方的仓库，如需使用，需要先声明。
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/google'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/central'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url "https://jitpack.io"
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/releases'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/gradle-plugin'
+        }
         //阿里云的 maven 地址
-
         //maven{ url uri("地址")} //自定义的本地仓库
 
     }
@@ -37,7 +61,7 @@ buildscript {//构建项目使用。android{}中的配置使用
         classpath "com.android.tools.build:gradle:7.1.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20"
 //        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${KOTLIN_VERSION}"
- //        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.21'//resguard 加密打包工具
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.22'//resguard 加密打包工具
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual
         // module build.gradle files

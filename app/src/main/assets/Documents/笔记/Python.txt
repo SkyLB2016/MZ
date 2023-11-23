@@ -1,19 +1,33 @@
-Python笔记
+Python 3.x笔记
+
+关键字
+and	exec	not
+assert	finally	or
+break	for	pass
+class	from	print
+continue	global	raise
+def	if	return
+del	import	try
+elif	in	while
+else	is	with
+except	lambda	yield
+
 
 第一章
-1.数据类型和变量
-整数，浮点数，字符串，布尔值，空值 None
+1.python的数据类型分为：整数，浮点数，字符串，布尔值(True False)，还有个特殊值 None（空值）
 1）二进制转十进制算法
-从低位开始，等于当前数（0或1）乘以2的n次方，n代表当前数所在的位置，从零开始计数。比如
-1111=2³+2²+2+1（2的零次方）=15
+从低位开始，当前数（0或1）乘以2的n次方，n代表当前数所在的位置，从零开始计数。比如
+1111= 2³+2²+2¹+2º =15
 
-2）十六进制用0x前缀，字符转换前缀用\u。0-9，abcdef；10=16，f=15，ff=15*16+15=255
-十六进制转十进制算法
-从低位开始，等于当前数（包括0）乘以2的4n次方，n代表当前数所在的位置，从零开始计数。比如
-3456=3*2的(4*3)次方+4*2的(4*2)次方+5*2的(4*1)次方+6*2的(4*0)次方=13398
+2）十六进制用 0x 前缀，字符转换前缀用 \u。
+0-9，abcdef；a=10，f=15，ff=15*16+15=255
+十六进制转十进制算法：
+从低位开始，当前数（包括0）乘以2的4n次方，n代表当前数所在的位置，从零开始计数。比如
+
+3456=3*2^(4*3)+4*2^(4*2)+5*2^(4*1)+6*2^(4*0)=13398
 
 3）Python允许在大数字中间以_分隔，如1000000可写成1_000_000
-4)e代表10，1.23e2=123
+4)e代表10，1.23e2=123.0
 5）整数运算是精确的，浮点数运算，可能会有四舍五入的误差
 6）字符串以单引号'或双引号括起来，用双引号括起来的单引号也是字符。
 7）转义字符 \，在字符串内转义使用；比如
@@ -32,7 +46,7 @@ print('''line1
 11）空值 none
 12）变量名必须是大小写英文、数字和_的组合，不能以数字开头。
 13）变量可以反复赋值，且可以是不同的类型的变量，这种变量本身类型不固定的语言称之为动态语言，与之对应的是静态语言，java就是静态的。
-14）除法 /，最后都会得到浮点数，要是想得到整数，需要用 //，且除数和被除数都是整数
+14）除号 / 会得到浮点数；要是想得到整数，要用 //，且除数和被除数都是整数
 15）Python的整数和浮点数都没有大小限制，但是超出一定范围后就会直接表示为inf 无限大。
 
 2.字符串
@@ -40,7 +54,8 @@ print('''line1
 2）Unicode 通常是2个字节，多的会有4个字节
 3）UTF-8是可变长编码，英文字母通常是1个字节，汉字通常是是3个字节，特别生僻的字符会被编码成4-6个字节。
 4）UTF-8 包含ASCII编码。
-5）ord() 查看字符的整数表示，chr() 把数字转成对应的字符
+5）ord() 查看字符编码的整数表示，
+chr() 把数字转成对应的字符编码
 6）Python对bytes类型的数据用带b前缀的单引号或双引号表示：
   x = b'ABC'
 
@@ -75,24 +90,30 @@ s = 3.14 * r ** 2
 print(f'The area of a circle with radius {r} is {s:.2f}')
 The area of a circle with radius 2.5 is 19.62
 
-4.list
-1）list = ['a','b','c']，有序集合可随时添加、删除，各个元素可以是不同类型
-2）list[-1] 代表取出最后一个元素，可依次倒推
-list[-2] 代表取出倒数第二个元素
-3）list.append() 末尾添加；
-4）list.insert(1,'dd') 插入
-5）list.pop() 末位删除
-list.pop(1) 指定删除
+4.list：用中括号定义
+python 内置的一种列表数据类型，有序集合可随时添加、删除，各个元素可以是不同类型
+1）names = ['张三', '李四', '王五', '赵六']
+2）names[-1] 代表取出最后一个元素，可依次倒推
+names[-2] 代表取出倒数第二个元素
+3）names.append('孙七') 末尾添加；
+4）names.insert(1,'周八') 插入
+5）names.pop() 末位删除
+names.pop(1) 指定删除
 
-用大扩号定义的list，添加用add(),移除用remove(),和用中括号定义的list 不一样。
+用大扩号定义的 set 集合，无序的，不重复，添加用add(),移除用remove(),和用中括号定义的list 不一样。
 
 
 5.tuple list变种
 1）tuple = ('a','b','c')，有序列表，叫元组，初始化后不可变
 1）tuple 陷阱：一元素定义，也需要加 , 分割
 
-6.if..elif..else..
-1） if x：x是非零数值、费控字符串、非空list等，就判断为True，否则为False
+6.条件匹配：if..elif..else..
+1） if x：x是非零数值、非空字符串、非空list等，就判断为True，否则为False
+
+模式匹配：match ... case
+相当于 java 的switch()... case
+
+case _: 默认返回
 
 7.循环
 1）for 循环
@@ -103,9 +124,9 @@ break 提前结束整个循环
 continue 结束此次循环
 
 8.dict：dictionary，相当于java 的 map，key-value 形式
-map = { 'a':8,'b':9}
+map = { 'username':'刘一','phone':18531022252 }
 1）查找元素的时候，先在字典的索引表里（首字母表，部首表）查key对应的页码，然后翻到该页。
-2）map['c'] = 10 key-value 形式直接添加
+2）map['addresss'] = "北京市" key-value 形式直接添加
 3）通过 key 查找对应的元素
 map[key] key不存在会报错
   key in map 判断map中是否存在key
@@ -121,7 +142,7 @@ map[key] key不存在会报错
     占用空间小，浪费内存很少。
 所以，dict是用空间来换取时间的一种方法。
 
-10.set 类似dict，一组 key 的集合，无序，由于key不能重复，所以在set中，没有重复的key
+10.set 用大括号{}定义,类似dict，一组 key 的集合，无序，不重复，由于key不能重复，所以在set中，没有重复的key
 要创建一个set，需要提供一个list作为输入集合，重复元素被自动过滤
 s1 = set([1,2,3])
 1）add(key) 添加
@@ -143,52 +164,46 @@ a(-1)
 1）空函数
 def pop():
    pass
-2）函数可返回多个数值，其实返回的是一个 tuple；多个变量可以同时接收一个tuple，按顺序赋值。要是接收对象只有一个，那就是一个 tuple
+2）函数可返回多个数值，相当于返回一个 tuple；多个变量可以同时接收一个 tuple，按顺序赋值。要是接收对象只有一个，那就是一个 tuple
 3）def power(x,n=2) 可以设置默认参数，必选在前，默认在后，这样就相当于 java 的重载
 当不按顺序提供默认参数时，需要把参数名写上。
-默认参数，是可以被改变的，使用的时候，必须指向不变对象，或者做判断，只改变一次。
-def add_end(L=None):
-    if L is None:
-        L = []
-    L.append('END')
-    return L
 
-13.可变参数 * 接收的是一个tuple
-    def calc1(numbers): 只能放入list或者tuple等类型
-    def calc1(*numbers): 可以直接放入基本类型参数，最后是以封装成 tuple类型作为参数的
 
-14.关键字参数 **：以 dict（map） 的 key=value 的形式，作为可变参数传入。
-可以拓展函数的功能，自定义参数，自定义解析
-1）**other 不限制关键字参数的个数
-    def person(name, age, **other):
-        print('name:', name, 'age:', age, 'other:', other)
-
-custom.person('lll', 33, gender='man', city='北京', year=2023)
-
-json = {city='北京', year=2023}
-custom.person('lll', 33, gender='man',**json)
-2）* 限制关键字参数的名字
-*,x,y  *之后被视为确定的关键字名字
+13.参数的种类
+1）位置参数：按顺序依次输入的参数。
+2）默认参数：一开始就设置了默认值的参数
+3）可变参数： *args 接收的是多个参数，最后封装成一个 tuple 类型，
+    def calc1(numbers):固定参数，只能放入 list 或 tuple 等类型，
+    def calc1(*args): 可以直接放入基本类型参数，最后是以封装成 tuple 类型作为参数的
+4）关键字参数 **：以 dict（map） 的形式，作为可变参数传入。
+**kw 不限制关键字参数的个数，接收的是 dict
+def person(name, age, **kw):
+    print('name:', name, 'age:', age, 'other:', other)
+person('李彬', 33, gender='man', city='北京', year=2023)
+kw = {city='北京', year=2023}
+custom.person('lll', 33, gender='man',**kw)
+5）命名关键字参数：* 限制关键字参数的名字
+a,b,*,x,y  *之后被视为确定的关键字名字
 def person(name, age, *, city, job):
     print(name, age, city, job)
-3）如果已经定义了可变参数，后边跟着的命名关键字参数就不需要 * 分割了
+6）可变参数+命名关键字参数：后边跟着的命名关键字参数就不需要 * 分割了
 def person(name, age, *args, city, job):
     print(name, age, args, city, job)
 
 15.递归，尾部递归，但是python没有做尾部优化，所以没卵用，尼玛，浪费感情
 
 16.切片操作符
-list1=list(range(100)) 0到99
-list1[0:3] 在list中 从索引0开始，到3为止，不包括3.
-1）如果第一个所以是0，可以省略，写成 list1[:3]
-list1[3:9]
+numbers=list(range(100)) 0到99
+numbers[0:3] 在list中 从索引0开始，到3为止，不包括3.
+1）如果第一个所以是0，可以省略，写成 numbers[:3]
+numbers[3:9]
 2）倒数切片
-list1[-7:-1]：从小到大
+numbers[-7:-1]：从小到大
 最后一个是0 可以省略
-list1[-7:]：从小到大
-3）list1[:] 取出全部
-4）list1[::2] 从0开始，间隔2，取出全部
-5）list1[:20:2] 从0开始，间隔2，取到20
+numbers[-7:]：从小到大
+3）numbers[:] 取出全部
+4）numbers[::2] 从0开始，间隔2，取出全部
+5）numbers[:20:2] 从0开始，间隔2，取到20，不包括20；
 6）字符串也可以使用
 
 17.迭代
@@ -196,7 +211,7 @@ list1[-7:]：从小到大
 item 可以是数组，也可以是字符串，
 整数不行
 
-2）enumerate(text) 方法key返回一个索引-元素队，等同于k-v
+2）enumerate(text) 返回一个索引-元素队，等同于k-v
 for i,v in enumerate(text):
     print(i,v)
 for k, v in map.items():
@@ -204,13 +219,16 @@ for k, v in map.items():
 for x, y in [(1, 1), (2, 4), (3, 9)]:
      print(x, y)
 
-18.列表生成式 List Comprehensions，用[] 括起来的就是列表生成式
+18.列表生成式即 List Comprehensions，是Python内置的非常简单却强大的可以用来创建list的生成式。
 print([k + '=' + v for k, v in distAndMap.items()])
 print([x if x % 2 == 0 else -x for x in range(1, 9)])
 print([x * (x if x % 2 == 0 else -x) for x in range(1, 9)])
 print([(x if x % 2 == 0 else -x) * (x if x % 2 == 0 else -x) for x in range(1, 9)])
+1）if 写在 for 之前 必须加 else，写在 for 之后，只有if，不能带 else，
 
-19.生成器 generator 用小括号 () 括起来的就是生成器
+19.生成器 generator 用 () 生成  或者含有 yield 的函数就是generator
+如果列表元素可以按照某种算法推算出来，那我们是否可以在循环的过程中不断推算出后续的元素呢？这样就不必创建完整的list，从而节省大量的空间。在Python中，这种一边循环一边计算的机制，称为生成器：generator。
+列表生成式是直接生成集合列表，容量确定。生成器是生成一个对象，一边循环 ，一边计算生成下一个元素
 1）列表生成式的[] 改为 ()
 generator 中保存的是一个算法，使用时，才开始计算。也是可以迭代的对象。
 列表生成式是已经计算好的列表
@@ -220,13 +238,13 @@ generator 中保存的是一个算法，使用时，才开始计算。也是可�
 20.迭代器
 1）可直接作用于for循环的数据类型有
 一类是集合数据类型：list、tuple、dict、set、str
-一类是 generator，包括生成器 和 带 yield 的generator function
+一类是 generator，包括生成器 和 带 yield 的 generator function
 这些可直接作用于 for 循环的对象统称为可迭代对象： Iterable
 使用 isinstance() 判断一个对象是否是 Iterable 对象
 
 2）可以被 next() 函数调用并不断返回下一个值的对象称为迭代器：Iterator，惰性计算的序列，相当于打一巴掌，动一下。
-生成器都是 iterator 对象，但list，dict，str不是iterator，
-list、dict、str等iterable 别称iterator 可以使用 iter() 函数
+生成器都是 iterator 对象，但list，dict，str 不是 iterator，
+list、dict、str等iterable 变成 iterator 可以使用 iter() 函数
 
 
 21.为什么list、dict、str等数据类型不是Iterator？
@@ -234,39 +252,26 @@ list、dict、str等iterable 别称iterator 可以使用 iter() 函数
 可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时它才会计算。
 Iterator甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可能存储全体自然数的。
 
-python 的 for循环本质上就是通过不断调用next 函数实现的
-for x in [1, 2, 3, 4, 5]:
-    pass
-
-实际上完全等价于：
-
-# 首先获得Iterator对象:
-it = iter([1, 2, 3, 4, 5])
-# 循环:
-while True:
-    try:
-        # 获得下一个值:
-        x = next(it)
-    except StopIteration:
-        # 遇到StopIteration就退出循环
-        break
+凡是可作用于for循环的对象都是Iterable类型；
+凡是可作用于next()函数的对象都是Iterator类型，它们表示一个惰性计算的序列；
+集合数据类型如list、dict、str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。
 
 22.高阶函数：接收函数作为参数
-1）map(function,list):方法和参数的调用，传入的方法只接收一个参数，最后的返回需要用list接收
-2）reduce(function,list):方法和参数的调用，传入的方法接收两个参数，最后返回一个返回值
-3）filter(function,list)：一个参数，用于过滤序列。
-4）sorted(list)：序列排序，默认排序
+1）map(function,list):方法和参数的调用，传入的方法只接收一个参数，最后的返回的是一个 iterator 惰性序列，可以用list接收
+2）reduce(function,list):参数相加的调用，传入的方法接收两个参数，最后只返回一个返回值
+3）filter(function,list)：一个参数，用于过滤序列，也是返回一个 iterator 惰性序列。
+4）sorted(list)：序列排序，默认排序，是按编码排的序，返回的是一个 list 序列
 sorted(list，key=abs)：序列排序，排序方式
 sorted(list，key=str.lower)：序列排序，排序方式
 sorted(list，key=str.upper)：序列排序，排序方式
 
 23.函数可作为返回值，这种称为闭包 closure
 
-24.匿名函数 lambda x: x*x
+24.匿名函数 lambda x: x * x
 print('匿名函数应用==', list(map(lambda x: x * x, [1, 2, 3, 4, 5])))
-lambda 表示匿名函数， 冒号前的x 表示参数；函数内只能有一句表达式，结果为返回值。
+lambda 表示匿名函数， 函数的简化写法，冒号前的x 表示参数；函数内只能有一句表达式，结果为返回值。
 
-25.装饰器：_
+25.装饰器：_------待研究
 
 26.偏函数
 int('1234') 字符转整型，默认是十进制转成十进制
@@ -285,14 +290,17 @@ __XXX__ 是特殊变量，这种特殊标量是可以被直接引用
 _xxx __xxx 这样的函数或变量是非公开的，不应该被直接应用
 
 28.类 Class  和 实例 Instance
-属性的公开，私有化，半私有化
+Class是一种抽象概念，比如我们定义的Class——Student，是指学生这个概念，而实例（Instance）则是一个个具体的Student，比如，Bart Simpson和Lisa Simpson是两个具体的Student。
+所以，面向对象的设计思想是抽象出Class，根据Class创建Instance。
+
 类是创建实例的模板，而实例则是一个一个具体的对象，各个实例拥有的数据都互相独立，互不影响；
 方法就是与实例绑定的函数，和普通函数不同，方法可以直接访问实例的数据；
 通过在实例上调用方法，我们就直接操作了对象内部的数据，但无需知道方法内部的实现细节。
 和静态语言不同，Python允许对实例变量绑定任何数据，也就是说，对于两个实例变量，虽然它们都是同一个类的不同实例，但拥有的变量名称都可能不同：
 
+属性的公开，私有化，半私有化
 如果要把属性私有化，加 __
-self.__name ：__name为私有变量，外部不可访问。其实是变成了_student__name，可以调用此名，但是最好不要。
+self.__name ：__name为私有变量，外部不可访问。其实是变成了_student__name，可以调用此名，但不同的python 解释器会把 __name 改成不同的变量名
 self._name ：_name 虽然被视为私有变量，但可以被外部访问，
 
 29.继承与多态，基本等同于java
@@ -302,22 +310,21 @@ self._name ：_name 虽然被视为私有变量，但可以被外部访问，
 2）isinstance(v,object) ：判断变量v 是否是 object 的类型
 3）dir() ： 获取一个对象的所有属性和方法。是一个字符串的list
 4）len() 长度方法，如有需要，可以重写 __len__，返回数字类型
-5）hasattr(obj,'x') ：是否有x属性
-setattr(obj,'x')：设置x属性的值
-getattr(obj,'x')：获取x属性对应的值
-getattr(obj,'x',default)：获取x属性对应的值
+5）hasattr(stu,'x') ：实例 stu 是否有 x 属性
+setattr(stu,'x','abc')：给实例 stu 设置 x属性，并赋值
+getattr(stu,'x')：获取实例 stu 中 x属性 对应的值
+getattr(stu,'x',default)：获取实例 stu 中 x属性 对应的值，并设置为空时的默认值
 相当于java的属性反射
 
-31.在class类中直接定义的属性是类属性，相当于java 静态变量
+31.在 class 类中直接定义的属性是类属性，相当于 java 静态变量
 在实例对象中，可覆写实例内的变量，但类变量是没变的。也可以删除对象的变量，但是找不到之后会自动查找类变量。
 如要改变，通过类直接覆写该属性。
 
 实例属性是各个实例所有，互不干扰。
-类属性属于类所有，所有实例共享一个属性，但之后每个实例可以自己修改。
-名称不要相同。
+类属性属于类所有，所有实例共享一个属性，但之后每个实例可以自己修改。就是 java 的类静态变量
 
 32.动态绑定方法
-1）types 的 MethodType 动态给一个实例绑定已有的方法
+1）types 的 MethodType 动态给一个 实例 绑定已有的方法
 MethodType(methodName，obj)
 def set_age(self, age):
     self.age = age
@@ -330,15 +337,15 @@ Student.set_age=set_age
 33.__slots__  绑定属性
 class Student(object):
     __slots__ = ('name', 'age') # 用tuple定义允许绑定的属性名称
-类中只能定义 name 和age 属性。
+类中只能定义 name 和 age 属性。
 对继承的子类不起作用。
 
 
-34.
-@property 代表只读属性，会派生一个xx.setter，代表设置属性，可不用
+34.有毛病的设计
+@property 代表只读属性，等同于 getx() 方法，同时 会派生一个@xx.setter 注解，代表设置属性，可不用
 方法名和属性名不能一样。
 
-35.多重继承 MixIn
+35.多重继承 后缀跟着：MixIn
 class A(B,CMixIn,DMixIn)
 
 36.__xx__：特殊属性
@@ -347,20 +354,21 @@ class A(B,CMixIn,DMixIn)
 2）__len__ ：重写长度函数
     def __len__(self):
 3）__str__ 相当于重写 java 的 toString 方法
-4）__repr__ ：输出对象的地址
+4）__repr__ ：输出对象的地址,通常
 __repr__ == __str__
 
 5）__iter__ ：自定义迭代
 需要搭配  __next__ 使用
 
-6）__getitem__： 懵逼方法，以后再说
+6）__getitem__： 定义一个循环，取出实例 到固定位置的数据
 
-7）__getattr__: 获取关键字参数等自定义属性的值
+7）__getattr__: 获取关键字参数等自定义属性的值，可以用于 属性值拼接
 def __getattr__(self, attr):
         if attr=='score':
             return 99
 
-8）__call__ :实例本身调用
+8）__call__ : 实例本身调用，可以把实例本身作为函数，
+stu()
 callable():判断是否重写了call 方法
 
 36.枚举类
@@ -381,7 +389,7 @@ metaclass 元类：当我们定义了类以后，就可以根据这个类创建�
 39.assert 断言 等同于 java 的assert
 为true 继续执行，为假，报错 AssertionException
 
-40.文件读取，用with 语句 替代 try捕捉，with语句结束自动调用close 方法，
+40.文件读取，用with 语句 替代 try捕捉，with语句结束hou ,自动调用 close 方法，
 with open('python.txt','r') as f:
 print(f.read())
 读取文本文件，以utf-8编码的文本
@@ -443,14 +451,16 @@ pickle.loads() 反序列化，直接反序列化出对象
 1）{} 对应 dict （map）
 
 2）[] 对应 list
-3）'string' 对应 str
+3）'abc' 对应 str
 4）123.123 对应 int/float
 5）true/false 对应  True/False
 6）null 对应 None
 
 import json
-7)json.dumps(dict) dict序列化成 json
-8)json.loads(json_str) json字符串反序列化成 dict，直接反序列化出对象
-8)json.load(json_str) json字符串反序列化成 dict，从file-like Object 中读取，并反序列化
-
+7)json.dump(dict)： 把 dict json格式保存成文件
+8)json.dumps(dict)： 把 dict 转成 json 字符串
+9)json.dumps(dict，default=obj)： 把 对应的对象实例或数组 转成 json字符串
+10)json.load(json_str)： 从文件中读取去对应的json字符串，读出来的格式是 dict
+11)json.loads(json_str)： 把 json字符串 反序列化成 dict
+12)json.loads(json_str,object_hook=)： 把 json字符串 反序列化成对应的对象实例或数组
 
