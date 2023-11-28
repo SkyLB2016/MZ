@@ -12,6 +12,9 @@ elif	in	while
 else	is	with
 except	lambda	yield
 
+pip3 install xxx 安装 xxx
+pip3 list 显示已安装的插件
+
 
 第一章
 1.python的数据类型分为：整数，浮点数，字符串，布尔值(True False)，还有个特殊值 None（空值）
