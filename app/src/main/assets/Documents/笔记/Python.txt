@@ -12,12 +12,22 @@ elif	in	while
 else	is	with
 except	lambda	yield
 
-pip3 install xxx 安装 xxx
+pip3 install xxx ：安装第三方模块 xxx
 pip3 list 显示已安装的插件
-
-
+playwright codegen https://www.baidu.com/  生成web自动化脚本
 第一章
-1.python的数据类型分为：整数，浮点数，字符串，布尔值(True False)，还有个特殊值 None（空值）
+1.python的数据类型分为：
+Python的基本数据类型有：
+数字（Numbers）：整数，浮点数，长整型，复数。
+字符串（String）
+布尔（Boolean）：布尔值(True False)
+列表（List）
+元组（Tuple）
+集合（Set）
+字典（Dictionary）
+
+这些是Python的基本数据类型。它们有各自的特性和操作，例如，你可以对数字进行加、减、乘、除等运算，可以对字符串进行连接、分割等操作，可以对列表和元组进行添加、删除元素等操作，可以对集合进行并、交、差等运算，还可以对字典进行添加、删除、查找等操作。
+还有个特殊值 None（空值）
 1）二进制转十进制算法
 从低位开始，当前数（0或1）乘以2的n次方，n代表当前数所在的位置，从零开始计数。比如
 1111= 2³+2²+2¹+2º =15
@@ -155,11 +165,25 @@ s1 & s2 交集
 s1 | s2 并集
 
 11.数据类型转换
-int()
-float()
-str()
+int(x,[base]) 将x转为整数
+long(x,[base]) 将x转为长整数
+float(x) 将x转为浮点数
+complex(real,[imag]) 创建一个复数
+str(x) 将x转为字符串
 bool()
-hex() 十进制转16进制
+repr(x) 将对象转换为表达式字符串
+eval(str) 用来计算在字符串中的有效python 表达式，并返回一个对象。
+tuple(s) 将序列 s 转换为一个元组
+list(s) 将序列 s 转换为一个列表
+set(s)  将序列 s 转换为一个可变集合
+dict(d) 创建一个字典，k:v 集合
+frozenset(s) 创建一个不可变集合
+chr(x) 将一个整数变为一个字符
+unichr(x) 将一个整数变为一个 unicode 字符
+ord(x) 将一个字符转为对应的整数编码
+hex(x) 十进制转十六进制
+oct(x) 十进制转十八进制
+
 a= abs 为 abs 起一个别名，感觉多此一举啊
 a(-1)
 
@@ -245,13 +269,13 @@ generator 中保存的是一个算法，使用时，才开始计算。也是可�
 这些可直接作用于 for 循环的对象统称为可迭代对象： Iterable
 使用 isinstance() 判断一个对象是否是 Iterable 对象
 
-2）可以被 next() 函数调用并不断返回下一个值的对象称为迭代器：Iterator，惰性计算的序列，相当于打一巴掌，动一下。
+2）可以被 next() 函数调用并不断返回下一个值的对象称为迭代器：Iterator，惰性序列：使用的当前数据后，才会开始计算下一个数据。
 生成器都是 iterator 对象，但list，dict，str 不是 iterator，
 list、dict、str等iterable 变成 iterator 可以使用 iter() 函数
 
 
 21.为什么list、dict、str等数据类型不是Iterator？
-这是因为Python的Iterator对象表示的是一个数据流，Iterator对象可以被next()函数调用并不断返回下一个数据，直到没有数据时抛出StopIteration错误。
+这是因为Python的 Iterator 对象表示的是一个数据流，Iterator 对象可以被next()函数调用并不断返回下一个数据，直到没有数据时抛出StopIteration错误。
 可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时它才会计算。
 Iterator甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可能存储全体自然数的。
 
@@ -260,9 +284,9 @@ Iterator甚至可以表示一个无限大的数据流，例如全体自然数。
 集合数据类型如list、dict、str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。
 
 22.高阶函数：接收函数作为参数
-1）map(function,list):方法和参数的调用，传入的方法只接收一个参数，最后的返回的是一个 iterator 惰性序列，可以用list接收
-2）reduce(function,list):参数相加的调用，传入的方法接收两个参数，最后只返回一个返回值
-3）filter(function,list)：一个参数，用于过滤序列，也是返回一个 iterator 惰性序列。
+1）map(function,list):传入的方法（function）只接收一个参数，结果直接返回；最后的返回的是一个 iterator 惰性序列。用list接收，会直接计算完成。
+2）reduce(function,list):传入的方法（function）接收两个参数，每执行一次会把结果作为参数，连同下一个参数，传递给函数，所以最后只有一个返回值
+3）filter(function,list)：传入的方法（function）接收一个参数，方法内部是判断逻辑；用于过滤序列，也是返回一个 iterator 惰性序列。
 4）sorted(list)：序列排序，默认排序，是按编码排的序，返回的是一个 list 序列
 sorted(list，key=abs)：序列排序，排序方式
 sorted(list，key=str.lower)：序列排序，排序方式
@@ -275,13 +299,15 @@ print('匿名函数应用==', list(map(lambda x: x * x, [1, 2, 3, 4, 5])))
 lambda 表示匿名函数， 函数的简化写法，冒号前的x 表示参数；函数内只能有一句表达式，结果为返回值。
 
 25.装饰器：_------待研究
+decorator 装饰器模式，近似于java的注解，但java的注解使用的是反射，而 python 使用的是方法嵌套
 
 26.偏函数
 int('1234') 字符转整型，默认是十进制转成十进制
 int('1234'，base=16)，字符转整型，定义成是16进制转成十进制
 int('1234'，16)，字符转整型，定义成是16进制转成十进制
 
-functools。partial(int,base=2)：用于创建偏函数，本质上是把函数的参数设置默认值。可以接收可变参数和关键字参数
+int2=functools.partial(int,base=2)：用于创建偏函数，本质上是把函数的参数设置默认值。可以接收可变参数和关键字参数
+print(int2('1111')) --> 15
 
 27.文件结构
 1）#!/usr/bin/env python3 ：运行环境
@@ -351,7 +377,7 @@ class Student(object):
 35.多重继承 后缀跟着：MixIn
 class A(B,CMixIn,DMixIn)
 
-36.__xx__：特殊属性
+36.__xx__：特殊属性/方法
 1）__slots__ ：绑定属性
     __slots__ = ('name', 'age', '_score')
 2）__len__ ：重写长度函数
@@ -373,6 +399,14 @@ def __getattr__(self, attr):
 8）__call__ : 实例本身调用，可以把实例本身作为函数，
 stu()
 callable():判断是否重写了call 方法
+
+加减乘除：
+__add__
+__sub__
+__mul__
+__truediv__
+
+
 
 36.枚举类
 
@@ -467,3 +501,27 @@ import json
 11)json.loads(json_str)： 把 json字符串 反序列化成 dict
 12)json.loads(json_str,object_hook=)： 把 json字符串 反序列化成对应的对象实例或数组
 
+json.dump json.dumps 其他参数：
+ensure_ascii为Fasle时输出的是utf_8格式，indent是缩进格式化
+
+46.常用文件的打开模式如下：
+t   文本模式（默认）
+x   写模式，新建一个文件
+r   以只读模式打开一个文件
+w   打开一个文件进行写入，如果文件内容已存在，会清除原有的内容
+a   打开一个文件并追加内容，会往文件尾部添加内容
++   更新一个文件（可读可写）
+w+  打开一个文件进行读写，如果文件内容已存在，会清除原有的内容
+a+  打开一个文件并使用追加进行读写
+
+除了文本以外，还有大量的非文本文件，比如图片、压缩文件、视频文件、音乐文件等等，这种文件统称为二进制文件，在Python中打开二进制文件，需要不同的打开模式。
+b   二进制模式，打开二进制文件
+rb  以二进制格式只读模式打开一个文件
+wb  以二进制格式只写模式打开一个文件，会清除原有的内容
+ab  以二进制格式打开一个文件并追加内容，会往文件尾部添加内容
+
+f.read()
+f.readline()
+f.readlines()
+f.write()
+f.writelines()

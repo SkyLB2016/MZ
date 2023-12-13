@@ -348,88 +348,6 @@ public class MainVM extends ViewModel {
 
     private void equalPoetry(Context context) {
 //        presenter.calculationTextLength();
-        int[] counts = {0,
-                59,
-                87,
-                67,
-                42,
-                45,
-                25,
-                49,
-                50,
-                40,
-                70,
-                49,
-                49,
-                81,
-                95,
-                95,
-                67,
-                44,
-                20,
-                45,
-                132,
-                71,
-                79,
-                75,
-                47,
-                86,
-                47,
-                91,
-                86,
-                62,
-                75,
-                115,
-                70,
-                38,
-                61,
-                43,
-                56,
-                50,
-                129,
-                136,
-                21,
-                95,
-                73,
-                39,
-                38,
-                40,
-                39,
-                36,
-                40,
-                65,
-                82,
-                72,
-                72,
-                52,
-                91,
-                79,
-                66,
-                88,
-                70,
-                64,
-                48,
-                82,
-                80,
-                79,
-                125,
-                69,
-                79,
-                99,
-                42,
-                54,
-                47,
-                26,
-                45,
-                64,
-                59,
-                54,
-                54,
-                79,
-                65,
-                44,
-                76,
-                56};
         String poetry = FileUtils.readAssestToChar(context, "Documents/背诵.txt")
 //        String poetry = FileUtils.readAssestToChar(this, "Documents/复写.txt")
                 .replaceAll("　", "")
@@ -444,24 +362,26 @@ public class MainVM extends ViewModel {
                 .replaceAll("”", "")
                 .replaceAll("‘", "")
                 .replaceAll("’", "")
-//                .replaceAll("'", "")
-//                .replaceAll("\"", "")
-                .replaceAll(",", "")
-                .replaceAll("!", "")
                 .replaceAll("【", "")
                 .replaceAll("】", "")
+                .replaceAll("《", "")
+                .replaceAll("》", "")
+                .replaceAll("·", "")
+
+                .replaceAll(",", "")
+                .replaceAll("!", "")
                 .replaceAll(" ", "")
                 .replaceAll("\n", "");
         LogUtils.i("长度==" + (poetry.length()));
-        int count = 0;
-        String[] poetries = poetry.split("章");
-        for (int i = 1; i < poetries.length; i++) {
-            count += poetries[i].length();
-            if (!(poetries[i].length() == counts[i])) {
-                LogUtils.i("第" + i + "章==" + poetries[i].length());
-            }
-        }
-        LogUtils.i("长度==" + (count));
+//        int count = 0;
+//        String[] poetries = poetry.split("章");
+//        for (int i = 1; i < poetries.length; i++) {
+//            count += poetries[i].length();
+//            if (!(poetries[i].length() == counts[i])) {
+//                LogUtils.i("第" + i + "章==" + poetries[i].length());
+//            }
+//        }
+//        LogUtils.i("长度==" + (count));
         LogUtils.i("长度==" + (poetry.length()));
         //        Character
 //        Boolean
