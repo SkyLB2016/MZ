@@ -114,8 +114,52 @@ keytool -delete -alias 秘钥名称 -keystore 文件名
 13）hostname 查看主机名
 14）scp 远程拷贝
 15）date 显示当前系统时间
-16）find 查找
-17）grep 过滤（ | 管道）
+16）find 用于在文件系统中搜索文件的命令行工具，它可以在指定的目录及其子目录中查找匹配特定条件的文件。
+基本语法如下：
+find [path...] [expression]
+其中，[path...] 是要搜索的目录路径列表，[expression] 是用于指定搜索条件的表达式。
+
+以下是一些常用的 find 表达式选项：
+    -name pattern：按文件名搜索匹配给定模式的文件。
+    -type type：按文件类型搜索，其中 type 可以是 f（普通文件）、d（目录）、l（符号链接）等。
+    -size n[c]：按文件大小搜索，其中 n 是文件大小的数字值，c 表示单位（例如 k 表示千字节）。
+    -mtime n：按文件的修改时间搜索，其中 n 是时间间隔的数字值（天数）。
+    -user username：按文件所有者搜索。
+    -group groupname：按文件所属组搜索。
+    -exec command {} \;：对匹配的文件执行指定的命令。
+
+示例：
+    在当前目录及其子目录中查找名为 "example.txt" 的文件：
+    find . -name "example.txt"
+    在 /home/user 目录中查找所有符号链接文件：
+    find /home/user -type l
+    在 /var/log 目录中查找大小超过 10MB 的文件：
+    find /var/log -size +10M
+    在 /home/user 目录中查找最近 7 天内修改过的文件：
+    find /home/user -mtime -7
+
+17）grep 搜索文本文件中的匹配包含特定模式的文本行，并将这些行打印到标准输出。
+基本语法如下：
+grep [options] pattern [file...]
+其中，pattern 是要搜索的模式，可以是简单的字符串或正则表达式。file 是要搜索的文件或文件列表。
+以下是一些常用的 grep 选项：
+    -i：忽略大小写。
+    -v：反转匹配，打印不匹配的行。
+    -n：显示匹配行的行号。
+    -c：只显示匹配行的数量。
+    -r 或 -R：递归搜索子目录。
+    -l：仅显示包含匹配行的文件名。
+    -w：匹配整个单词。
+    -x：匹配整行。
+示例：
+    在当前目录下的所有文件中搜索字符串 "hello"：
+    grep "hello" *
+    在文件 example.txt 中搜索字符串 "hello"：
+    grep "hello" example.txt
+    在当前目录下的所有文件中递归搜索字符串 "hello"：
+    grep -r "hello" *
+    在文件 example.txt 中忽略大小写地搜索字符串 "hello"：
+    grep -i "hello" example.txt
 
 03.ls：（List directory contents）列出目录下的文件和文件夹
 01）-l：列出详细的目录清单

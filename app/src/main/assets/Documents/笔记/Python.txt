@@ -15,6 +15,7 @@ except	lambda	yield
 pip3 install xxx ：安装第三方模块 xxx
 pip3 list 显示已安装的插件
 playwright codegen https://www.baidu.com/  生成web自动化脚本
+环境配制采用本地虚拟机环境，一个项目一个环境。也可以统一使用本地系统的环境。
 第一章
 1.python的数据类型分为：
 Python的基本数据类型有：
@@ -210,7 +211,7 @@ person('李彬', 33, gender='man', city='北京', year=2023)
 kw = {city='北京', year=2023}
 custom.person('lll', 33, gender='man',**kw)
 5）命名关键字参数：* 限制关键字参数的名字
-a,b,*,x,y  *之后被视为确定的关键字名字
+a,b,*,x,y  *之后被视为确定的关键字名字，其实就是 key-value 中的key
 def person(name, age, *, city, job):
     print(name, age, city, job)
 6）可变参数+命名关键字参数：后边跟着的命名关键字参数就不需要 * 分割了
@@ -246,7 +247,8 @@ for k, v in map.items():
 for x, y in [(1, 1), (2, 4), (3, 9)]:
      print(x, y)
 
-18.列表生成式即 List Comprehensions，是Python内置的非常简单却强大的可以用来创建list的生成式。
+18.列表生成式即 List Comprehensions，是 Python 内置的非常简单却强大的可以用来创建list的生成式。
+有点绕，不好看懂
 print([k + '=' + v for k, v in distAndMap.items()])
 print([x if x % 2 == 0 else -x for x in range(1, 9)])
 print([x * (x if x % 2 == 0 else -x) for x in range(1, 9)])
@@ -288,9 +290,9 @@ Iterator甚至可以表示一个无限大的数据流，例如全体自然数。
 2）reduce(function,list):传入的方法（function）接收两个参数，每执行一次会把结果作为参数，连同下一个参数，传递给函数，所以最后只有一个返回值
 3）filter(function,list)：传入的方法（function）接收一个参数，方法内部是判断逻辑；用于过滤序列，也是返回一个 iterator 惰性序列。
 4）sorted(list)：序列排序，默认排序，是按编码排的序，返回的是一个 list 序列
-sorted(list，key=abs)：序列排序，排序方式
-sorted(list，key=str.lower)：序列排序，排序方式
-sorted(list，key=str.upper)：序列排序，排序方式
+sorted(list，key=abs)：序列排序，全部转成绝对值排序
+sorted(list，key=str.lower)：序列排序，全部转成小写排序
+sorted(list，key=str.upper)：序列排序，全部转成大写排序
 
 23.函数可作为返回值，这种称为闭包 closure
 
@@ -316,10 +318,10 @@ print(int2('1111')) --> 15
 4）__author__ = '李彬' ：文件作者
 
 __XXX__ 是特殊变量，这种特殊标量是可以被直接引用
-_xxx __xxx 这样的函数或变量是非公开的，不应该被直接应用
+_xxx 与 __xxx 这样的函数或变量是非公开的，不应该被直接应用
 
 28.类 Class  和 实例 Instance
-Class是一种抽象概念，比如我们定义的Class——Student，是指学生这个概念，而实例（Instance）则是一个个具体的Student，比如，Bart Simpson和Lisa Simpson是两个具体的Student。
+Class是一种抽象概念，比如我们定义的Class：Student，是指学生这个概念，而实例（Instance）则是一个个具体的Student，比如，Bart Simpson和Lisa Simpson是两个具体的Student。
 所以，面向对象的设计思想是抽象出Class，根据Class创建Instance。
 
 类是创建实例的模板，而实例则是一个一个具体的对象，各个实例拥有的数据都互相独立，互不影响；
@@ -329,10 +331,12 @@ Class是一种抽象概念，比如我们定义的Class——Student，是指学
 
 属性的公开，私有化，半私有化
 如果要把属性私有化，加 __
-self.__name ：__name为私有变量，外部不可访问。其实是变成了_student__name，可以调用此名，但不同的python 解释器会把 __name 改成不同的变量名
+self.__name ：__name为私有变量，外部不可访问。其实是变成了_student__name，可以调用此名，但不同版本的python 解释器会把 __name 改成不同的变量名
 self._name ：_name 虽然被视为私有变量，但可以被外部访问，
 
 29.继承与多态，基本等同于java
+class Dog(Animal):
+Dog 继承自 Animal
 
 30.
 1）type() 获取变量对应的类型
@@ -345,7 +349,9 @@ getattr(stu,'x')：获取实例 stu 中 x属性 对应的值
 getattr(stu,'x',default)：获取实例 stu 中 x属性 对应的值，并设置为空时的默认值
 相当于java的属性反射
 
-31.在 class 类中直接定义的属性是类属性，相当于 java 静态变量
+31.在 class 类中直接定义的属性是 类属性，就是起始就有数据的变量，相当于 java 静态变量
+一开始就赋值的变量是类属性
+一开始没有数据的，实例化的时候才赋值的是 实例属性。
 在实例对象中，可覆写实例内的变量，但类变量是没变的。也可以删除对象的变量，但是找不到之后会自动查找类变量。
 如要改变，通过类直接覆写该属性。
 
@@ -525,3 +531,9 @@ f.readline()
 f.readlines()
 f.write()
 f.writelines()
+
+
+查询端口被占用：
+sudo lsof -i tcp:8888
+杀死占用端口：
+sudo kill 1060

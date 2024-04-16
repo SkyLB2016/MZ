@@ -155,26 +155,27 @@ public class MainVM extends ViewModel {
 //        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data", list);
 //        FileUtils.serialize(context.getFilesDir().getAbsolutePath() + "/data1", new KeyValue("1", "2"));
 //
-        double distance = lineDistance(39.930713, 116.385936, 39.930709, 116.38589);
-        LogUtils.i("两点间的距离==" + distance);
-
-
-        String address = "河北省保定市竞秀区万博广场";
-        int start = address.indexOf("省") + 1;
-        address = address.substring(start, address.indexOf("市") + 1);
-        LogUtils.i("截取出来的字段1为==" + address);
-        address = "北京市海淀区圣熙八号";
-        start = address.indexOf("省") + 1;
-        int end = address.indexOf("市");
-        end = address.indexOf("市");
-        address = address.substring(start, address.indexOf("市") + 1);
-        LogUtils.i("截取出来的字段1为==" + address);
-        address = "北京市海淀区圣熙八号";
-        address = address.substring(0, 0);
-        LogUtils.i("截取出来的字段1为==" + address);
-        LogUtils.i("截取出来的字段1为==" + start);
-
-        equalPoetry(context);
+//        double distance = lineDistance(39.930713, 116.385936, 39.930709, 116.38589);
+//        LogUtils.i("两点间的距离==" + distance);
+//
+//
+//        String address = "河北省保定市竞秀区万博广场";
+//        int start = address.indexOf("省") + 1;
+//        address = address.substring(start, address.indexOf("市") + 1);
+//        LogUtils.i("截取出来的字段1为==" + address);
+//        address = "北京市海淀区圣熙八号";
+//        start = address.indexOf("省") + 1;
+//        int end = address.indexOf("市");
+//        end = address.indexOf("市");
+//        address = address.substring(start, address.indexOf("市") + 1);
+//        LogUtils.i("截取出来的字段1为==" + address);
+//        address = "北京市海淀区圣熙八号";
+//        address = address.substring(0, 0);
+//        LogUtils.i("截取出来的字段1为==" + address);
+//        LogUtils.i("截取出来的字段1为==" + start);
+//
+//        equalPoetry(context);
+//        1.android apk文件反编译，charles抓取文件包，查找反编译文件中的签名算法逻辑代码，研究签名的加密方式。
     }
 
     public static double rad(double d) {
