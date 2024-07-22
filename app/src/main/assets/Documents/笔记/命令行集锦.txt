@@ -160,6 +160,10 @@ grep [options] pattern [file...]
     grep -r "hello" *
     在文件 example.txt 中忽略大小写地搜索字符串 "hello"：
     grep -i "hello" example.txt
+参数列表过长，这样搜：
+find . -type f -print0 | xargs -0 grep -l "340604198507260411"
+find . -type f -exec grep -l "340604198507260411" {} +
+搜出来的是匹配的文件列表
 
 03.ls：（List directory contents）列出目录下的文件和文件夹
 01）-l：列出详细的目录清单
@@ -390,9 +394,10 @@ git层级：
 
 第三节 分支管理
 01.git branch name  创建分支;
-   简拼：gb
+   简拼：gb name
+   gb 查看分支
    git branch -d name 删除本地分支；
-   简拼：gbd
+   简拼：gbd  name
    git push origin :name 删除远程分支，与-d配合，两步相继执行，删除远程；
    简拼：gp origin :name
    git branch -f master HEAD~<num> 把master移动到从HEAD所在位置向上移动num步；
