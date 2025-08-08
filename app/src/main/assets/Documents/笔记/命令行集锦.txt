@@ -565,3 +565,14 @@ C:\Users\Sky\.gradle\wrapper\dists\gradle-7.0.2-bin\857tjihv64xamwrf0h14cai3r\gr
 
 一路确定，完成即时生效。
 
+ @signassistant.auth_check
+    @signassistant.post
+    @run_on_executor
+    @signassistant.log_business_record
+    def upload_excel_function(self):
+            file_name = 'excel_file'
+            upload_type = self.get_body_argument('upload_type', 10)
+            customer_id = self.get_body_argument('customer_id', '')
+            scheme_id = self.get_body_argument('scheme_id', '')
+            # self._tenant_token = '6a96582684eab1ac77a923c4'
+怎么直接调用这个接口

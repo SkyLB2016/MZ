@@ -9,7 +9,7 @@ plugins {
 }
 //apply from: "$rootDir/common.gradle"
 //apply from: "$rootDir/app/copysrc/test.gradle"
-//apply from: "${rootDir}/resguard.gradle"
+apply from: "${rootDir}/resguard.gradle"
 
 //设置依赖的jar，遵循group:artifactId:version
 dependencies {

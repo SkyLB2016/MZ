@@ -1,6 +1,8 @@
 package com.sky.oa.activity
 
 import android.app.Activity
+import android.app.AppOpsManager
+import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.MediaController

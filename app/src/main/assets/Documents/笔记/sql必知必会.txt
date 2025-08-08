@@ -6,8 +6,11 @@ select ... from...
 where
 and
 or
-order by：排序，必须在最后
 group by：分组
+order by：排序，必须在最后
+limit {lim} offset {offs};
+limit：返回多少条，
+offset：从第多少条开始
 distinct
 
 第一课 了解SQL 笔记：
@@ -19,20 +22,40 @@ SQL（发音为字母 S-Q-L 或 sequel）是 Structured Query Language（结构
 第 2 课 检索数据
 1.SQL关键字 不区分大小写，表名，列民，有些DBMS区分，有些不区分。
 
-2.select distinct name from people 只返回不同名字的人。
-select 使用 * 检出所有列，会降低速度，最好使用明确列，当然检出全部列的时候，用星号*
+2.distinct 用于从查询结果中去除重复的行，只返回唯一的记录。作用于select 选择的所有属性字段
+1）只返回不同名字的人
+select distinct name
+from people;
+2）返回不同的供应商id，不同的价格。
+select distinct vend_id, prod_price
+from products;
+
+select 使用 * 检出所有列，会降低速度，最好使用明确列，当然检出全部列的时候，用星号 *
+
+
 3.最多返回多少行：
 MySql，MariaDB，sqlite等数据库使用 limit
-select  name from people limit 5
+select  name
+from people
+limit 5;
+
 oracle数据库的写法：
-SELECT prod_name FROM Products WHERE ROWNUM <=5;
+SELECT prod_name
+FROM Products
+WHERE ROWNUM <=5;
+
 SQL Server数据库的写法：
-select top 5 name from people
+select top 5 name
+from people;
 
 4.指定行数获取：offset是从0开始的，第一行对应的下标是零，
-select  name from people limit 5 offset 5
+select  name
+from people
+limit 5 offset 5
 简化：逗号前边代表 offset，后边代表 limit
-select  name from people limit 5,4：从第五行（下标是5）开始，返回四行
+select  name
+from people
+limit 5,4：从第五行（下标是5）开始，返回四行
 
 5.注释
 --
@@ -44,14 +67,23 @@ select  name from people limit 5,4：从第五行（下标是5）开始，返回
 第 3 课 排序检索数据
 1.order by 排序，必须放在最后
 按列名排序
-select  prod_id,prod_price,prod_name from products order by prod_price,prod_name;
+select  prod_id,prod_price,prod_name
+from products
+order by prod_price,prod_name;
+
 按列的相对位置排序
-select  prod_id,prod_price,prod_name from products order by 2,3;
+select  prod_id,prod_price,prod_name
+from products
+order by 2,3;
 
 降序：desc 跟在列名之后，且只对这个列名起作用。
-select  prod_id,prod_price,prod_name from products order by prod_price desc,prod_name;
+select  prod_id,prod_price,prod_name
+from products
+order by prod_price desc,prod_name;
 
-select  prod_id,prod_price,prod_name from products order by prod_price,prod_name desc;
+select  prod_id,prod_price,prod_name
+from products
+order by prod_price,prod_name desc;
 
 
 第 4 课 过滤数据
@@ -69,16 +101,17 @@ between 5 and 9 在两者之间
 is null 为null值
 
 第 5 课 高级数据过滤
-在where 子句中，and 的优先级比 or 高
+1.在 where 子句中，and 的优先级比 or 高
 
-in  的用法，与 or相当
-where vend_id in ('DLL01','BRS01')
-where vend_id ='DLL01'or vend_id='BRS01'
-
-in的执行速度比 or 快
+2.在 where 子句中，in  的用法与 or 相当
+但 in 的执行速度比 or 快
 in 比 or 更直观
 
-not 的使用
+where vend_id in ('DLL01','BRS01')
+where vend_id ='DLL01' or vend_id='BRS01'
+
+
+3.not 的使用
 where not vend_id ='DLL01'
 
 MariaDB 支持使用 NOT 否定 IN、BETWEEN 和 EXISTS 子句。大多数
@@ -86,28 +119,27 @@ DBMS 允许使用 NOT 否定任何条件
 
 
 第 6 课 用通配符进行过滤
-like 操作符与通配符
+1.like 操作符与通配符
 通配符搜索只能用于文本字段（字符串），非文本数据类型字段不能使用通配符搜索。
 
-通配符
-% 区分前后，
-WHERE prod_name like 'fish%' 以fish 开头的
-WHERE prod_name like '%toy' 以fish 结尾的
+2.通配符 % 区分前后，
+WHERE prod_name like 'fish%' 以 fish 开头的
+WHERE prod_name like '%toy' 以 toy 结尾的
 WHERE prod_name like '%fish%' 包含 fish
 WHERE prod_name like 'F%y' 以F开头，y结尾的。
 
-%不会匹配空值（null）
+3.% 不会匹配空值（null）
 
-通配符 _ 只匹配一个字符
+4.通配符 _ 只匹配一个字符
 DB2不支持通配符 _
-WHERE prod_name like 'F%o_'
+WHERE prod_name like 'F%o_' 只匹配 o 后边一个字符的数据
 
-通配符 [] 首字母字符集，
+5.通配符 [] 首字母字符集，
 搜索首字母为J,M开头的数据
 WHERE cust_contact like '[JM]%'
 mysql ,oracle,DB2,sqlite 不支持
 
-不要过度使用通配符。如果其他操作符能达到相同的目的，应该使用
+6.不要过度使用通配符。如果其他操作符能达到相同的目的，应该使用
 其他操作符。
 在确实需要使用通配符时，也尽量不要把它们用在搜索模式的开始
 处。把通配符置于开始处，搜索起来是最慢的。
@@ -116,14 +148,13 @@ mysql ,oracle,DB2,sqlite 不支持
 
 
 第 7 课 创建计算字段
-计算字段
-拼接字段:
-SQL Server 使用+号。DB2、Oracle、PostgreSQL 和 SQLite 使用||。详
-细请参阅具体的 DBMS 文档。
+1.拼接字段:
+SQL Server 使用+号。详细请参阅具体的 DBMS 文档。
 select vend_name + '(' + vend_country + ')' as "商家地址"
 from vendors
 order by vend_name;
 
+DB2、Oracle、PostgreSQL 和 SQLite 使用||。
 select vend_name || '(' || vend_country || ')' as "商家地址"
 from vendors
 order by vend_name;
@@ -134,7 +165,7 @@ select concat(vend_name, '(', vend_country, ')') as "商家地址"
 from vendors
 order by vend_name;
 
-rtrim(text)：去掉右边的空格。
+2.rtrim(text)：去掉右边的空格。
 
 AS 设置别名
 
@@ -237,6 +268,10 @@ SUM(prod_price) 返回某列值之和,忽略列值为 NULL 的行。
 6) 如果分组列中包含具有 NULL 值的行，则 NULL 将作为一个分组返回。如果列中有多行 NULL 值，它们将分为一组。
 7) GROUP BY 子句必须出现在 WHERE 子句之后，ORDER BY 子句之前。
 
+注意：
+group by 分组，是按字段实际值来分组，
+字段的值相同就是一组，不同就是另一组，
+在clickhouse 去重结构的表中，不同组，得把不同的字段全部作为去重的 key 列出来，不然会顶掉之前的数据的。
 
 2.过滤分组
 HAVING 支持所有 WHERE 操作符
@@ -251,7 +286,7 @@ WHERE 在数据分组前进行过滤，HAVING 在数据分组后进行过滤。
 HAVING 与 WHERE 非常类似，如果不指定 GROUP BY，则大多数 DBMS 会同等对待它们。
 不过，你自己要能区分这一点。使用 HAVING 时应该结合 GROUP BY 子句，而 WHERE 子句用于标准的行级过滤。
 
-表10-1 ORDER BY与GROUP BY
+表10-1 ORDER BY 与 GROUP BY
 ORDER BY
 对产生的输出排序
 任意列都可以使用（甚至非 选择的列也可以使用）
@@ -274,7 +309,7 @@ GROUP BY    分组说明            仅在按组计算聚集时使用
 HAVING      组级过滤            否
 ORDER BY    输出排序顺序         否
 
-group by 后面需要是实际的列或表达式列，不能使用 聚集函数计算以后的计算字段。
+group by 后面需要是实际的列或表达式列，不能使用 聚集函数 计算以后的计算字段。
 
 
 第 11 课 使用子查询
@@ -284,69 +319,76 @@ group by 后面需要是实际的列或表达式列，不能使用 聚集函数�
 2.作为计算字段使用：
 
 第 12 课 联结表
-创建联结
+1.创建联结
 SELECT vend_name, prod_name, prod_price
 FROM Vendors, Products
 WHERE Vendors.vend_id = Products.vend_id;
 
 笛卡儿积（cartesian product）
-由没有联结条件的表关系返回的结果为笛卡儿积。检索出的行的数目
-将是第一个表中的行数乘以第二个表中的行数
+由没有联结条件的表关系返回的结果为笛卡儿积。
+检索出的行的数目将是第一个表中的行数乘以第二个表中的行数
 叉联结
-有时，返回笛卡儿积的联结，也称叉联结（cross join）。
+返回笛卡儿积的联结也称叉联结（cross join）。
 
 SELECT vend_name, prod_name, prod_price
 FROM Vendors, Products
 将返回 六十条数据：六个供应商 与 10个产品的乘积
 
-12.2.2 内联结
+2.内联结
 SELECT vend_name, prod_name, prod_price
 FROM Vendors
 INNER JOIN Products ON Vendors.vend_id = Products.vend_id;
 
 说明：“正确的”语法
-ANSI SQL 规范首选 INNER JOIN 语法，之前使用的是简单的等值语
-法。其实，SQL 语言纯正论者是用鄙视的眼光看待简单语法的。这就
-是说，DBMS 的确支持简单格式和标准格式，我建议你要理解这两种
-格式，具体使用就看你用哪个更顺手了。
+ANSI SQL 规范首选 INNER JOIN 语法，之前使用的是简单的等值语法。
+其实，SQL 语言纯正论者是用鄙视的眼光看待简单语法的。
+这就是说，DBMS 的确支持简单格式和标准格式，我建议你要理解这两种格式，具体使用就看你用哪个更顺手了。
 
 注意：性能考虑
-DBMS 在运行时关联指定的每个表，以处理联结。这种处理可能非常
-耗费资源，因此应该注意，不要联结不必要的表。联结的表越多，性
-能下降越厉害。
+DBMS 在运行时关联指定的每个表，以处理联结。这种处理可能非常耗费资源，因此应该注意，不要联结不必要的表。联结的表越多，性能下降越厉害。
+
 注意：联结中表的最大数目
-虽然 SQL 本身不限制每个联结约束中表的数目，但实际上许多 DBMS
-都有限制。请参阅具体的 DBMS 文档以了解其限制。
+虽然 SQL 本身不限制每个联结约束中表的数目，但实际上许多 DBMS 都有限制。请参阅具体的 DBMS 文档以了解其限制。
 
 第 13 课 创建高级联结
 联结的几种形式
-1.等值联结，叉联结，笛卡尔积联结 交叉联结：equaljoin
-交叉连接（CROSS JOIN）：有两种，显式的和隐式的，不带ON子句，返回的是两表的乘积，也叫笛卡尔积。
+1.等值联结，叉联结，笛卡尔积联结，交叉联结：equal join
+交叉连接（CROSS JOIN）：有两种，显式的和隐式的，不带 ON 子句，返回的是两表的乘积，也叫笛卡尔积。
 分隐式和显示，
 显示的：
-FROM ORDERS O CROSS JOIN CUSTOMERS C
+select cust_email
+FROM orders O CROSS JOIN customers C
 隐式的，去掉 cross join
-FROM ORDERS O , CUSTOMERS C
+select cust_email
+FROM orders O , customers C
 
-2.内联结 inner join
+2.内联结 inner join：只返回两表匹配的数据
 也有显示隐式之分，
 隐式就是交叉联结的方式
 显示 带上 inner join，基本都是这种的
 输出的数据为两个表经过 on 条件过滤后的积
 
+内联结相当于取 交集，只返回两表匹配的数据
+
 3.外联结（outer join）。
-外连接分三类：左外连接（LEFT OUTER JOIN）、右外连接（RIGHT OUTER JOIN）和全外连接（FULL OUTER JOIN）。
-外连不但返回符合连接和查询条件的数据行，还返回不符合条件的一些行。
+外联结不但返回符合查询条件的数据行，还返回不符合条件的行。
+外连接分三类：
+左外连接：LEFT OUTER JOIN  等价于 left join
+右外连接：RIGHT OUTER JOIN  等价于 right join
+全外连接：FULL OUTER JOIN  等价于 full join
 
-# 外联结之左联结，返回左表的全部数据，右表符合标准的数据
 
-# 外联结之右联结，返回右表的全部数据，左表表符合标准的数据
-
-
+1）外联结之左联结，返回左表符合标准和不符合标准的全部数据，右表符合标准的数据
+2）外联结之右联结，返回右表符合标准和不符合标准的全部数据，左表符合标准的数据
 左联结和右联结，调整表的顺序，就翻转了。
+3）全外联结：返回左右两表符合标准的数据，以及左右两表各自剩余的不匹配的数据，为空补空
 
-内联结和外联结的区别是：
-内联结只返回符合条件的行，而外联结会返回符合条件的行以及对应表的其他所有行。
+
+左右联结 范围比内联结大，相当于 两表的交集加两表交集的补集只属于左表/右表的部分（半开半闭区间/集合）
+全联结 范围比 左右联结大，相当于 并集，全开区间
+
+5.内联结和外联结的区别是：
+内联结只返回符合条件的行，而外联结会返回符合条件的行以及其他并不匹配的数据。
 
 FULL OUTER JOIN 的支持
 MariaDB、MySQL 和 SQLite 不支持 FULL OUTER JOIN 语法。
@@ -356,7 +398,6 @@ sqlite 不支持 右联结。
 Oracle 用户应该记住去掉 AS。
 
 
-
 第 14 课 组合查询 (感觉没卵用)
 UNION 取消重复数据；
 UNION ALL 显示全部数据
@@ -364,16 +405,17 @@ order by 还是放在最后一条select 语句的结尾处。
 
 
 第 15 课 插入数据
-查询数据，并插入到另一个表
+1.查询数据，并插入到另一个表
 INSERT INTO Customers(cust_id, cust_name, cust_address, cust_city, cust_state, cust_zip, cust_country, cust_contact, cust_email)
 select cust_id, cust_name, cust_address, cust_city, cust_state, cust_zip, cust_country, cust_contact, cust_email from customers1;
 
-根据已有的表，创建新表，并附带数据：把一个表的数据迁移复制到另一个新表里
+2.根据已有的表，创建新表，并附带数据：把一个表的数据迁移复制到另一个新表里
 CREATE TABLE CustCopy AS SELECT * FROM Customers;
-# 若是使用 SQL Server，可以这么写：
-# SELECT * INTO CustCopy FROM Customers;
 
-在使用 SELECT INTO 时，需要知道一些事情：
+若是使用 SQL Server，可以这么写：
+SELECT * INTO CustCopy FROM Customers;
+
+3.在使用 SELECT INTO 时，需要知道一些事情：
  任何 SELECT 选项和子句都可以使用，包括 WHERE 和 GROUP BY；
  可利用联结从多个表插入数据；
  不管从多少个表中检索数据，数据都只能插入到一个表中。
@@ -384,6 +426,7 @@ SELECT INTO 是试验新 SQL 语句前进行表复制的很好工具。先进行
 
 
 第 16 课 更新和删除数据
+1.更新表里匹配的数据
 update customers1
 set cust_name='找钱华',
     cust_address='天津',
@@ -395,18 +438,19 @@ set cust_name='找钱华',
 where cust_id = 1000000013;
 
 
-没有条件语句的话，会更新整个表的数据。
+2.没有条件语句的话，会更新整个表的数据。
 
-删除数据：
+3.删除数据：
 DELETE FROM Customers
 WHERE cust_id = 1000000013;
-删除整表数据
+
+4.删除整表数据
 DELETE FROM Customers1;
 
 TRUNCATE TABLE  Customers1;这个更快
 
 
-下面是许多 SQL 程序员使用 UPDATE 或 DELETE 时所遵循的重要原则。
+5.下面是许多 SQL 程序员使用 UPDATE 或 DELETE 时所遵循的重要原则。
  除非确实打算更新和删除每一行，否则绝对不要使用不带 WHERE 子句 的 UPDATE 或 DELETE 语句。
  保证每个表都有主键（如果忘记这个内容，请参阅第 12 课），尽可能 像 WHERE 子句那样使用它（可以指定各主键、多个值或值的范围）。
  在 UPDATE 或 DELETE 语句使用 WHERE 子句前，应该先用 SELECT 进 行测试，保证它过滤的是正确的记录，以防编写的 WHERE 子句不正确。
@@ -417,18 +461,18 @@ TRUNCATE TABLE  Customers1;这个更快
 
 
 第 17 课 创建和操纵表
-理解 NULL
+1、理解 NULL
 不要把 NULL 值与空字符串相混淆。NULL 值是没有值，不是空字符串。
 如果指定''（两个单引号，其间没有字符），这在 NOT NULL 列中是允 许的。空字符串是一个有效的值，它不是无值。NULL 值用关键字 NULL 而不是空字符串指定。
 
-默认值经常用于日期或时间戳列。例如，通过指定引用系统日期的函数 或变量，将系统日期用作默认日期。
+2、默认值经常用于日期或时间戳列。例如，通过指定引用系统日期的函数 或变量，将系统日期用作默认日期。
 MySQL 用户指定 DEFAULT CURRENT_DATE()，
 Oracle 用户指定 DEFAULT SYSDATE，
 而 SQL Server 用户指定 DEFAULT GETDATE()。
 遗憾的是，这条获得系统日期的命令在不同的 DBMS 中大多是不同的
 
 
-表17-1 获得系统日期
+3、表17-1 获得系统日期
 DBMS 函数/变量
 DB2 CURRENT_DATE
 MySQL CURRENT_DATE()
@@ -437,7 +481,7 @@ PostgreSQL CURRENT_DATE
 SQL Server GETDATE()
 SQLite date('now')
 
-以下是使用 ALTER TABLE 时需要考虑的事情。
+4、以下是使用 ALTER TABLE 时需要考虑的事情。
  理想情况下，不要在表中包含数据时对其进行更新。应该在表的设计
 过程中充分考虑未来可能的需求，避免今后对表的结构做大改动。
  所有的 DBMS 都允许给现有的表增加列，不过对所增加列的数据类型
@@ -453,14 +497,14 @@ SQLite date('now')
  列出要做哪些更改
 
 
-更改或删除列、增加约束或增加键，这些操作也使用类似的语法。
+4、更改或删除列、增加约束或增加键，这些操作也使用类似的语法。
 注意，下面的例子并非对所有 DBMS 都有效：
 输入▼
 ALTER TABLE Vendors
 DROP COLUMN vend_phone;
 
 
-复杂的表结构更改一般需要手动删除过程，它涉及以下步骤：
+5、复杂的表结构更改一般需要手动删除过程，它涉及以下步骤：
 (1) 用新的列布局创建一个新表；
 (2) 使用 INSERT SELECT 语句（关于这条语句的详细介绍，请参阅第 15 课）从旧表复制数据到新表。有必要的话，可以使用转换函数和计算 字段；
 (3) 检验包含所需数据的新表；
@@ -469,12 +513,12 @@ DROP COLUMN vend_phone;
 (6) 根据需要，重新创建触发器、存储过程、索引和外键。
 
 
-说明：ALTER TABLE 和 SQLite
+6、说明：ALTER TABLE 和 SQLite
 SQLite 对使用 ALTER TABLE 执行的操作有所限制。最重要的一个限制 是，它不支持使用 ALTER TABLE 定义主键和外键，这些必须在最初创 建表时指定。
 注意：小心使用 ALTER TABLE
 使用 ALTER TABLE 要极为小心，应该在进行改动前做完整的备份（表 结构和数据的备份）。数据库表的更改不能撤销，如果增加了不需要的 列，也许无法删除它们。类似地，如果删除了不应该删除的列，可能 会丢失该列中的所有数据。
 
-DROP TABLE Customers1;
+7、DROP TABLE Customers1;
 删除表不可撤销！
 删除表不可撤销！
 删除表不可撤销！
@@ -482,13 +526,15 @@ DROP TABLE Customers1;
 
 
 第 18 课 使用视图
-创建视图：数据变化后，会自动更新
+1、创建视图：数据变化后，会自动更新
 CREATE VIEW ProduceCustomers
 sel语句，不带Order by
-删除视图
+
+2、删除视图
 DROP VIEW ProduceCustomer;
 DROP VIEW IF EXISTS your_view_name;
-更新视图：查询条件变化后，更新视图
+
+3、更新视图：查询条件变化后，更新视图
 UPDATE employees_view SET column_name = value WHERE condition;
 
 生成视图时，不使用：Order by

@@ -1,0 +1,54 @@
+1、填写完手机号   请求GET接口    /login/count/{mobile}
+错误次数 count
+锁定文案 lockMsg
+是否锁定 true：是 false：否 locked
+锁定时长 单位：秒 lockTime
+
+2、获取图片验证码
+接口：/verifycode/login/imgcode
+方法：GET
+返回参数
+{
+  "base":"图片二进制数据 base64加密",
+  "uuid":"图片验证码UUID"
+}
+
+
+3、发送短信验证码
+接口：/verifycode/login/smscode
+方法：POST
+入参
+{
+  "mobile":"手机号",
+  "imgUuid":"图片验证码UUID",
+  "imgCode":"图片验证码"
+}
+返回参数
+{
+  "status":"200" -- 200 成功
+}
+
+
+4、登录接口
+
+添加入参
+imgCode 图片验证码code
+imgUuid 图片验证码uuid
+smsCode 短信验证码code
+
+返回参数中
+status
+   1001 、1002 、1003
+
+//                 1001图片验证码
+            //                 1002 图片验证码 + 短信验证码
+            //                 1003 密码错误五次 锁定15分钟
+   • 错误次数 1–2：仅显示图形验证码；
+    • 错误次数 3–4：图形验证码和短信验证码同时显示；
+    • 错误次数 ≥5：显示账号锁定提示；
+
+    1001  对应  错误次数 1–2：仅显示图形验证码；
+    1002  对应  错误次数 3–4：图形验证码和短信验证码同时显示；
+    1003 对应错误次数 ≥5： 显示账号锁定提示
+
+    2025-05-16 14:42:02,936 - info [line:129] - INFO: :Fadada reponse api ::https://contract.bumuyun.com/contract/sign/get/manual/url...::params::{"code": "1000", "msg": "\u6210\u529f", "result": {"signUrl": "https://extapi.fadada.com/api2/extsign.api?app_id=001241&v=2.0&timestamp=20250516144202&transaction_id=si20250516144202ECFI3592&customer_id=DE3FAD6CDA92C07BBCEA4D8D4D6E9D31&contract_id=ct2025051614420130930579&doc_title=%E4%B8%8A%E6%B5%B7%E8%8B%8F%E5%8D%97-%E5%A4%96%E5%8C%85%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C&keyword_strategy=0&sign_keyword=None&return_url=https%3A%2F%2Fmy.linlongyun.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=https%3A%2F%2Fcontract.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=MTIyN0E3OEVBMDJBQzg3NkQyNDM5MEIyQzFEMzBCNzE4QTZEMTg3RQ==&mobile_sign_type=1"}}

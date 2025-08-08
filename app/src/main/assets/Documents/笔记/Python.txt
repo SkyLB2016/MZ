@@ -308,7 +308,7 @@ sorted(list，key=str.upper)：序列排序，全部转成大写排序
 
 24.匿名函数 lambda x: x * x
 print('匿名函数应用==', list(map(lambda x: x * x, [1, 2, 3, 4, 5])))
-lambda 表示匿名函数， 函数的简化写法，冒号前的x 表示参数；函数内只能有一句表达式，结果为返回值。
+lambda 表示匿名函数，函数的简化写法，冒号前的x 表示参数；函数内只能有一句表达式，结果为返回值。
 
 25.装饰器：_------待研究
 decorator 装饰器模式，近似于java的注解，但java的注解使用的是反射，而 python 使用的是方法嵌套
@@ -544,4 +544,53 @@ f.writelines()
 sudo lsof -i tcp:8888
 杀死占用端口：
 sudo kill 1060
-sudo kill 6462 6462 6466 6466 6467 6467 6468 6468 6469 6469 6470 6470 6471 6471 6472 6472 6473 6473
+
+
+
+{
+  "status": 200,
+  "message": "SUCCESS",
+  "msg": "SUCCESS",
+  "data": {
+    "corp_list": [
+      {
+        "contact_id": "张琪",
+        "contact_name": "张琪",
+        "contact_phone": "18531022252",
+        "legal_id_number": "130406199103042714",
+        "customer_name": "乔月测试企业签Z",
+        "corp_name": "乔月测试企业一公司",
+        "sign_state": "已完成",
+        "sign_status": 40,
+        "invite_time": "2024年12月24日 14:50:06",
+        "sign_time": "2024年12月24日 15:01:44",
+        "fire_time": "",
+        "view_time": "2024年12月24日 15:02:34",
+        "contract_url": "https://testapi.fadada.com/api/viewContract.action?app_id=401952&v=2.0&timestamp=20241224150012&contract_id=ct2024122415001048758730&msg_digest=Qzc4QkJENkU3MjA3N0JBRTA0RThENDVGODNDMDlDN0M2MEZERkFDNA==",
+        "download_url": "https://testapi.fadada.com/api/downLoadContract.action?app_id=401952&v=2.0&timestamp=20241224150012&contract_id=ct2024122415001048758730&msg_digest=Qzc4QkJENkU3MjA3N0JBRTA0RThENDVGODNDMDlDN0M2MEZERkFDNA==",
+        "contract_start_time": "",
+        "contract_term": "年",
+        "relieve_url": "",
+        "relieve_download_url": "",
+        "relation_id": 63,
+        "a_sign_people": null,
+        "a_sign_time": "",
+        "scheme": {
+          "id": 607,
+          "name": "企业方案1223-001",
+          "customer_ids": "[\"141\"]",
+          "sign_model": 1,
+          "content_from": 2,
+          "is_collect": 1,
+          "status": 10,
+          "ctime": "2024-12-23 11:35:23",
+          "utime": "2024-12-24 14:52:15",
+          "information": "[{\"id\": 1, \"name\": \"\\u6237\\u53e3\\u6027\\u8d28\", \"content\": \"\\u53ef\\u9009\\u62e9\\u519c\\u4e1a\\u6237\\u53e3\\u3001\\u57ce\\u9547\\u6237\\u53e3\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 1, \"prop\": \"hukou_type\", \"order_desc\": 1, \"indexInfo\": 0, \"statusInfo\": 1}, {\"id\": 2, \"name\": \"\\u4e2a\\u4eba\\u94f6\\u884c\\u5361\\u8d26\\u53f7\", \"content\": \"\\u2460\\u5b9e\\u73b0\\u7b7e\\u7f72\\u4eba\\u7684\\u4e2a\\u4eba\\u94f6\\u884c\\u5361\\u8d26\\u53f7\\u53ca\\u5f00\\u6237\\u884c\\u6240\\u5728\\u7701\\u3001\\u5e02\\u7684\\u6536\\u96c6\\n\\n\\u2461\\u5b9e\\u73b0\\u6301\\u5361\\u4eba\\u59d3\\u540d\\u3001\\u8eab\\u4efd\\u8bc1\\u53f7\\u7801\\u4e0e\\u94f6\\u884c\\u5361\\u8d26\\u53f7\\u4e00\\u81f4\\u6027\\u7684\\u6548\\u9a8c\\uff0c\\u81ea\\u52a8\\u8bc6\\u522b\\u94f6\\u884c\\u540d\\u79f0\\u3001\\u6240\\u5728\\u7701\\u3001\\u6240\\u5728\\u5e02\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": [{\"type\": 1, \"options\": [{\"label\": \" \\u4ec5\\u5141\\u8bb8\\u8f93\\u5165\\u672c\\u4eba\\u94f6\\u884c\\u5361\\u53f7\", \"value\": 0}, {\"label\": \" \\u4ec5\\u5141\\u8bb8\\u8f93\\u5165\\u672c\\u4eba\\u94f6\\u884c\\u5361\\u53f7\", \"value\": 1}], \"value\": 1}, {\"type\": 1, \"options\": [{\"label\": \" \\u94f6\\u884c\\u5361\\u7c7b\\u578b\\u65e0\\u9650\\u5236\", \"value\": 0}, {\"label\": \" \\u4e0d\\u5141\\u8bb8\\u4f7f\\u7528\\u4fe1\\u7528\\u5361\", \"value\": 1}], \"value\": 0}]}, {\"label\": \"\\u63d0\\u793a\\u4fe1\\u606f\", \"value\": 1, \"options\": [{\"type\": 2, \"value\": \"xxxxxxx\", \"placeholder\": \"\\u8bf7\\u4f7f\\u7528\\u5efa\\u884c\\u3001\\u4e2d\\u884c\\u3001\\u5de5\\u884c\"}]}]}]}, \"status\": 10, \"type\": 2, \"prop\": \"bank_card\", \"order_desc\": 2, \"indexInfo\": 1, \"statusInfo\": 1}, {\"id\": 10, \"name\": \"\\u94f6\\u884c\\u5361\\u5f00\\u6237\\u652f\\u884c\", \"content\": \"\\u8bf7\\u8f93\\u5165\\u5f00\\u6237\\u94f6\\u884c\\u7684\\u652f\\u884c\\u540d\\u79f0\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 1, \"prop\": \"bank_address\", \"order_desc\": 3, \"indexInfo\": 2, \"statusInfo\": 1}, {\"id\": 3, \"name\": \"\\u6bd5\\u4e1a\\u8bc1\\u7167\\u7247\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"BYPhoto\", \"order_desc\": 9, \"indexInfo\": 3, \"statusInfo\": 1}, {\"id\": 4, \"name\": \"\\u5b66\\u4f4d\\u8bc1\\u7167\\u7247\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"XWPhoto\", \"order_desc\": 9, \"indexInfo\": 4, \"statusInfo\": 1}, {\"id\": 5, \"name\": \"\\u6237\\u53e3\\u672c\\u7167\\u7247\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"HKPhoto\", \"order_desc\": 9, \"indexInfo\": 5, \"statusInfo\": 1}, {\"id\": 6, \"name\": \"\\u79bb\\u804c\\u8bc1\\u660e\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"LZPhoto\", \"order_desc\": 9, \"indexInfo\": 6, \"statusInfo\": 1}, {\"id\": 7, \"name\": \"1\\u5bf8\\u4e2a\\u4eba\\u7167\\u7247\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"1CPhoto\", \"order_desc\": 9, \"indexInfo\": 7, \"statusInfo\": 1}, {\"id\": 8, \"name\": \"2\\u5bf8\\u4e2a\\u4eba\\u7167\\u7247\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 1, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0, \"options\": []}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"2CPhoto\", \"order_desc\": 9, \"indexInfo\": 8, \"statusInfo\": 1}, {\"id\": 9, \"name\": \"\\u5176\\u4ed6\\u7167\\u7247\", \"content\": \"\\u6700\\u591a\\u5141\\u8bb8\\u4e0a\\u4f203\\u5f20\\u7167\\u7247\", \"button\": {\"statusInfo\": 0, \"relation\": [{\"label\": \"\\u4e0d\\u6536\\u96c6\", \"value\": 0}, {\"label\": \"\\u6536\\u96c6\", \"value\": 1, \"relationOption\": [{\"label\": \"\\u5fc5\\u586b\", \"value\": 0}, {\"label\": \"\\u63d0\\u793a\\u4fe1\\u606f\", \"value\": 0, \"options\": [{\"type\": 2, \"value\": \"\", \"placeholder\": \"\\u8bf7\\u8f93\\u5165\\u63d0\\u793a\\u4fe1\\u606f\\u5185\\u5bb9\"}]}]}]}, \"status\": 10, \"type\": 3, \"prop\": \"QTPhoto\", \"order_desc\": 9, \"indexInfo\": 9, \"statusInfo\": 0}]",
+          "type": 1
+        },
+        "certificate_url": null
+      }
+    ]
+  }
+}
+

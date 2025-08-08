@@ -63,8 +63,3 @@ render_template(string,arg)：template里的视图名称，参数
 
 
 
-
-
-
-
-

@@ -16,15 +16,6 @@
 四、注解：@interface
 五、Scroller（待深入研究）：弹性滑动对象，与view中的computeScroll方法配合。
 
-儒家：中庸、大学、《系辞》
-释家：心经、金刚经、六祖坛经
-道家：道德经（流通版和仙派版）、清静经、道门精要
-
-武术：太极拳图说、内功四经、易筋经、洗髓经
-命理：千里命稿、子平真诠、滴天髓、三命通会
-医学：黄帝内经、医道还原、医学三书
-命理看《千里命稿》和《子平真诠》就可以了，尤其是后者，这是最正宗的传统子平命理。
-
-1.5升的空瓶五十度左右的热水，治疗颈椎不适。
-每天早上一杯温水，按时早睡早起，治疗缓解鼻炎。
-毛巾包住酒瓶子枕着睡觉，治疗富贵包
+https://www.androidos.net.cn/sourcecode
+repo init -u https://android.googlesource.com/platform/manifest -b android-11.0.0_r1
+repo init -u https://www.androidos.net.cn/sourcecode/platform/manifest -b android-11.0.0_r1

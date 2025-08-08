@@ -1,34 +1,328 @@
-首先必须要明确学习的流程，这个是最重要的，因为我们是系统化学习方式
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboardLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-同学这是重点流程概述：
-第一步.首先就是基础打扎实了，这个并不能一遍就能够扎实，需要反反复复的练习（这个过程会很枯燥，但也是需要忍受的）。
-第二步.例如：进入架构师课程的时候，千万不要跳着学，一定要顺序 一个一个的掌握好（尽量培养对架构的浓厚兴趣，兴趣最重要）。
-第三步.当在工作过程中，项目开发过程中，一定要把自己所学的架构方方面面给运用起来（会使用才能证明真真正正的掌握了）。
+    <include
+        android:id="@+id/nav_bar"
+        layout="@layout/app_toolbar" />
 
-基础：所以任何时候，都是基础最重要，那么我们先要把基础打扎实了，无论是在面试方面（面试官看重基础），还是后续高深内容的学习，基础功底代表了一切哦。
-那些写开源框架的人，都是基础非常扎实的，才能去驾驭框架的
-后期是运用：
-基础 -----》专业学习：例如 架构方面 ----》运用
+    <ScrollView
+        android:id="@+id/scrollview_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/nav_bar"
+        android:fadeScrollbars="true"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-上面是 重点步骤，接下来就是学习的方法：
-学习的方法：
-1）坚持：坚持直播，把直播内容要消化，代码都写一下，甚至几遍。直播事我们最好坚持的，把每周的学习计划做成课程内容的学习。
-2）代码：多写代码这个是关键，多写代码。
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-在学习的过程中，肯定会遇到问题，这个时候怎么办，必须要去解决哦
-
-如果有时间自主学习：
-1）第一个数据结构算法，找简单老师要课程，作业是：leetcode 上面的题目，简单 中等难度的一定要做，最好全面学习。实在没时间至少要学习前 7章。
-2）java语言进阶：java编程思想（2~11章， 重点7~11章）+ java 语言进阶视频。
-其次是：高级UI， frameWork源码（handler，binder，WMS, 事件分发， Fragment管理机制，AMS，PMS），性能优化等。
-
-
-同学目前可以按照这种思路学习：
-	1.直播先看着学习着。
-	2.如果自己能够挤出时间，那么去“自主学习哦”。
-
-基础就是，第一专题 和 第二专题的源码分析相关
+            <ImageView
+                android:id="@+id/login_logo"
+                android:layout_width="161dp"
+                android:layout_height="65dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/login_logo" />
 
 
-Cause: module java.base does not open java.lang to unnamed module @2931522b
-久卧伤气、久坐伤肉、久立伤骨
+            <RelativeLayout
+                android:id="@+id/login_edit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_logo"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="40dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="26dp"
+                android:paddingRight="24dp">
+
+                <com.haizhi.design.view.LineEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_marginTop="0dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/edit_delete_icon"
+                    android:ems="10"
+                    android:hint="请输入手机号"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:nextFocusDown="@+id/password"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp" />
+
+                <com.haizhi.design.view.LineEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@+id/username"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/edit_delete_icon"
+                    android:ems="10"
+                    android:hint="请输入密码"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_get_img_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@+id/password"
+                    android:layout_alignRight="@+id/password"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="换一换"
+                    android:textColor="#ff379dff" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/img_code"
+                    fresco:actualImageScaleType="fitCenter"
+                    fresco:placeholderImageScaleType="fitCenter"
+                    fresco:roundAsCircle="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@+id/password"
+                    android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@+id/tv_get_img_code"
+                    android:minWidth="80dp" />
+
+                <com.haizhi.design.view.LineEditText
+                    android:id="@+id/et_img_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@+id/password"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/img_code"
+                    android:background="@null"
+                    android:drawableRight="@drawable/edit_delete_icon"
+                    android:ems="10"
+                    android:hint="请输入密码"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_get_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@+id/et_img_code"
+                    android:layout_alignRight="@+id/password"
+                    android:layout_alignLeft="@+id/img_code"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="获取验证码"
+                    android:textColor="#ff379dff" />
+                <com.haizhi.design.view.LineEditText
+                    android:id="@+id/et_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@+id/et_img_code"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/img_code"
+                    android:background="@null"
+                    android:drawableRight="@drawable/edit_delete_icon"
+                    android:ems="10"
+                    android:hint="请输入密码"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/register_button_height"
+                    android:layout_below="@id/et_code"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/selector_blue_radius4"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/login"
+                    android:textColor="@color/color_white"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/super_debug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login_button"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/add_wifi_button_bg"
+                    android:padding="10dp"
+                    android:text="Debug"
+                    android:textColor="@color/color_white"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/resetPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login_button"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:text="@string/resetpassword"
+                    android:textColor="#ff1B9CF1"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_edit_layout"
+                android:layout_alignParentBottom="true">
+
+                <LinearLayout
+                    android:id="@+id/llAgreementLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/cb_login_bt"
+                        android:paddingLeft="4dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="登录即代表同意"
+                        android:textColor="@color/color_999999"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tvServiceAgreement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="《微办公用户服务协议》"
+                        android:textColor="@color/material_blue"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="与"
+                        android:textColor="@color/color_999999"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tvPrivacyAgreement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="《隐私协议》"
+                        android:textColor="@color/material_blue"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/login_website"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_above="@+id/llAgreementLayout"
+                    android:layout_centerHorizontal="true"
+                    android:autoLink="web"
+                    android:text="www.weibangong.com"
+                    android:textColor="#ff9b9b9b"
+                    android:textColorLink="#ff9b9b9b"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:id="@+id/tel_note"
+                    android:layout_width="138dp"
+                    android:layout_height="22dp"
+                    android:layout_above="@+id/login_website"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/tel_logo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="400-065-9966"
+                        android:textColor="#ff379dff"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tel_note"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/text_note"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="服务热线"
+                        android:textColor="#ff999999"
+                        android:textSize="10sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/text_note"
+                        android:background="#ffe6e6e6" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/text_note"
+                        android:background="#ffe6e6e6" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/basic_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
