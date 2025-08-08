@@ -220,7 +220,7 @@ rm [options] source
 COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
 java    21475  sky  103u  IPv6 0x3346561e541e9da7      0t0  TCP *:ddi-tcp-1 (LISTEN)
 
-2）kill 21475 (PID) 关闭端口
+2）sudo kill 21475 (PID) 关闭端口
 
 10.Linux文件系统
 01）/  根目录
